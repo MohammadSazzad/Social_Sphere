@@ -6,4 +6,5 @@ const usersRouter = express.Router();
 usersRouter.get("/", getUsersController);
 usersRouter.post("/signup", signUpController);
 
+
 export default usersRouter;
