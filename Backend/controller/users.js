@@ -1,5 +1,6 @@
+import { createJWT } from "../auth/createJWT.js";
 import { sendVerificationEmail } from "../auth/UserVerification.js";
-import { getUsers, getUserByEmail, signUp } from "../model/users.js";
+import { getUsers, getUserByEmail, signUp, verifyUser } from "../model/users.js";
 import bcrypt from 'bcrypt';
 
 export const getUsersController = async (req, res) => {
@@ -31,4 +32,35 @@ export const signUpController = async (req, res) => {
     }
 
 };
+
+export const verifyUserController = async (req, res) => {
+    try {
+        const { otp } = req.body;
+        const result = await verifyUser(otp);
+        if (!result) {
+            res.status(400).json({ message: 'Invalid OTP' });
+        }
+        const payload = {
+            id : result.id,
+            username : result.username,
+            first_name : result.first_name,
+            last_name : result.last_name,
+            email : result.email,
+            image : result.profile_picture_url,
+            bio : result.bio,
+            created_at : result.created_at,
+            date_of_birth : result.date_of_birth,
+            gender : result.gender,
+            phone_number : result.phone_number
+        }
+        
+        const token = createJWT(payload, '30d');
+        res.status(200).json({token});
+        
+    }catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+ };
+
+ 
 
