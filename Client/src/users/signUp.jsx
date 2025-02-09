@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import styles from './signUp.module.css';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
     const fName = useRef();
@@ -11,10 +12,12 @@ const SignUp = () => {
     const [gender, setGender] = useState("");
     console.log(gender);
 
+    const navigate = useNavigate();
+
     const handleSubmitButton = async(e) => {
         e.preventDefault();
         try{
-            const response = await axios.post('api/users/signup', {
+            const response = await axios.post('/api/users/signup', {
                 first_name: fName.current.value,
                 last_name: lName.current.value,
                 date_of_birth: dob.current.value,
@@ -23,6 +26,7 @@ const SignUp = () => {
                 password: pass.current.value
             });
             console.log(response);
+            navigate('/users/verification');
             if(response.status === 201){
                 alert('Verification Email Send Successfully.');
             }
