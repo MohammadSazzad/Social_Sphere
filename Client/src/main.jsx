@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import SignUp from './users/signUp.jsx'
 import VerifyUser from './users/VerifyUser.jsx'
 import Layout from './Layout.jsx'
+import Login from './users/LogIn.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -12,6 +13,7 @@ const router = createBrowserRouter(
       <Route path='users' >
         <Route path='signup' element={<SignUp/>}/>
         <Route path='verification' element={<VerifyUser/>}/>
+        <Route path= 'login' element = { <Login /> } />
       </Route> 
     </Route>
   )
