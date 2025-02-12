@@ -36,22 +36,22 @@ export const signUpController = async (req, res) => {
 export const verifyUserController = async (req, res) => {
     try {
         const { otp } = req.body;
-        const result = await verifyUser(otp);
-        if (!result) {
+        const user = await verifyUser(otp);
+        if (!user) {
             res.status(400).json({ message: 'Invalid OTP' });
         }
         const payload = {
-            id : result.id,
-            username : result.username,
-            first_name : result.first_name,
-            last_name : result.last_name,
-            email : result.email,
-            image : result.profile_picture_url,
-            bio : result.bio,
-            created_at : result.created_at,
-            date_of_birth : result.date_of_birth,
-            gender : result.gender,
-            phone_number : result.phone_number
+            id : user.id,
+            username : user.username,
+            first_name : user.first_name,
+            last_name : user.last_name,
+            email : user.email,
+            image : user.profile_picture_url,
+            bio : user.bio,
+            created_at : user.created_at,
+            date_of_birth : user.date_of_birth,
+            gender : user.gender,
+            phone_number : user.phone_number
         }
         
         const token = createJWT(payload, '30d');
@@ -61,6 +61,41 @@ export const verifyUserController = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
  };
+
+ export const loginController = async (req, res) => {
+    try{
+        const { email, password } = req.body;
+        const user = await getUserByEmail(email);
+        if(!user){
+            res.status(400).json({ message: 'Please Sign-up first' });
+            return;
+        }
+        const result = await bcrypt.compare(password, user.password_hash);
+        if(!result){
+            res.status(400).json({ message: 'Invalid Password' });
+            return;
+        }
+        const payload = {
+            id : user.id,
+            username : user.username,
+            first_name : user.first_name,
+            last_name : user.last_name,
+            email : user.email,
+            image : user.profile_picture_url,
+            bio : user.bio,
+            created_at : user.created_at,
+            date_of_birth : user.date_of_birth,
+            gender : user.gender,
+            phone_number : user.phone_number
+        }
+
+        const token = createJWT(payload, '30d');
+        res.status(200).json({token});
+
+    }catch(error){
+        res.status(500).json({ message: error.message });
+    }
+ }
 
  
 
