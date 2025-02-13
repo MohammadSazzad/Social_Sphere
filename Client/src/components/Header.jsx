@@ -1,7 +1,16 @@
+import { useNavigate } from "react-router-dom";
+
 const Header = () => {
+    const navigate = useNavigate();
+
+    const handleLogoutButton = () => {
+        localStorage.removeItem('token');
+        navigate('/');
+    }
+
     return (
         <header>
-            <h1>My App</h1>
+            <button className="btn btn-primary btn-block btn-lg text-body" onClick={handleLogoutButton}>logout</button>
         </header>
     );
 }

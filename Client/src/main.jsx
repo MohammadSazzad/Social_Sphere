@@ -5,15 +5,22 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import SignUp from './users/signUp.jsx'
 import VerifyUser from './users/VerifyUser.jsx'
 import Layout from './Layout.jsx'
-import Login from './users/LogIn.jsx'
+import Login from './users/login.jsx'
+import App from './App.jsx'
+
+const isToken = localStorage.getItem('token');
+console.log(isToken);
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element= {<Layout />} >
+      {isToken? 
+      <Route path='' element = { <App /> } /> : 
+      <Route path='' element = { <Login /> } />  
+    }
       <Route path='users' >
         <Route path='signup' element={<SignUp/>}/>
         <Route path='verification' element={<VerifyUser/>}/>
-        <Route path= 'login' element = { <Login /> } />
       </Route> 
     </Route>
   )

@@ -17,5 +17,8 @@
 .titleStyling {
   font-size: 1.5rem;
   font-weight: bold;
-  color: ;
+}
+
+.mainContainer {
+  background-color: #F2F2F2;
 }
