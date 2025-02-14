@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { Bell, MessageCircle, Search, ChevronDown, Menu, House, MonitorPlay, Store,  UsersRound, Gamepad } from "lucide-react";
+import { Bell, MessageCircle, Search, ChevronDown, Grip, House, MonitorPlay, Store,  UsersRound, Gamepad } from "lucide-react";
 import Logo from "../assets/Logo2.png";
 import TitleProfile from "../assets/TitleProfile.svg";
 import styles from "./Header.module.css";
@@ -72,7 +72,7 @@ const Header = () => {
 
                 <div className="d-flex align-items-center">
                     <button className="btn btn-light me-2">
-                        <Menu size={20} />
+                        <Grip size={20}/>
                     </button>
                     <button className="btn btn-light me-2">
                         <MessageCircle size={20} />

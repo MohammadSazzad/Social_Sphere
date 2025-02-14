@@ -9,7 +9,6 @@ import Login from './users/login.jsx'
 import App from './App.jsx'
 
 const isToken = localStorage.getItem('token');
-console.log(isToken);
 
 const router = createBrowserRouter(
   createRoutesFromElements(
