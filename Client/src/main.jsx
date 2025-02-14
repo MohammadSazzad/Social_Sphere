@@ -15,7 +15,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element= {<Layout />} >
       {isToken? 
-      <Route path='' element = { <App /> } /> : 
+      <Route path='feed' element = { <App /> } /> : 
       <Route path='' element = { <Login /> } />  
     }
       <Route path='users' >
@@ -31,3 +31,4 @@ createRoot(document.getElementById('root')).render(
     <RouterProvider router={router} />
   </StrictMode>,
 )
+
