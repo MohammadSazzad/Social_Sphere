@@ -25,7 +25,7 @@ const Header = () => {
     }
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+        <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top d-flex justify-content-between">
             <div className="container-fluid d-flex justify-content-between">
                 <div className="d-flex align-items-center gap-3">
                     <img src={Logo} alt="Logo" style={{ 'height': '40px', 'width': '40px', 'borderRadius' : '50%'}} />
@@ -42,7 +42,7 @@ const Header = () => {
                         </div>
                     </form>
                 </div>
-                <ul className="navbar-nav mx-auto d-none d-lg-flex gap-5">
+                <ul className="navbar-nav mx-auto d-none d-lg-flex pe-5 ">
                     <li className="nav-item">
                         <button className={`btn pe-5 ps-5 ${styles.navButton}`}>
                             <House size={30}/>

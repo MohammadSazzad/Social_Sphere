@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import usersRouter from './route/users.js';
+import eventsRouter from './route/events.js';
 
 dotenv.config();
 
@@ -10,6 +11,7 @@ const app = express();
 
 app.use(express.json());
 app.use('/api/users', usersRouter);
+app.use('/api/events', eventsRouter);
 
 app.get('/', (req, res) => {
     res.send('Hello World');

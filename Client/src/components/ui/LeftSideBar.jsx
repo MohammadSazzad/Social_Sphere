@@ -9,7 +9,14 @@ const LeftSideBar = () => {
     }
 
     return (
-        <div className="d-flex flex-column flex-shrink-0 p-3 bg-light" style={{"width": "380px", "height": "93vh"}}>
+        <div className="d-flex flex-column flex-shrink-0 p-3 bg-light" style={{
+            position: "fixed", 
+            top: 60,
+            left: 0,
+            width: "380px",
+            height: "94vh", 
+            overflowY: "auto", 
+        }}>
             <ul className="nav nav-pills flex-column mb-auto">
             <li className="nav-item">
                 <a href="#" className="nav-link active p-3" aria-current="page">
