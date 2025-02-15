@@ -2,3 +2,10 @@
     margin-top: 63px;
     background-color: #F8F9FA;
 }
+
+.MainContainer{
+    margin-left: 580px;  
+    margin-right: 580px; 
+    flex: 1;
+    max-width: 100%;
+}

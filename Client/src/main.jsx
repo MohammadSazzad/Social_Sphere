@@ -7,6 +7,7 @@ import VerifyUser from './users/VerifyUser.jsx'
 import Layout from './Layout.jsx'
 import Login from './users/login.jsx'
 import App from './App.jsx'
+import ContextProvider from './store/ContextProvider.jsx'
 
 const isToken = localStorage.getItem('token');
 
@@ -27,7 +28,9 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <ContextProvider>
+      <RouterProvider router={router} />
+    </ContextProvider>
   </StrictMode>,
 )
 

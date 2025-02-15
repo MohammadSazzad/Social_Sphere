@@ -7,12 +7,16 @@ import CreatePostContainer from './components/ui/CreatePostContainer.jsx'
 function App() {
 
   return (
-      <div className='UiContainer d-flex justify-content-between align-items-center'>
-        <LeftSideBar />
+      <div className='UiContainer d-flex justify-content-center align-items-center'>
         <div>
+          <LeftSideBar />
+        </div>
+        <div className='MainContainer'>
           <CreatePostContainer />
         </div>
-        <RightSideBar />
+        <div>
+          <RightSideBar />
+        </div>
       </div>
   )
 }

@@ -1,58 +1,14 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useContext } from "react";
 import { UserRoundPlus, EllipsisVertical, ChartNoAxesCombined, ArrowUpRight, CalendarDays, Bell } from "lucide-react";
 import TitleProfile from "../../assets/TitleProfile.svg";
 import styels from "./RightSideBar.module.css";
+import Context from "../../store/Context";
 
 const RightSideBar = () => {
 
-    const [users, setUsers] = useState([]);
-    const [events, setEvents] = useState([]);
-
-    useEffect( () => {
-        axios.get('/api/users/')
-        .then( response => {
-            setUsers(response.data.map ( (item) => ({
-                id: item.id,
-                firstName: item.first_name,
-                lastName: item.last_name,
-                email: item.email,
-                gender : item.gender,
-                dob: item.date_of_birth,
-                profile: item.image,
-                bio: item.bio,
-                phoneNumber: item.phone_number,
-                createdAt: item.created_at,
-            })));
-        })
-        .catch( error => {
-            console.log(error);
-        })
-
-    }, []) ;    
-
-    useEffect( () => {
-        axios.get('/api/events/upcoming/')
-        .then( response => {
-            setEvents(response.data.map ( (item) => ({
-                id: item.id,
-                title: item.title,
-                description: item.description,
-                organizer_id: item.organizer_id,
-                group_id: item.group_id,
-                location: item.location,
-                start_date: item.start_date,
-                end_date: item.end_date,
-                created_at: item.created_at,
-            })));
-        })
-        .catch( error => {
-            console.log(error);
-        })
-    }, []) ;
+    const { users, events } = useContext(Context);
 
     console.log(users);
-    console.log(events);
 
     return (
         <div className="d-flex flex-column flex-shrink-0 p-3 bg-light" style={{
