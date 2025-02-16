@@ -3,9 +3,9 @@
     background-color: #F8F9FA;
 }
 
-.MainContainer{
-    margin-left: 580px;  
-    margin-right: 580px; 
+.MainContainer {
+    max-width: 800px; 
+    margin: 0 auto; 
     flex: 1;
-    max-width: 100%;
+    width: 100%;
 }

@@ -5,6 +5,7 @@ import axios from "axios";
 const ContextProvider = ({children}) => {
     const [users, setUsers] = useState([]);
     const [events, setEvents] = useState([]);
+    const [stories, setStories] = useState([]);
 
     const isToken = localStorage.getItem('token');
 
@@ -31,7 +32,7 @@ const ContextProvider = ({children}) => {
             console.log(error);
         })
 
-    }, []) ;    
+    }, [isToken]) ;    
 
     useEffect( () => {
         if(!isToken){
@@ -54,10 +55,33 @@ const ContextProvider = ({children}) => {
         .catch( error => {
             console.log(error);
         })
-    }, []) ;
+    }, [isToken]) ;
+
+    useEffect( () => {
+        if(!isToken){
+            return;
+        }
+        axios.get('/api/stories/')
+        .then( response => {
+            setStories(response.data.map ( (item) => ({
+                id: item.id,
+                user_id: item.user_id,
+                media_url: item.media_url,
+                created_at: item.created_at,
+                expires_at: item.expires_at,
+            })));
+        })
+        .catch( error => {
+            console.log(error);
+        })
+    }, [isToken]) ;
+
+    console.log(stories);
+
     const context = {
         users,
         events,
+        stories,
     };
 
     console.log(users);
