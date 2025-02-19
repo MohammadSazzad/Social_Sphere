@@ -22,6 +22,7 @@ const Context = createContext(
         friend: {},
         request: {},
         stories: [],
+        posts: [],
         setUser: () => {},
         setEvent: () => {},
         setPost: () => {},
@@ -41,6 +42,8 @@ const Context = createContext(
         setFriends: () => {},
         setRequests: () => {},
         setStories: () => {},
+        setPosts: () => {},
+        formatTimeDifference: () => {},
     }
 );
 
