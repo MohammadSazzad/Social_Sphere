@@ -9,7 +9,6 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { Plus } from 'lucide-react'
 import { jwtDecode } from 'jwt-decode';
 
-// Custom arrow components
 const NextArrow = ({ onClick }) => (
   <div className={styles.nextArrow} onClick={onClick}>
     <FaChevronRight />
