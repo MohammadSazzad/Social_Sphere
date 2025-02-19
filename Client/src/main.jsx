@@ -15,7 +15,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element= {<Layout />} >
       {isToken? 
-      <Route path='feed' element = { <App /> } /> : 
+      <Route path='' element = { <App /> } /> : 
       <Route path='' element = { <Login /> } />  
     }
       <Route path='users' >

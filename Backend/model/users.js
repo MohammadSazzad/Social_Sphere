@@ -18,4 +18,9 @@ export const verifyUser = async (username) => {
     const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
     return result.rows[0];
  }
+
+ export const uploadImage = async (id, profile_picture_url) => {
+    const result = await pool.query('UPDATE users SET profile_picture_url = $1 WHERE id = $2', [profile_picture_url, id]);
+    return result.rows[0];
+ }
  
