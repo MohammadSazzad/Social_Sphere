@@ -12,6 +12,7 @@ const PORT = process.env.SERVER_PORT;
 const app = express();
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use('/api/users', usersRouter);
 app.use('/api/events', eventsRouter);
 app.use('/api/stories', storiesRouter);

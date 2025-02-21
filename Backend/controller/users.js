@@ -103,7 +103,7 @@ export const verifyUserController = async (req, res) => {
         const { id } = req.params;
         const LocalFilePath = req.file.path;
         const result = await uploadOnCloudinary(LocalFilePath);
-        const dbresult = await uploadImage(id, result.url);
+        await uploadImage(id, result.url);
         res.status(200).json({ message: 'Image uploaded successfully'  });
     }catch ( error ) {
         res.status(500).json({ message: error.message });
