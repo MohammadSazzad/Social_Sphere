@@ -8,6 +8,7 @@ import TitleProfile from "../../assets/TitleProfile.svg";
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { Plus } from 'lucide-react'
 import { jwtDecode } from 'jwt-decode';
+import { useNavigate } from "react-router-dom";
 
 const NextArrow = ({ onClick }) => (
   <div className={styles.nextArrow} onClick={onClick}>
@@ -25,6 +26,13 @@ const Stories = () => {
     const { stories } = useContext(Context);
     const token = localStorage.getItem('token');
     const decoded = token ? jwtDecode(token) : null;
+    const navigate = useNavigate();
+    console.log(stories);
+
+    const handleCreateStory = () => {
+        navigate('/story/create');
+    }
+
 
     const settings = {
         dots: false,
@@ -58,10 +66,14 @@ const Stories = () => {
         ],
     };
 
+    const handleShowStory = () => {
+        console.log('Show Story');
+    }
+
     return (
         <div className='container-fluid px-4 py-2 position-relative'>
             <Slider {...settings}>
-                <div className="px-1">
+                <div className="px-1" onClick={handleCreateStory}>
                         <div className="d-flex flex-column align-items-center story-item">
                             <div className={styles.storyContainer}>
                                 <div className="d-flex align-items-center justify-content-center border border-2 border-white" style={{ height: '30px', width:'30px', position: 'absolute', top:'66%', left:'39%', right: '39%', backgroundColor: `#075CE5`, borderRadius: '50%', cursor: 'pointer', color: 'white' }}>
@@ -91,24 +103,24 @@ const Stories = () => {
                         </div>
                     </div>
                 {stories.map((story) => (
-                    <div key={story.id} className="px-1">
+                    <div key={story.id} className="px-1" onClick={ handleShowStory }>
                         <div className="d-flex flex-column align-items-center story-item">
                             <div className={styles.storyContainer}>
                                 <div className={styles.profileIcon}>
                                     <img 
-                                        src={story.profileImage || TitleProfile} 
+                                        src={story.profilePicture|| TitleProfile} 
                                         alt="Profile" 
                                         className={styles.profileImage}
                                     />
                                 </div>
                                 <img 
-                                    src={story.image || TitleProfile} 
+                                    src={story.media_url || TitleProfile} 
                                     alt="Story" 
                                     className={styles.storyImage} 
                                 />
                                 <div className={styles.nameOverlay}>
                                     <span className={styles.storyName}>
-                                        Mohammad Sazzad
+                                        {story.firstName} {story.lastName}
                                     </span>
                                 </div>
                             </div>

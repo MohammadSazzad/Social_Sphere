@@ -8,6 +8,7 @@ import Layout from './Layout.jsx'
 import Login from './users/login.jsx'
 import App from './App.jsx'
 import ContextProvider from './store/ContextProvider.jsx'
+import CreateStory from './pages/CreateStory.jsx'
 
 const isToken = localStorage.getItem('token');
 
@@ -22,6 +23,9 @@ const router = createBrowserRouter(
         <Route path='signup' element={<SignUp/>}/>
         <Route path='verification' element={<VerifyUser/>}/>
       </Route> 
+      <Route path = 'story' >
+        <Route path = 'create' element = { <CreateStory/> }/>
+      </Route>
     </Route>
   )
 )

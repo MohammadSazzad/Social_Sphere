@@ -66,10 +66,13 @@ const ContextProvider = ({children}) => {
         .then( response => {
             setStories(response.data.map ( (item) => ({
                 id: item.id,
-                user_id: item.user_id,
                 media_url: item.media_url,
                 created_at: item.created_at,
                 expires_at: item.expires_at,
+                storyContent: item.storycontent,
+                firstName: item.first_name,
+                lastName: item.last_name,
+                profilePicture: item.profile_picture_url,
             })));
         })
         .catch( error => {
