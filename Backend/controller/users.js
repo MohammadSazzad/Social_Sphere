@@ -1,7 +1,8 @@
 import { createJWT } from "../auth/createJWT.js";
 import { sendVerificationEmail } from "../auth/UserVerification.js";
-import { getUsers, getUserByEmail, signUp, verifyUser } from "../model/users.js";
+import { getUsers, getUserByEmail, signUp, verifyUser, uploadImage } from "../model/users.js";
 import bcrypt from 'bcrypt';
+import uploadOnCloudinary from "../utility/cloudinary.js";
 
 export const getUsersController = async (req, res) => {
     try {
@@ -97,6 +98,17 @@ export const verifyUserController = async (req, res) => {
     }
  }
 
+ export const uploadImageController = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const LocalFilePath = req.file.path;
+        const result = await uploadOnCloudinary(LocalFilePath);
+        await uploadImage(id, result.url);
+        res.status(200).json({ message: 'Image uploaded successfully'  });
+    }catch ( error ) {
+        res.status(500).json({ message: error.message });
+    }
+ }
 
  
 

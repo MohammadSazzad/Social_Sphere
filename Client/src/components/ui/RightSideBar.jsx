@@ -1,39 +1,24 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { UserRoundPlus, EllipsisVertical, ChartNoAxesCombined, ArrowUpRight } from "lucide-react";
+import { useContext } from "react";
+import { UserRoundPlus, EllipsisVertical, ChartNoAxesCombined, ArrowUpRight, CalendarDays, Bell } from "lucide-react";
 import TitleProfile from "../../assets/TitleProfile.svg";
 import styels from "./RightSideBar.module.css";
+import Context from "../../store/Context";
 
 const RightSideBar = () => {
 
-    const [users, setUsers] = useState([]);
+    const { users, events } = useContext(Context);
 
-    useEffect( () => {
-        axios.get('/api/users/')
-        .then( response => {
-            setUsers(response.data.map ( (item) => ({
-                id: item.id,
-                firstName: item.first_name,
-                lastName: item.last_name,
-                email: item.email,
-                gender : item.gender,
-                dob: item.date_of_birth,
-                profile: item.image,
-                bio: item.bio,
-                phoneNumber: item.phone_number,
-                createdAt: item.created_at,
-            })));
-        })
-        .catch( error => {
-            console.log(error);
-        })
-
-    }, []) ;    
-    
     console.log(users);
 
     return (
-        <div className="d-flex flex-column flex-shrink-0 p-3 bg-light" style={{"width": "380px", "height": "93vh"}}>
+        <div className="d-flex flex-column flex-shrink-0 p-3 bg-light" style={{
+            position: "fixed", 
+            top: 60,
+            right: 0, 
+            width: "380px",
+            height: "94vh", 
+            overflowY: "auto",
+        }}>
             <div>
                 <span className="fs-4">Friend Suggestions</span>
                 <button className="btn btn-light float-end">
@@ -100,11 +85,15 @@ const RightSideBar = () => {
             </div>
             <hr />
             <ul className="list-group list-group-flush">
-                <li className="list-group-item">Cras justo odio</li>
-                <li className="list-group-item">Dapibus ac facilisis in</li>
-                <li className="list-group-item">Morbi leo risus</li>
-                <li className="list-group-item">Porta ac consectetur ac</li>
-                <li className="list-group-item">Vestibulum at eros</li>
+                {events.slice(0,5).map( (event) => (
+                    <li key={event.id} className={`${styels.friendContainer}  list-group-item d-flex justify-content-between align-items-center`}>
+                        <div type="button" className="d-flex align-items-center gap-2">
+                        <CalendarDays />
+                            <p>{event.title}</p>
+                        </div>
+                        <button className="btn btn-light"><Bell /></button>
+                    </li>
+                ))}
             </ul>
         </div>
     );

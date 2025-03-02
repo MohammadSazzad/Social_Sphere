@@ -23,7 +23,7 @@ const Login = () => {
       if (response.status === 200) {
         localStorage.setItem("token", response.data.token);
         alert("Login successful!");
-        navigate("/feed"); // Redirect to dashboard
+        navigate("/"); // Redirect to dashboard
       }
     } catch (err) {
       setError(err.response?.data?.message || "Something went wrong.");

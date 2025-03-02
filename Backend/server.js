@@ -1,6 +1,9 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import usersRouter from './route/users.js';
+import eventsRouter from './route/events.js';
+import storiesRouter from './route/stories.js';
+import postsRouter from './route/posts.js';
 
 dotenv.config();
 
@@ -9,7 +12,11 @@ const PORT = process.env.SERVER_PORT;
 const app = express();
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use('/api/users', usersRouter);
+app.use('/api/events', eventsRouter);
+app.use('/api/stories', storiesRouter);
+app.use('/api/posts', postsRouter);
 
 app.get('/', (req, res) => {
     res.send('Hello World');

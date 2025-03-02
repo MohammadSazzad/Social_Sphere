@@ -1,3 +1,11 @@
 .UiContainer{
     margin-top: 63px;
+    background-color: #F8F9FA;
+}
+
+.MainContainer {
+    max-width: 800px; 
+    margin: 0 auto; 
+    flex: 1;
+    width: 100%;
 }

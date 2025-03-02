@@ -1,5 +1,6 @@
 import { House, CircleEllipsis, UsersRound, MessageCircle, MonitorPlay, Store, Gamepad, LayoutDashboard, Handshake, LogOut } from "lucide-react";
 import TitleProfile from "../../assets/TitleProfile.svg";
+import { jwtDecode } from 'jwt-decode';
 
 const LeftSideBar = () => {
 
@@ -8,8 +9,18 @@ const LeftSideBar = () => {
         window.location.href = "/";
     }
 
+    const token = localStorage.getItem('token');
+    const decoded = jwtDecode(token);
+
     return (
-        <div className="d-flex flex-column flex-shrink-0 p-3 bg-light" style={{"width": "380px", "height": "93vh"}}>
+        <div className="d-flex flex-column flex-shrink-0 p-3 bg-light" style={{
+            position: "fixed", 
+            top: 60,
+            left: 0,
+            width: "380px",
+            height: "94vh", 
+            overflowY: "auto", 
+        }}>
             <ul className="nav nav-pills flex-column mb-auto">
             <li className="nav-item">
                 <a href="#" className="nav-link active p-3" aria-current="page">
@@ -69,8 +80,8 @@ const LeftSideBar = () => {
             <hr />
             <div className="d-flex justify-content-between"> 
                 <button className={`btn btn-light btn-block d-flex align-items-center`}>
-                    <img src={TitleProfile} alt="Profile Image" style={{ "width": "48px", "height": "48px", "borderRadius": "50%"}} />
-                    <p className="fs-5 ms-3">Mohammad Sazzad</p>
+                    <img src={decoded.image || TitleProfile} alt="Profile Image" style={{ "width": "48px", "height": "48px", "borderRadius": "50%"}} />
+                    <p className="fs-5 ms-3">{decoded.first_name+ " "+decoded.last_name}</p>
                 </button>
                 <button className="btn btn-light btn-block " onClick={handleLogOut}>
                     <LogOut />
