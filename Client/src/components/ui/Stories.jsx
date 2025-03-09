@@ -9,6 +9,7 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { Plus } from 'lucide-react'
 import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from "react-router-dom";
+import { all } from "axios";
 
 const NextArrow = ({ onClick }) => (
   <div className={styles.nextArrow} onClick={onClick}>
@@ -23,11 +24,11 @@ const PrevArrow = ({ onClick }) => (
 );
 
 const Stories = () => {
-    const { stories } = useContext(Context);
+    const { allStories } = useContext(Context);
     const token = localStorage.getItem('token');
     const decoded = token ? jwtDecode(token) : null;
     const navigate = useNavigate();
-    console.log(stories);
+    console.log(allStories);
 
     const handleCreateStory = () => {
         navigate('/story/create');
@@ -66,8 +67,9 @@ const Stories = () => {
         ],
     };
 
-    const handleShowStory = () => {
-        console.log('Show Story');
+    const handleShowStory = (id) => {
+        console.log(id);
+        navigate (`/story/viewStory/${id}`);
     }
 
     return (
@@ -102,8 +104,8 @@ const Stories = () => {
                             </div>
                         </div>
                     </div>
-                {stories.map((story) => (
-                    <div key={story.id} className="px-1" onClick={ handleShowStory }>
+                {allStories.map((story) => (
+                    <div key={story.id} className="px-1" onClick={ () => handleShowStory (story.id) }>
                         <div className="d-flex flex-column align-items-center story-item">
                             <div className={styles.storyContainer}>
                                 <div className={styles.profileIcon}>
@@ -113,11 +115,14 @@ const Stories = () => {
                                         className={styles.profileImage}
                                     />
                                 </div>
+                                {story.media_url ?
                                 <img 
                                     src={story.media_url || TitleProfile} 
                                     alt="Story" 
                                     className={styles.storyImage} 
-                                />
+                                /> : (
+                                    <p className={styles.storyContent} >{story.storyContent}</p>
+                                )}
                                 <div className={styles.nameOverlay}>
                                     <span className={styles.storyName}>
                                         {story.firstName} {story.lastName}

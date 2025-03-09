@@ -9,6 +9,7 @@ import Login from './users/login.jsx'
 import App from './App.jsx'
 import ContextProvider from './store/ContextProvider.jsx'
 import CreateStory from './pages/CreateStory.jsx'
+import ShowStory from './pages/ShowStory.jsx'
 
 const isToken = localStorage.getItem('token');
 
@@ -25,6 +26,7 @@ const router = createBrowserRouter(
       </Route> 
       <Route path = 'story' >
         <Route path = 'create' element = { <CreateStory/> }/>
+        <Route path = 'viewStory/:id' element = { <ShowStory /> }/> 
       </Route>
     </Route>
   )

@@ -25,7 +25,7 @@ const Header = () => {
     }
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top d-flex justify-content-between">
+        <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top d-flex justify-content-between ">
             <div className="container-fluid d-flex justify-content-between">
                 <div className="d-flex align-items-center gap-3">
                     <img src={Logo} alt="Logo" style={{ 'height': '40px', 'width': '40px', 'borderRadius' : '50%'}} />

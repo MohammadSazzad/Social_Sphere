@@ -13,7 +13,7 @@ function App() {
         <div>
           <LeftSideBar />
         </div>
-        <div className='MainContainer'>
+        <div className='MainContainer' >
           <div>
             <CreatePostContainer />
           </div>

@@ -1,4 +1,4 @@
-import { getStories, createStory, createStoryContent } from "../model/stories.js";
+import { getStoriesWithoutId, createStory, createStoryContent, getStoryById, getStories } from "../model/stories.js";
 import uploadOnCloudinary from "../utility/cloudinary.js";
 
 export const getStoriesController = async (req, res) => {
@@ -6,6 +6,26 @@ export const getStoriesController = async (req, res) => {
         const stories = await getStories();
         res.status(200).json(stories);
     } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+export const getStoriesWithoutIdController = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const stories = await getStoriesWithoutId(id);
+        res.status(200).json(stories);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+export const getStoryByIdController = async (req, res) => {
+    try {
+        const {id} = req.params;
+        const story = await getStoryById(id);
+        res.status(200).json(story);
+    }catch ( error ) {
         res.status(500).json({ message: error.message });
     }
 }

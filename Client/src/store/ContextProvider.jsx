@@ -1,14 +1,17 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import Context from "./Context";
 import axios from "axios";
+import { jwtDecode } from 'jwt-decode';
 
 const ContextProvider = ({children}) => {
     const [users, setUsers] = useState([]);
     const [events, setEvents] = useState([]);
     const [stories, setStories] = useState([]);
+    const [allStories, setAllStories] = useState([]);
     const [posts, setPosts] = useState([]);
 
     const isToken = localStorage.getItem('token');
+    const decoded = isToken ? jwtDecode(isToken) : null;
 
     useEffect( () => {
         if(!isToken){
@@ -62,7 +65,7 @@ const ContextProvider = ({children}) => {
         if(!isToken){
             return;
         }
-        axios.get('/api/stories/')
+        axios.get(`/api/stories/${decoded.id}`)
         .then( response => {
             setStories(response.data.map ( (item) => ({
                 id: item.id,
@@ -79,6 +82,28 @@ const ContextProvider = ({children}) => {
             console.log(error);
         })
     }, [isToken]) ;
+
+    useEffect( () => {
+        if(!isToken){
+            return;
+        }
+        axios.get('/api/stories/')
+        .then( response => {
+            setAllStories(response.data.map ( (item) => ({
+                id: item.id,
+                media_url: item.media_url,
+                created_at: item.created_at,
+                expires_at: item.expires_at,
+                storyContent: item.storycontent,
+                firstName: item.first_name,
+                lastName: item.last_name,
+                profilePicture: item.profile_picture_url,
+            })));
+        })
+        .catch( error => {
+            console.log(error);
+        })
+    }, [isToken]);
 
     useEffect ( () => {
         if(!isToken){
@@ -138,6 +163,7 @@ const ContextProvider = ({children}) => {
         events,
         stories,
         posts,
+        allStories,
         formatTimeDifference,
     };
 
