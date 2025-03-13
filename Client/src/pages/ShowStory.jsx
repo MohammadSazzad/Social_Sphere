@@ -31,7 +31,9 @@ const ShowStory = () => {
     const handleBackButton = () => {
         navigate('/');
     }
-    console.log(storyById);
+    const handleCreateStoryButton = () => {
+        navigate('/story/create');
+    }
 
     return (
         <div className={styles.showStoryContainer}>
@@ -55,7 +57,7 @@ const ShowStory = () => {
                     <p className="fw-medium pt-3">Your Story</p>
                 </div>
                 <div className="d-flex gap-2">
-                    <div className={styles.Button} style={{height: '60px', width:'60px'}}> <Plus /> </div>
+                    <div className={styles.Button} style={{height: '60px', width:'60px'}} onClick={handleCreateStoryButton}> <Plus /> </div>
                     <div className={styles.smallGap} >
                         <p className="fw-medium ">Create a Story</p>
                         <p className="fw-light">Share a photo or write something</p>
