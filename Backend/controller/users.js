@@ -55,7 +55,7 @@ export const verifyUserController = async (req, res) => {
             phone_number : user.phone_number
         }
         
-        const token = createJWT(payload, '30d');
+        const token = createJWT(res, payload, '30d');
         res.status(200).json({token});
         
     }catch (error) {
@@ -87,10 +87,10 @@ export const verifyUserController = async (req, res) => {
             created_at : user.created_at,
             date_of_birth : user.date_of_birth,
             gender : user.gender,
-            phone_number : user.phone_numberl
+            phone_number : user.phone_number
         }
 
-        const token = createJWT(payload, '30d');
+        const token = createJWT(res, payload, '30d');
         res.status(200).json({token});
 
     }catch(error){
@@ -110,5 +110,26 @@ export const verifyUserController = async (req, res) => {
     }
  }
 
+ export const logoutController = async (req, res) => {
+    try {
+        res.clearCookie('jwt', {
+            httpOnly: true,
+            secure: process.env.NODE_ENV !== 'development',
+            sameSite: 'strict',
+        });
+        res.status(200).json({ message: 'Logged out successfully' });
+    }catch ( error ) {
+        res.status(500).json({ message: error.message });
+    }
+ }
+
+ export const authCheckController = async (req,res) => {
+    try{
+        const user = req.user;
+        res.status(200).json(user);
+    }catch(error){
+        res.status(500).json({ message: error.message });
+    }
+ }
  
 

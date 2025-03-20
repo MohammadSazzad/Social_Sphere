@@ -5,9 +5,10 @@ import { useRef, useState } from 'react';
 import { useDropzone } from "react-dropzone";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { axiosInstance } from '../lib/axios';
 const CreateStory = () => {
     const token = localStorage.getItem('token');
-    const decoded = jwtDecode(token);
+    const decoded = token? jwtDecode(token): null;
     const [ createImage, setImage ] = useState(false);
     const [ createText, setText ] = useState(false);
     const [mediaPreview, setMediaPreview] = useState(null);
@@ -40,7 +41,7 @@ const CreateStory = () => {
             formData.append('user_id', decoded.id);
             formData.append('created_at', new Date().toISOString());
             formData.append('storyContent', title.current.value.trim());
-            const response = await axios.post('/api/stories/create', formData, {
+            const response = await axiosInstance.post('/stories/create', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -67,7 +68,7 @@ const CreateStory = () => {
         }
         console.log('Share to story');
         try {
-            const response = await axios.post('/api/stories/createContent', {
+            const response = await axiosInstance.post('/stories/createContent', {
                 user_id: decoded.id,
                 created_at: new Date().toISOString(),
                 storyContent: textDes.current.value.trim(),

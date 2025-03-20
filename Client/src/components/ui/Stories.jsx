@@ -7,9 +7,8 @@ import Context from "../../store/Context";
 import TitleProfile from "../../assets/TitleProfile.svg";
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { Plus } from 'lucide-react'
-import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from "react-router-dom";
-import { all } from "axios";
+import { useAuthStore } from "../../store/useAuthStore";
 
 const NextArrow = ({ onClick }) => (
   <div className={styles.nextArrow} onClick={onClick}>
@@ -25,10 +24,8 @@ const PrevArrow = ({ onClick }) => (
 
 const Stories = () => {
     const { allStories } = useContext(Context);
-    const token = localStorage.getItem('token');
-    const decoded = token ? jwtDecode(token) : null;
+    const { authUser } = useAuthStore();
     const navigate = useNavigate();
-    console.log(allStories);
 
     const handleCreateStory = () => {
         navigate('/story/create');
@@ -82,7 +79,7 @@ const Stories = () => {
                                     <Plus />
                                 </div>
                                 <img 
-                                    src={decoded.image || TitleProfile} 
+                                    src={authUser?.image || TitleProfile} 
                                     alt="Story" 
                                     className={styles.CreateStoryImage} 
                                 />

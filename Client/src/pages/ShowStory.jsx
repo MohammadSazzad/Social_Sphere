@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import Context from "../store/Context";
 import TitleProfile from "../assets/TitleProfile.svg";
 import axios from "axios";
+import { axiosInstance } from "../lib/axios";
 
 const ShowStory = () => {
 
@@ -18,7 +19,7 @@ const ShowStory = () => {
     const [ storyById, setStoryById ] = useState([]);
 
     useEffect( () => {
-        axios.get(`/api/stories/show/${id}`)
+        axiosInstance.get(`/stories/show/${id}`)
         .then( response => {
             setStoryById(response.data);
         })

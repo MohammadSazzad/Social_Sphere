@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { axiosInstance } from "../lib/axios";
 
 const VerifyUser = () => {
 
@@ -10,7 +10,7 @@ const VerifyUser = () => {
     const handleSubmitButton = async(e) => {
         e.preventDefault();
         try{
-            const response = await axios.post('/api/users/verify', {
+            const response = await axiosInstance.post('/users/verify', {
                 otp : otp.current.value
             });
             console.log(response.data);

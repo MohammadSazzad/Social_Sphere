@@ -1,32 +1,31 @@
 import { useRef, useState } from "react";
 import styles from "./login.module.css";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import TitleLogo from "../assets/TitleLogo.png";
+import { axiosInstance } from "../lib/axios";
+import { useAuthStore } from "../store/useAuthStore";
+import LoaderX from "../components/Loader";
 
 const Login = () => {
   const email = useRef();
   const pass = useRef();
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const { authUser, login } = useAuthStore();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError(null);
 
-    try {
-      const response = await axios.post("/api/users/login", {
-        email: email.current.value,
-        password: pass.current.value,
-      });
-
-      if (response.status === 200) {
-        localStorage.setItem("token", response.data.token);
-        alert("Login successful!");
-        navigate("/"); // Redirect to dashboard
-      }
-    } catch (err) {
-      setError(err.response?.data?.message || "Something went wrong.");
+    const data = {
+      email: email.current.value,
+      password: pass.current.value,
+    }
+    login(data);
+    if(!authUser) {
+      LoaderX(authUser);
+    }else {
+      navigate("/");
     }
   };
 

@@ -1,0 +1,124 @@
+.container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .leftSideBarContainer {
+    flex: 1.10;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: white;
+    padding-top: 4rem;
+    padding-left: 1rem;
+    padding-right: 2px;
+    border: 1px solid #e0e5e9;
+  }
+  
+  .messagesContainer {
+    flex: 3.80;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 5rem;
+  }
+  
+  .rightSideBarContainer {
+    flex: 1.10;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: white;
+    padding-top: 4rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border: 1px solid #e0e5e9;
+  }
+  
+  .Button {
+    background-color: #e5e5e6;
+    border: none;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .Button:hover {
+    background-color: #d8d8d8;
+  }
+
+  .opButton {
+    border: none;
+    border-radius: 20px;
+    height: 35px;
+    width: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+
+.opButton:hover {
+    background-color: #e5e5e6;
+}
+
+  .opButton2 {
+    border: none;
+    border-radius: 20px;
+    height: 35px;
+    width: 105px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .opButton2:hover {
+    background-color: #e5e5e6;
+  }
+
+  .active {
+    background-color: #ddddfc; 
+    color: #007bff;
+  }
+  
+  .searchForm {
+    width: 100%;
+  }
+  
+  .inputGroupRounded {
+    border-radius: 50px;
+    overflow: hidden;
+  }
+  
+  .noFocusOutline:focus {
+    box-shadow: none !important;
+    outline: none !important;
+    border-color: transparent !important;
+  }
+  
+  .friendContainer {
+    display: flex;
+    gap: 5px;
+    margin-top: 5px ;
+    margin-bottom: 5px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .friendContainer:hover {
+    background-color: #e0e5e9;
+  }
+
+  .activeFriend {
+    background-color: #e5e6e7;
+    display: flex;
+    justify-content: space-between;
+  }

@@ -1,7 +1,7 @@
 import { use, useEffect, useState } from "react";
 import Context from "./Context";
-import axios from "axios";
-import { jwtDecode } from 'jwt-decode';
+import { axiosInstance } from "../lib/axios";
+import { useAuthStore } from "./useAuthStore";
 
 const ContextProvider = ({children}) => {
     const [users, setUsers] = useState([]);
@@ -10,14 +10,13 @@ const ContextProvider = ({children}) => {
     const [allStories, setAllStories] = useState([]);
     const [posts, setPosts] = useState([]);
 
-    const isToken = localStorage.getItem('token');
-    const decoded = isToken ? jwtDecode(isToken) : null;
+    const { authUser } = useAuthStore();
 
     useEffect( () => {
-        if(!isToken){
+        if(!authUser){
             return;
         }
-        axios.get('/api/users/')
+        axiosInstance.get('/users/')
         .then( response => {
             setUsers(response.data.map ( (item) => ({
                 id: item.id,
@@ -36,13 +35,13 @@ const ContextProvider = ({children}) => {
             console.log(error);
         })
 
-    }, [isToken]) ;    
+    }, [authUser]) ;    
 
     useEffect( () => {
-        if(!isToken){
+        if(!authUser){
             return;
         }
-        axios.get('/api/events/upcoming/')
+        axiosInstance.get('/events/upcoming/')
         .then( response => {
             setEvents(response.data.map ( (item) => ({
                 id: item.id,
@@ -59,13 +58,13 @@ const ContextProvider = ({children}) => {
         .catch( error => {
             console.log(error);
         })
-    }, [isToken]) ;
+    }, [authUser]) ;
 
     useEffect( () => {
-        if(!isToken){
+        if(!authUser){
             return;
         }
-        axios.get(`/api/stories/${decoded.id}`)
+        axiosInstance.get(`/stories/${authUser.id}`)
         .then( response => {
             setStories(response.data.map ( (item) => ({
                 id: item.id,
@@ -81,13 +80,13 @@ const ContextProvider = ({children}) => {
         .catch( error => {
             console.log(error);
         })
-    }, [isToken]) ;
+    }, [authUser]) ;
 
     useEffect( () => {
-        if(!isToken){
+        if(!authUser){
             return;
         }
-        axios.get('/api/stories/')
+        axiosInstance.get('/stories/')
         .then( response => {
             setAllStories(response.data.map ( (item) => ({
                 id: item.id,
@@ -103,13 +102,13 @@ const ContextProvider = ({children}) => {
         .catch( error => {
             console.log(error);
         })
-    }, [isToken]);
+    }, [authUser]);
 
     useEffect ( () => {
-        if(!isToken){
+        if(!authUser){
             return;
         }
-        axios.get('/api/posts/')
+        axiosInstance.get('/posts/')
         .then( response => {
             setPosts(response.data.map ( (item) => ({
                 postId : item.post_id,
@@ -128,7 +127,7 @@ const ContextProvider = ({children}) => {
             console.log(error);
         })
 
-    }, [isToken]);
+    }, [authUser]);
 
     const formatTimeDifference = (isoString) => {
         const postDate = new Date(isoString);

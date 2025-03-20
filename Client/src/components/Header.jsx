@@ -4,24 +4,24 @@ import { Bell, MessageCircle, Search, ChevronDown, Grip, House, MonitorPlay, Sto
 import Logo from "../assets/Logo2.png";
 import TitleProfile from "../assets/TitleProfile.svg";
 import styles from "./Header.module.css";
-import { jwtDecode } from "jwt-decode";
+import { axiosInstance } from "../lib/axios";
+import { useAuthStore } from "../store/useAuthStore";
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
 
-    const token = localStorage.getItem('token');
-    const decoded = token ? jwtDecode(token) : null;
-    let image = null;
-    if(decoded.image === null){
-        image = TitleProfile;
-    }else{
-        image = decoded.image;
-    }
+    const { authUser, isLoggingIn } = useAuthStore();
 
     const handleLogout = () => {
-        localStorage.removeItem('token');
-        navigate("/");
+        axiosInstance.post('/users/logout')
+        .then( response => {
+            localStorage.removeItem('token');
+            navigate('/login');
+        })
+        .catch( error => {
+            console.log(error);
+        })  
     }
 
     return (
@@ -86,7 +86,7 @@ const Header = () => {
                         onClick={() => setIsOpen(!isOpen)}
                         >
                         <img
-                            src={image}
+                            src={authUser?.image || TitleProfile}
                             alt="User"
                             className="rounded-circle me-2"
                             width="32"

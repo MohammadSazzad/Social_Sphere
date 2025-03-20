@@ -4,12 +4,11 @@ import { jwtDecode } from 'jwt-decode';
 import styles from './PostContainer.module.css';
 import { useContext } from "react";
 import Context from "../../store/Context";
+import { useAuthStore } from "../../store/useAuthStore";
 
 const PostContainer = () => {
 
-    const token = localStorage.getItem('token');
-    const decoded = jwtDecode(token);
-
+    const { authUser } = useAuthStore();
     const { posts, formatTimeDifference } = useContext(Context);
 
     return (
@@ -19,7 +18,7 @@ const PostContainer = () => {
                     <div className="">
                         <div className="d-flex justify-content-between">
                             <div className="d-flex gap-2">
-                                <img src={post.profile_picture_url || TitleProfile} alt="profile" className="rounded-circle" style={{height:'40px', width:'40px'}}/>
+                                <img src={post.profilePicture || TitleProfile} alt="profile" className="rounded-circle" style={{height:'40px', width:'40px'}}/>
                                 <div className="d-flex flex-column ml-2">
                                     <h6 className="mb-0">{post.firstName + " " + post.lastName}</h6>
                                     <small>{formatTimeDifference(post.createdAt)}</small>
@@ -73,7 +72,7 @@ const PostContainer = () => {
                     <div className="d-flex justify-content-between">
                         <div className="d-flex align-items-center gap-1 ">
                         <img 
-                            src={decoded.image || TitleProfile} 
+                            src={authUser?.image || TitleProfile} 
                             alt="profile" 
                             style={{
                                 height: '32px', 
