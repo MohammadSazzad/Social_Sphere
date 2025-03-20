@@ -14,6 +14,7 @@ const CreatePostContainer = () => {
     const [mediaPreview, setMediaPreview] = useState(null);
     const [mediaFile, setMediaFile] = useState(null); 
     const [ dragNdrop, setDragNdrop ] = useState(false);
+    const [isUploading, setIsUploading] = useState(false);
 
     const handleFileChange = () => {
         setDragNdrop(true);
@@ -34,6 +35,8 @@ const CreatePostContainer = () => {
             console.log("No content or media to post.");
             return;
         }
+
+        setIsUploading(true);
 
         try {
             const formData = new FormData();
@@ -61,6 +64,8 @@ const CreatePostContainer = () => {
             setMediaFile(null);
         } catch (error) {
             console.error("Error creating post:", error);
+        }finally{
+            setIsUploading(false);
         }
     };
 
@@ -179,7 +184,7 @@ const CreatePostContainer = () => {
                             <div className="d-flex justify-content-between align-items-center w-100">
                                 <button
                                     className={styles.postButton}
-                                    disabled={!postContent.current?.value.trim() && !mediaFile}
+                                    disabled={(!postContent.current?.value.trim() && !mediaFile) || isUploading}
                                     onClick={handleCreatePost}
                                 >
                                     Post
@@ -187,6 +192,11 @@ const CreatePostContainer = () => {
                             </div>
                         </div>
                     </div>
+                    {isUploading && (
+                        <div className={styles.loaderOverlay}>
+                            <div className={styles.loader}></div>
+                        </div>
+                    )}
                 </div>
             )}
         </>

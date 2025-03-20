@@ -1,19 +1,15 @@
 import { useNavigate, useParams } from "react-router-dom";
 import styles from './ShowStory.module.css';
 import { Plus, X, Heart, Smile, Angry, Annoyed , ThumbsUp, Laugh, ThumbsDown } from 'lucide-react';
-import { jwtDecode } from 'jwt-decode';
 import { useContext, useEffect, useState } from "react";
 import Context from "../store/Context";
 import TitleProfile from "../assets/TitleProfile.svg";
-import axios from "axios";
 import { axiosInstance } from "../lib/axios";
 
 const ShowStory = () => {
 
     const { id } = useParams();
     console.log(id);
-    const token = localStorage.getItem('token');
-    const decoded = jwtDecode(token);
     const navigate = useNavigate();
     const { stories, formatTimeDifference } = useContext(Context);
     const [ storyById, setStoryById ] = useState([]);

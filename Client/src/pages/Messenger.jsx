@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import styles from './Messenger.module.css';
 import { Ellipsis, MessageSquareShare, Search, EllipsisVertical } from 'lucide-react';
-import axios from 'axios';
-import { jwtDecode } from 'jwt-decode';
 import TitleProfile from '../assets/TitleProfile.svg'
 import { axiosInstance } from '../lib/axios';
+import { useAuthStore } from '../store/useAuthStore';
 
 const Messenger = () => {
 
@@ -13,11 +12,10 @@ const Messenger = () => {
     const [friends, setFriends] = useState([]);
     const [communities, setCommunities] = useState([]);
 
-    const token = localStorage.getItem('token');
-    const decoded = jwtDecode(token);
+    const { authUser } = useAuthStore();
 
     useEffect(() => {
-        axiosInstance.get(`/friends/${decoded.id}`)
+        axiosInstance.get(`/friends/${authUser.id}`)
         .then( response => {
             setFriends(response.data.map( (item) => ({
                 id: item.id,
