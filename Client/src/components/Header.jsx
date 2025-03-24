@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Bell, MessageCircle, Search, ChevronDown, Grip, House, MonitorPlay, Store,  UsersRound, Gamepad } from "lucide-react";
@@ -113,4 +111,3 @@ const Header = () => {
 }
 
 export default Header;
->>>>>>> 7d1fbe19d2aad82efbfdb4350defc3315b4573dd

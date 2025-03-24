@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider, BrowserRouter } from 'react-router-dom'
@@ -70,4 +68,3 @@ createRoot(document.getElementById('root')).render(
   </StrictMode>,
 )
 
->>>>>>> 7d1fbe19d2aad82efbfdb4350defc3315b4573dd

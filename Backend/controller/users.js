@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 import { createJWT } from "../auth/createJWT.js";
 import { sendVerificationEmail } from "../auth/UserVerification.js";
 import { getUsers, getUserByEmail, signUp, verifyUser, uploadImage } from "../model/users.js";
@@ -135,4 +133,3 @@ export const verifyUserController = async (req, res) => {
  }
  
 
->>>>>>> 7d1fbe19d2aad82efbfdb4350defc3315b4573dd

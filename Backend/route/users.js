@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 import { protectRoute } from "../auth/authCheck.js";
 import { upload } from "../auth/multer.js";
 import { getUsersController, signUpController, verifyUserController, loginController, uploadImageController, logoutController, authCheckController } from "../controller/users.js";
@@ -18,4 +16,3 @@ usersRouter.get("/check", protectRoute, authCheckController);
 
 
 export default usersRouter;
->>>>>>> 7d1fbe19d2aad82efbfdb4350defc3315b4573dd
