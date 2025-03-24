@@ -1,20 +1,20 @@
 import styles from "./CreatePostContainer.module.css";
 import { Image, Gift, TextQuote, Smile, CalendarClock, MessageCirclePlus, X, Tags, ImagePlus } from "lucide-react";
 import TitleProfile from "../../assets/TitleProfile.svg";
-import { jwtDecode } from "jwt-decode";
 import { useState, useRef } from "react";
 import { useDropzone } from "react-dropzone";
-import axios from "axios";
+import { axiosInstance } from "../../lib/axios";
+import { useAuthStore } from "../../store/useAuthStore";
 
 const CreatePostContainer = () => {
-    const token = localStorage.getItem("token");
-    const decoded = jwtDecode(token);
+    const { authUser } = useAuthStore();
     const [modal, setModal] = useState(false);
     const postContent = useRef();
     const [privacy, setPrivacy] = useState("public");
     const [mediaPreview, setMediaPreview] = useState(null);
     const [mediaFile, setMediaFile] = useState(null); 
     const [ dragNdrop, setDragNdrop ] = useState(false);
+    const [isUploading, setIsUploading] = useState(false);
 
     const handleFileChange = () => {
         setDragNdrop(true);
@@ -36,18 +36,20 @@ const CreatePostContainer = () => {
             return;
         }
 
+        setIsUploading(true);
+
         try {
             const formData = new FormData();
             if (mediaFile) {
                 formData.append("file", mediaFile);
             }
-            formData.append("user_id", decoded.id);
+            formData.append("user_id", authUser.id);
             formData.append("content", postContent.current?.value.trim());
             formData.append("privacy_setting", privacy);
             formData.append("created_at", new Date().toISOString());
             formData.append("updated_at", new Date().toISOString());
 
-            const response = await axios.post("/api/posts/create", formData, {
+            const response = await axiosInstance.post("/posts/create", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
@@ -62,6 +64,8 @@ const CreatePostContainer = () => {
             setMediaFile(null);
         } catch (error) {
             console.error("Error creating post:", error);
+        }finally{
+            setIsUploading(false);
         }
     };
 
@@ -74,7 +78,7 @@ const CreatePostContainer = () => {
                     <div className="d-flex flex-column text-start ">
                         <div className="d-flex align-items-center gap-3 p-1">
                             <img
-                                src={decoded.image || TitleProfile}
+                                src={authUser?.image || TitleProfile}
                                 alt="Profile"
                                 style={{ height: "40px", width: "40px", borderRadius: "50%" }}
                             />
@@ -83,7 +87,7 @@ const CreatePostContainer = () => {
                                     className={`${styles.createPostButton} btn w-100 border rounded text-start`}
                                     onClick={() => setModal(true)}
                                 >
-                                    {`What's happening, ${decoded.first_name}?`}
+                                    {`What's happening, ${authUser?.first_name}?`}
                                 </button>
                             </div>
                         </div>
@@ -112,13 +116,13 @@ const CreatePostContainer = () => {
                         <div className={styles.modalBody}>
                             <div className="d-flex align-items-center gap-3 mb-3">
                                 <img
-                                    src={decoded.image || TitleProfile}
+                                    src={authUser?.image || TitleProfile}
                                     className="rounded-circle"
                                     style={{ width: "40px", height: "40px" }}
                                     alt="Profile"
                                 />
                                 <div>
-                                    <h6 className="m-0">{decoded.first_name + " " + decoded.last_name}</h6>
+                                    <h6 className="m-0">{authUser.first_name + " " + authUser.last_name }</h6>
                                     <select
                                         className={styles.privacySelect}
                                         value={privacy}
@@ -180,7 +184,7 @@ const CreatePostContainer = () => {
                             <div className="d-flex justify-content-between align-items-center w-100">
                                 <button
                                     className={styles.postButton}
-                                    disabled={!postContent.current?.value.trim() && !mediaFile}
+                                    disabled={(!postContent.current?.value.trim() && !mediaFile) || isUploading}
                                     onClick={handleCreatePost}
                                 >
                                     Post
@@ -188,6 +192,11 @@ const CreatePostContainer = () => {
                             </div>
                         </div>
                     </div>
+                    {isUploading && (
+                        <div className={styles.loaderOverlay}>
+                            <div className={styles.loader}></div>
+                        </div>
+                    )}
                 </div>
             )}
         </>

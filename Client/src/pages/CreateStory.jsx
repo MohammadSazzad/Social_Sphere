@@ -3,16 +3,17 @@ import styles from './CreateStory.module.css';
 import { Settings, ImagePlus, CaseSensitive, X } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { useDropzone } from "react-dropzone";
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { axiosInstance } from '../lib/axios';
+import { useAuthStore } from '../store/useAuthStore';
 const CreateStory = () => {
-    const token = localStorage.getItem('token');
-    const decoded = jwtDecode(token);
+    const { authUser } = useAuthStore();
     const [ createImage, setImage ] = useState(false);
     const [ createText, setText ] = useState(false);
     const [mediaPreview, setMediaPreview] = useState(null);
     const [description, setDescription] = useState(false);
     const [mediaFile, setMediaFile] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
     const title = useRef();
     const textDes = useRef();
     const navigate = useNavigate();
@@ -29,18 +30,19 @@ const CreateStory = () => {
     const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
     const handleContinueButton = async(e) => {
+        setIsLoading (true);
         e.preventDefault();
-        if(!title.current.value.trim() && !mediaFile){
-            console.log('No content or media to post');
+        if (!mediaFile && (!description || (description && !title.current?.value?.trim()))) {
+            console.log('No content to post');
             return;
         }
         try {
             const formData = new FormData();
             formData.append('file', mediaFile);
-            formData.append('user_id', decoded.id);
+            formData.append('user_id', authUser.id);
             formData.append('created_at', new Date().toISOString());
             formData.append('storyContent', title.current.value.trim());
-            const response = await axios.post('/api/stories/create', formData, {
+            const response = await axiosInstance.post('/stories/create', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -54,6 +56,8 @@ const CreateStory = () => {
 
         }catch(error){
             console.log(error);
+        }finally{
+            setIsLoading(false);
         }
 
         e.reset.target();
@@ -65,10 +69,10 @@ const CreateStory = () => {
             console.log('No content or media to post');
             return;
         }
-        console.log('Share to story');
+        setIsLoading(true);
         try {
-            const response = await axios.post('/api/stories/createContent', {
-                user_id: decoded.id,
+            const response = await axiosInstance.post('/stories/createContent', {
+                user_id: authUser.id,
                 created_at: new Date().toISOString(),
                 storyContent: textDes.current.value.trim(),
             })
@@ -78,6 +82,8 @@ const CreateStory = () => {
 
         }catch(error){
             console.log(error);
+        }finally{
+            setIsLoading(false);
         }
 
         e.reset.target();
@@ -93,8 +99,8 @@ const CreateStory = () => {
                             <button className={styles.SettingsButton}><Settings size={25}/></button>
                         </div>
                         <div className='d-flex align-items-start gap-2 text-body pt-2'>
-                            <img src={decoded.image} alt="profile" className={styles.profileImage} />
-                            <p className='p-2'>{decoded.first_name} {decoded.last_name}</p>
+                            <img src={authUser.image} alt="profile" className={styles.profileImage} />
+                            <p className='p-2'>{authUser.first_name} {authUser.last_name}</p>
                         </div>
                         <hr />
                         { mediaPreview && (
@@ -110,7 +116,7 @@ const CreateStory = () => {
                         <div className={`d-flex flex-column ${styles.footerContainer}`}>
                             <div className={styles.footer}>
                                 <button className='btn btn-secondary btn-lg' onClick={() => {setImage(false); setText(false); setMediaPreview(false); setDescription(false)}}>Discard</button>
-                                <button className='btn btn-primary btn-lg' onClick={handleContinueButton}>Continue</button>
+                                <button className='btn btn-primary btn-lg' onClick={handleContinueButton} disabled={isLoading}>Continue</button>
                             </div>
                         </div>
                     )}
@@ -118,7 +124,7 @@ const CreateStory = () => {
                         <div className={`d-flex flex-column ${styles.footerContainer}`}>
                             <div className={styles.footer}>
                                 <button className='btn btn-secondary btn-lg' onClick={() => {setImage(false); setText(false); setMediaPreview(false); setDescription(false)}}>Discard</button>
-                                <button className='btn btn-primary btn-lg' onClick={handleShareToStory}>Share to Story</button>
+                                <button className='btn btn-primary btn-lg' onClick={handleShareToStory} disabled={isLoading}>Share to Story</button>
                             </div>
                         </div>
                     )}
@@ -177,6 +183,11 @@ const CreateStory = () => {
                 </div>
             
             }
+            {isLoading && (
+                <div className={styles.loaderOverlay}>
+                    <div className={styles.loader}></div>
+                </div>
+            )}
             
         </div>
     )   

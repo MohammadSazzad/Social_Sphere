@@ -6,7 +6,7 @@ import CreatePostContainer from './components/ui/CreatePostContainer.jsx'
 import Stories from './components/ui/Stories.jsx'
 import PostContainer from './components/ui/PostContainer.jsx'
 
-function App() {
+function HomePage() {
 
   return (
       <div className='UiContainer d-flex justify-content-center align-items-center'>
@@ -32,4 +32,4 @@ function App() {
   )
 }
 
-export default App
+export default HomePage;
