@@ -33,4 +33,5 @@ export const verifyUser = async (username) => {
     const result = await pool.query('GET * FROM users WHERE id = &1', [userId]);
     return result.rows[0];
  }
+
  

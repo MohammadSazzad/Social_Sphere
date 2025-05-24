@@ -5,7 +5,7 @@ import RightSideBar from './components/ui/RightSideBar.jsx'
 import CreatePostContainer from './components/ui/CreatePostContainer.jsx'
 import Stories from './components/ui/Stories.jsx'
 import PostContainer from './components/ui/PostContainer.jsx'
-
+import profile from './users/profile.jsx'
 function App() {
 
   return (

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { Bell, MessageCircle, Search, ChevronDown, Grip, House, MonitorPlay, Store,  UsersRound, Gamepad } from "lucide-react";
+import { Bell, MessageCircle, Search, ChevronDown, Grip, House, MonitorPlay, Store, UsersRound, Gamepad } from "lucide-react";
 import Logo from "../assets/Logo2.png";
 import TitleProfile from "../assets/TitleProfile.svg";
 import styles from "./Header.module.css";
@@ -15,14 +15,20 @@ const Header = () => {
 
     const handleLogout = () => {
         axiosInstance.post('/users/logout')
-        .then( response => {
+        .then(response => {
             localStorage.removeItem('token');
             navigate('/login');
         })
-        .catch( error => {
+        .catch(error => {
             console.log(error);
-        })  
-    }
+        });
+    };
+
+    const handleProfileClick = () => {
+        if (authUser) {
+            navigate(`/profile/${authUser.id}`);
+        }
+    };
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top d-flex justify-content-between ">
@@ -82,22 +88,24 @@ const Header = () => {
                     </button>
                     <div className="dropdown">
                         <button
-                        className="btn d-flex align-items-center"
-                        onClick={() => setIsOpen(!isOpen)}
+                            className="btn d-flex align-items-center"
+                            onClick={() => setIsOpen(!isOpen)}
                         >
-                        <img
-                            src={authUser?.image || TitleProfile}
-                            alt="User"
-                            className="rounded-circle me-2"
-                            width="32"
-                            height="32"
-                        />
-                        <ChevronDown size={20} />
+                            <img
+                                src={authUser?.image || TitleProfile}
+                                alt="User"
+                                className="rounded-circle me-2"
+                                width="32"
+                                height="32"
+                            />
+                            <ChevronDown size={20} />
                         </button>
 
                         {isOpen && (
                             <ul className="dropdown-menu dropdown-menu-end show" style={{ position: "absolute" }}>
-                                <li><a className="dropdown-item" href="#">Profile</a></li>
+                                <li>
+                                    <a className="dropdown-item" href="#" onClick={handleProfileClick}>Profile</a>
+                                </li>
                                 <li><a className="dropdown-item" href="#">Settings</a></li>
                                 <li><hr className="dropdown-divider" /></li>
                                 <li><a className="dropdown-item" href="/" onClick={handleLogout}>Logout</a></li>
@@ -108,6 +116,6 @@ const Header = () => {
             </div>
         </nav>
     );
-}
+};
 
 export default Header;

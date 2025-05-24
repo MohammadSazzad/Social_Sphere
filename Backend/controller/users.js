@@ -131,5 +131,41 @@ export const verifyUserController = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
  }
+ export const getUserProfileController = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const user = await getUserById(id);
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+// export const updateUserProfileController = async (req, res) => {
+//     try {
+//         const userId = req.params.id;
+//         const { first_name, last_name, bio, profile_picture_url } = req.body;
+
+        
+//         const updatedProfile = await updateUserProfile(userId, {
+//             first_name,
+//             last_name,
+//             bio,
+//             profile_picture_url,
+//         });
+
+//         if (!updatedProfile) {
+//             return res.status(404).json({ message: "User not found" });
+//         }
+
+//         res.status(200).json(updatedProfile);
+//     } catch (error) {
+//         res.status(500).json({ message: error.message });
+//     }
+// }; 
  
 

@@ -12,6 +12,7 @@ const Login = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const { authUser, login } = useAuthStore();
+  console.log(authUser);
 
   const handleLogin = async (e) => {
     e.preventDefault();

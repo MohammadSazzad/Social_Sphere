@@ -8,6 +8,7 @@ import friendRouter from './route/friends.js';
 import cookieParser from 'cookie-parser';
 import messagesRouter from './route/messages.js';
 import cors from 'cors';
+import profileRouter from './route/profile.js'; 
 
 dotenv.config();
 
@@ -23,21 +24,20 @@ app.use(
         origin: 'http://localhost:5173',
         credentials: true,
     })
-)
+);
 
 app.use('/api/users', usersRouter);
 app.use('/api/events', eventsRouter);
 app.use('/api/stories', storiesRouter);
 app.use('/api/posts', postsRouter);
 app.use('/api/friends', friendRouter);
-app.use('/api/messages', messagesRouter)
+app.use('/api/messages', messagesRouter);
+app.use('/api/profile', profileRouter);
 
 app.get('/', (req, res) => {
     res.send('Hello World');
-    }
-);
+});
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
-    }
-);
+});
