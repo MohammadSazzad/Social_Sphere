@@ -7,6 +7,7 @@ import express from "express";
 const usersRouter = express.Router();
 
 usersRouter.get("/", getUsersController);
+usersRouter.get("/friendProfile/:id", getUserByIdController);
 usersRouter.post("/signup", signUpController);
 usersRouter.post("/verify", verifyUserController);
 usersRouter.post("/login", loginController);

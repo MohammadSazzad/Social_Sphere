@@ -8,14 +8,17 @@ import friendRouter from './route/friends.js';
 import cookieParser from 'cookie-parser';
 import messagesRouter from './route/messages.js';
 import cors from 'cors';
+<<<<<<< HEAD
 import profileRouter from './route/profile.js'; 
+=======
+import { app, server, injectSocketIO } from './config/socket.js';
+>>>>>>> e21aecc0b37b159a306c734a6f9d3bd612c2e97e
 
 dotenv.config();
 
 const PORT = process.env.SERVER_PORT;
 
-const app = express();
-
+app.use(injectSocketIO);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -38,6 +41,6 @@ app.get('/', (req, res) => {
     res.send('Hello World');
 });
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

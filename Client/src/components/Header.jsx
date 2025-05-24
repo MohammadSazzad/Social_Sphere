@@ -4,16 +4,16 @@ import { Bell, MessageCircle, Search, ChevronDown, Grip, House, MonitorPlay, Sto
 import Logo from "../assets/Logo2.png";
 import TitleProfile from "../assets/TitleProfile.svg";
 import styles from "./Header.module.css";
-import { axiosInstance } from "../lib/axios";
 import { useAuthStore } from "../store/useAuthStore";
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
 
-    const { authUser, isLoggingIn } = useAuthStore();
+    const { authUser, logout } = useAuthStore();
 
     const handleLogout = () => {
+<<<<<<< HEAD
         axiosInstance.post('/users/logout')
         .then(response => {
             localStorage.removeItem('token');
@@ -29,6 +29,12 @@ const Header = () => {
             navigate(`/profile/${authUser.id}`);
         }
     };
+=======
+        logout();
+        localStorage.removeItem('token');
+        navigate('/login');
+    }
+>>>>>>> e21aecc0b37b159a306c734a6f9d3bd612c2e97e
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top d-flex justify-content-between ">

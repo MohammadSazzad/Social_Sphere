@@ -1,35 +1,40 @@
-import { useEffect, useState } from 'react';
+import { use, useEffect, useState, } from 'react';
 import styles from './Messenger.module.css';
-import { Ellipsis, MessageSquareShare, Search, EllipsisVertical } from 'lucide-react';
-import TitleProfile from '../assets/TitleProfile.svg'
-import { axiosInstance } from '../lib/axios';
+import { Ellipsis, MessageSquareShare, Search, EllipsisVertical, Lock, CircleUserRound, BellRing, ChevronDown } from 'lucide-react';
+import TitleProfile from '../assets/TitleProfile.svg';
 import { useAuthStore } from '../store/useAuthStore';
+import { useMessageStore } from '../store/useMessageStore';
+import MessageContent from '../components/MessageContent';
+import { axiosInstance } from '../lib/axios';
 
 const Messenger = () => {
 
     const [isInbox, setIsInbox] = useState(true);
-    const [activeFriendId, setActiveFriendId] = useState(null);
-    const [friends, setFriends] = useState([]);
+    const [selectFriendId, setselectFriendId] = useState(null);
     const [communities, setCommunities] = useState([]);
+    const [activeFriendProfile, setActiveFriendProfile] = useState(null);
 
     const { authUser } = useAuthStore();
 
-    useEffect(() => {
-        axiosInstance.get(`/friends/${authUser.id}`)
-        .then( response => {
-            setFriends(response.data.map( (item) => ({
-                id: item.id,
-                firstName: item.first_name,
-                lastName: item.last_name,
-                profilePicture: item.profile_picture_url,
-            })));
-        })
-        .catch( error => {
-            console.log(error);
-        });
-    }, []);
+    const { getFriends, friends } = useMessageStore();
 
-    console.log(friends);
+    useEffect( () => {
+        getFriends(authUser.id);
+    }, [getFriends, authUser] );
+    
+    useEffect(() => {
+        const fetchSelectedFriendProfile = async () => {
+            try {
+                const response = await axiosInstance.get(`/users/friendProfile/${selectFriendId}`);
+                setActiveFriendProfile(response.data);
+            } catch (error) {
+                console.error('Error fetching communities:', error);
+            }
+        };
+        if (selectFriendId) {
+            fetchSelectedFriendProfile();
+        }
+    }, [selectFriendId]);
 
     return (
         <div className={styles.container}>
@@ -74,23 +79,27 @@ const Messenger = () => {
                     maxHeight: 'calc(100vh - 200px)',
                     overflowY: 'auto',
                 }}>
-                    {friends.map((friend) => (
+                    {friends.map( (friend) => (
                         <div 
                             key={friend.id} 
                             className={`${styles.friendContainer} ${
-                                activeFriendId === friend.id ? styles.activeFriend : ''
+                                selectFriendId === friend.id ? styles.activeFriend : ''
                             }`} 
-                            onClick={() => setActiveFriendId(friend.id)}
+                            onClick={() => setselectFriendId(friend.id)}
                         >
                             <div className='d-flex gap-2'>
-                                <img 
-                                    src={friend.profile_picture_url || TitleProfile} 
-                                    alt="Profile" 
-                                    style={{ height: '50px', width: '50px', borderRadius: '50%'}} 
-                                />
-                                <p>{friend.firstName} {friend.lastName}</p>
+                            <img 
+                                src={friend.profile_picture_url || TitleProfile} 
+                                alt="Profile" 
+                                onError={(e) => {
+                                    e.target.onerror = null; 
+                                    e.target.src = TitleProfile;
+                                }}
+                                style={{ height: '50px', width: '50px', borderRadius: '50%'}} 
+                            />
+                                <p>{friend.first_name} {friend.last_name}</p>
                             </div>
-                            {activeFriendId === friend.id && (
+                            {selectFriendId === friend.id && (
                                 <div className={`${styles.Button}`}>
                                     <EllipsisVertical  size={18}/>
                                 </div>
@@ -103,11 +112,63 @@ const Messenger = () => {
                 </div>
             </div>
             <div className={styles.messagesContainer}>
-                Messages
+               <MessageContent selectedUser={selectFriendId}  />
             </div>
+            { selectFriendId && (
             <div className={styles.rightSideBarContainer}>
-                Right Side Bar
+                <div className='d-flex flex-column gap-3 pt-1 align-items-center justify-content-center'>
+                    <div>
+                        <img src={activeFriendProfile?.profile_picture_url} alt="Profile Picture" style={{ height: '90px', width: '90px', borderRadius: '50%'}}  />
+                    </div>
+                    <div>
+                        <h4>{activeFriendProfile?.first_name} {activeFriendProfile?.last_name}</h4>
+                        <p>time</p>
+                    </div>
+                </div>
+                <div className='d-flex flex-column gap-2 align-items-center justify-content-center'>
+                    <div className={styles.Encrypt}>
+                        <span className={styles.EncryptContent}><Lock size={12} />End-to-end encrypted </span>
+                    </div>
+                    <div className='d-flex gap-4 justify-content-center mt-2'>
+                        <button className={styles.Button}>
+                            <CircleUserRound /> 
+                        </button>
+                        <button className={styles.Button}>
+                            <BellRing />
+                        </button>
+                        <button className={styles.Button}>
+                            <Search />
+                        </button>
+                    </div>
+                </div>
+                <div className={styles.activeProfileInfo}>
+                    <div className={styles.activeInfo}>
+                        <span>Chat Info</span>
+                        <div>
+                            <ChevronDown />
+                        </div>
+                    </div>
+                    <div className={styles.activeInfo}>
+                        <span>Customize Chat</span>
+                        <div>
+                            <ChevronDown />
+                        </div>
+                    </div>
+                    <div className={styles.activeInfo}>
+                        <span>Media & Files</span>
+                        <div>
+                            <ChevronDown />
+                        </div>
+                    </div>
+                    <div className={styles.activeInfo}>
+                        <span>Privacy & Supports</span>
+                        <div>
+                            <ChevronDown />
+                        </div>
+                    </div>
+                </div>
             </div>
+            )}
         </div>
     );
 }

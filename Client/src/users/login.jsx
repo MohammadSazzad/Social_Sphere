@@ -2,7 +2,6 @@ import { useRef, useState } from "react";
 import styles from "./login.module.css";
 import { useNavigate } from "react-router-dom";
 import TitleLogo from "../assets/TitleLogo.png";
-import { axiosInstance } from "../lib/axios";
 import { useAuthStore } from "../store/useAuthStore";
 import LoaderX from "../components/Loader";
 

@@ -1,6 +1,6 @@
 import { createJWT } from "../auth/createJWT.js";
 import { sendVerificationEmail } from "../auth/UserVerification.js";
-import { getUsers, getUserByEmail, signUp, verifyUser, uploadImage } from "../model/users.js";
+import { getUsers, getUserByEmail, signUp, verifyUser, uploadImage, getUserById } from "../model/users.js";
 import bcrypt from 'bcrypt';
 import uploadOnCloudinary from "../utility/cloudinary.js";
 
@@ -9,6 +9,20 @@ export const getUsersController = async (req, res) => {
         const users = await getUsers();
         res.status(200).json(users);
     } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+export const getUserByIdController = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const userProfile = await getUserById(id);
+        if (!userProfile) {
+            res.status(404).json({ message: 'User not found' });
+            return;
+        }
+        res.status(200).json(userProfile);
+    }catch (error) {
         res.status(500).json({ message: error.message });
     }
 }

@@ -6,7 +6,9 @@ import { useEffect } from "react";
 import { Loader } from "lucide-react";
 
 const Layout = () => {
-    const { isCheckingAuth, checkAuth, authUser } = useAuthStore();
+    const { isCheckingAuth, checkAuth, authUser, onlineUsers } = useAuthStore();
+
+    
 
     useEffect(() => {
         checkAuth();
@@ -19,6 +21,9 @@ const Layout = () => {
             </div>
         )
     }
+
+    console.log(onlineUsers);
+    console.log(authUser);
 
     return (
         <>

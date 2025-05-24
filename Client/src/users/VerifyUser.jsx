@@ -14,7 +14,7 @@ const VerifyUser = () => {
                 otp : otp.current.value
             });
             console.log(response.data);
-            navigate('/feed');
+            navigate('/');
         }catch(err){
             console.log(err);
         }

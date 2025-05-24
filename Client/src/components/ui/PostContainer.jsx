@@ -1,6 +1,5 @@
 import TitleProfile from "../../assets/TitleProfile.svg";
 import { EllipsisVertical, ThumbsUp, MessageCircleMore, Send, Share, Link , Smile, SendHorizontal} from 'lucide-react';
-import { jwtDecode } from 'jwt-decode';
 import styles from './PostContainer.module.css';
 import { useContext } from "react";
 import Context from "../../store/Context";
