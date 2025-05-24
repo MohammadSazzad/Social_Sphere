@@ -1,4 +1,3 @@
-import { jwtDecode } from 'jwt-decode';
 import styles from './CreateStory.module.css';
 import { Settings, ImagePlus, CaseSensitive, X } from 'lucide-react';
 import { useRef, useState } from 'react';

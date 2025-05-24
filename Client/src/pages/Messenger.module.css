@@ -21,7 +21,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-left: 5rem;
+    position: relative;
+    margin-top: 65px;
+    height: calc(100vh - 65px);
+    width: 100%;
   }
   
   .rightSideBarContainer {
@@ -34,6 +37,8 @@
     padding-left: 1rem;
     padding-right: 1rem;
     border: 1px solid #e0e5e9;
+    align-items: center;
+    
   }
   
   .Button {
@@ -121,4 +126,39 @@
     background-color: #e5e6e7;
     display: flex;
     justify-content: space-between;
+  }
+
+  .Encrypt{
+    background-color: #dddfe0;
+    border-radius: 15px;
+    padding: 5px;
+  }
+
+  .EncryptContent{
+    font-weight: bold;
+    font-size: small;
+  }
+
+  .activeProfileInfo{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  .activeInfo{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: start;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+
+  .activeInfo:hover{
+    background-color: #e0e5e9;
   }

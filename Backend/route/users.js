@@ -1,11 +1,12 @@
 import { protectRoute } from "../auth/authCheck.js";
 import { upload } from "../auth/multer.js";
-import { getUsersController, signUpController, verifyUserController, loginController, uploadImageController, logoutController, authCheckController } from "../controller/users.js";
+import { getUsersController, signUpController, verifyUserController, loginController, uploadImageController, logoutController, authCheckController, getUserByIdController } from "../controller/users.js";
 import express from "express";
 
 const usersRouter = express.Router();
 
 usersRouter.get("/", getUsersController);
+usersRouter.get("/friendProfile/:id", getUserByIdController);
 usersRouter.post("/signup", signUpController);
 usersRouter.post("/verify", verifyUserController);
 usersRouter.post("/login", loginController);

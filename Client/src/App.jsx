@@ -5,8 +5,10 @@ import RightSideBar from './components/ui/RightSideBar.jsx'
 import CreatePostContainer from './components/ui/CreatePostContainer.jsx'
 import Stories from './components/ui/Stories.jsx'
 import PostContainer from './components/ui/PostContainer.jsx'
+import { useAuthStore } from './store/useAuthStore.js'
 
 function App() {
+
 
   return (
       <div className='UiContainer d-flex justify-content-center align-items-center'>

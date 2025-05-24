@@ -8,13 +8,13 @@ import friendRouter from './route/friends.js';
 import cookieParser from 'cookie-parser';
 import messagesRouter from './route/messages.js';
 import cors from 'cors';
+import { app, server, injectSocketIO } from './config/socket.js';
 
 dotenv.config();
 
 const PORT = process.env.SERVER_PORT;
 
-const app = express();
-
+app.use(injectSocketIO);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -37,7 +37,7 @@ app.get('/', (req, res) => {
     }
 );
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
     }
 );
