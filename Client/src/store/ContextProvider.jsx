@@ -9,6 +9,8 @@ const ContextProvider = ({children}) => {
     const [stories, setStories] = useState([]);
     const [allStories, setAllStories] = useState([]);
     const [posts, setPosts] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
 
     const { authUser } = useAuthStore();
 
@@ -164,6 +166,10 @@ const ContextProvider = ({children}) => {
         posts,
         allStories,
         formatTimeDifference,
+        searchTerm, 
+        setSearchTerm,
+        isSearchModalOpen,
+        setIsSearchModalOpen,
     };
 
     console.log(users);

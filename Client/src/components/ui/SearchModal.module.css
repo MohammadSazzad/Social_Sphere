@@ -1,0 +1,139 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 1050;
+  padding-top: 60px;
+}
+
+/* Main modal styling */
+.modal {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 600px;
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  z-index: 1060;
+  overflow: hidden;
+}
+
+/* Modal header */
+.modalHeader {
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.modalTitle {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #6c757d;
+  line-height: 1;
+  padding: 0 8px;
+}
+
+.closeButton:hover {
+  color: #495057;
+}
+
+/* Modal body */
+.modalBody {
+  padding: 0;
+  overflow-y: auto;
+}
+
+/* No results styling */
+.noResults {
+  padding: 30px 20px;
+  text-align: center;
+}
+
+.noResults p {
+  margin: 0 0 5px 0;
+  font-weight: 500;
+}
+
+.noResults small {
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+/* Results list */
+.resultsList {
+  padding: 0;
+  margin: 0;
+}
+
+/* Individual result item */
+.resultItem {
+  display: block;
+  padding: 12px 20px;
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s;
+}
+
+.resultItem:hover {
+  background-color: #f8f9fa;
+  text-decoration: none;
+}
+
+/* User info styling */
+.userInfo {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 12px;
+  background-color: #e9ecef;
+}
+
+.userDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.userName {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #212529;
+}
+
+.userHandle {
+  color: #6c757d;
+  font-size: 0.85rem;
+}
+
+/* Modal backdrop */
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1040;
+}

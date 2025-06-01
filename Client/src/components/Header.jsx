@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { Bell, MessageCircle, Search, ChevronDown, Grip, House, MonitorPlay, Store,  UsersRound, Gamepad } from "lucide-react";
+import { Bell, MessageCircle, ChevronDown, Grip, House, MonitorPlay, Store,  UsersRound, Gamepad } from "lucide-react";
 import Logo from "../assets/Logo2.png";
 import TitleProfile from "../assets/TitleProfile.svg";
 import styles from "./Header.module.css";
 import { useAuthStore } from "../store/useAuthStore";
+import SearchBarInHeader from "./ui/SearchBarInHeader";
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -23,18 +24,7 @@ const Header = () => {
             <div className="container-fluid d-flex justify-content-between">
                 <div className="d-flex align-items-center gap-3">
                     <img src={Logo} alt="Logo" style={{ 'height': '40px', 'width': '40px', 'borderRadius' : '50%'}} />
-                    <form className="d-none d-md-flex">
-                        <div className="input-group">
-                        <span className="input-group-text bg-light border-0">
-                            <Search size={18} />
-                        </span>
-                        <input
-                            type="text"
-                            className="form-control border-0 bg-light"
-                            placeholder="Search Social Sphere"
-                        />
-                        </div>
-                    </form>
+                    <SearchBarInHeader />
                 </div>
                 <ul className="navbar-nav mx-auto d-none d-lg-flex pe-5 ">
                     <li className="nav-item">
