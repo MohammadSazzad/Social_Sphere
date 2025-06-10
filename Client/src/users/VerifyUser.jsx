@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 import axios from "axios";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
+=======
+import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { axiosInstance } from "../lib/axios";
+>>>>>>> 7f826afbd4d82d70e90c4278383f16e0070a0add
 
 const VerifyUser = () => {
 
@@ -10,7 +16,11 @@ const VerifyUser = () => {
     const handleSubmitButton = async(e) => {
         e.preventDefault();
         try{
+<<<<<<< HEAD
             const response = await axios.post('/api/users/verify', {
+=======
+            const response = await axiosInstance.post('/users/verify', {
+>>>>>>> 7f826afbd4d82d70e90c4278383f16e0070a0add
                 otp : otp.current.value
             });
             console.log(response.data);

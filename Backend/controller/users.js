@@ -1,7 +1,13 @@
 import { createJWT } from "../auth/createJWT.js";
 import { sendVerificationEmail } from "../auth/UserVerification.js";
+<<<<<<< HEAD
 import { getUsers, getUserByEmail, signUp, verifyUser } from "../model/users.js";
 import bcrypt from 'bcrypt';
+=======
+import { getUsers, getUserByEmail, signUp, verifyUser, uploadImage, getUserById } from "../model/users.js";
+import bcrypt from 'bcrypt';
+import uploadOnCloudinary from "../utility/cloudinary.js";
+>>>>>>> 7f826afbd4d82d70e90c4278383f16e0070a0add
 
 export const getUsersController = async (req, res) => {
     try {
@@ -12,6 +18,23 @@ export const getUsersController = async (req, res) => {
     }
 }
 
+<<<<<<< HEAD
+=======
+export const getUserByIdController = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const userProfile = await getUserById(id);
+        if (!userProfile) {
+            res.status(404).json({ message: 'User not found' });
+            return;
+        }
+        res.status(200).json(userProfile);
+    }catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+>>>>>>> 7f826afbd4d82d70e90c4278383f16e0070a0add
 export const signUpController = async (req, res) => {
     try {
         const { first_name, last_name, date_of_birth, gender, email, password } = req.body;
@@ -54,7 +77,11 @@ export const verifyUserController = async (req, res) => {
             phone_number : user.phone_number
         }
         
+<<<<<<< HEAD
         const token = createJWT(payload, '30d');
+=======
+        const token = createJWT(res, payload, '30d');
+>>>>>>> 7f826afbd4d82d70e90c4278383f16e0070a0add
         res.status(200).json({token});
         
     }catch (error) {
@@ -86,10 +113,17 @@ export const verifyUserController = async (req, res) => {
             created_at : user.created_at,
             date_of_birth : user.date_of_birth,
             gender : user.gender,
+<<<<<<< HEAD
             phone_number : user.phone_numberl
         }
 
         const token = createJWT(payload, '30d');
+=======
+            phone_number : user.phone_number
+        }
+
+        const token = createJWT(res, payload, '30d');
+>>>>>>> 7f826afbd4d82d70e90c4278383f16e0070a0add
         res.status(200).json({token});
 
     }catch(error){
@@ -97,6 +131,42 @@ export const verifyUserController = async (req, res) => {
     }
  }
 
+<<<<<<< HEAD
 
+=======
+ export const uploadImageController = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const LocalFilePath = req.file.path;
+        const result = await uploadOnCloudinary(LocalFilePath);
+        await uploadImage(id, result.url);
+        res.status(200).json({ message: 'Image uploaded successfully'  });
+    }catch ( error ) {
+        res.status(500).json({ message: error.message });
+    }
+ }
+
+ export const logoutController = async (req, res) => {
+    try {
+        res.clearCookie('jwt', {
+            httpOnly: true,
+            secure: process.env.NODE_ENV !== 'development',
+            sameSite: 'strict',
+        });
+        res.status(200).json({ message: 'Logged out successfully' });
+    }catch ( error ) {
+        res.status(500).json({ message: error.message });
+    }
+ }
+
+ export const authCheckController = async (req,res) => {
+    try{
+        const user = req.user;
+        res.status(200).json(user);
+    }catch(error){
+        res.status(500).json({ message: error.message });
+    }
+ }
+>>>>>>> 7f826afbd4d82d70e90c4278383f16e0070a0add
  
 

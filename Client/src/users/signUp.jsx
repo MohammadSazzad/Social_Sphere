@@ -2,6 +2,10 @@ import { useRef, useState } from "react";
 import styles from './signUp.module.css';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+<<<<<<< HEAD
+=======
+import { axiosInstance } from "../lib/axios";
+>>>>>>> 7f826afbd4d82d70e90c4278383f16e0070a0add
 
 const SignUp = () => {
     const fName = useRef();
@@ -17,7 +21,11 @@ const SignUp = () => {
     const handleSubmitButton = async(e) => {
         e.preventDefault();
         try{
+<<<<<<< HEAD
             const response = await axios.post('/api/users/signup', {
+=======
+            const response = await axiosInstance.post('/users/signup', {
+>>>>>>> 7f826afbd4d82d70e90c4278383f16e0070a0add
                 first_name: fName.current.value,
                 last_name: lName.current.value,
                 date_of_birth: dob.current.value,
