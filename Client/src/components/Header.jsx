@@ -13,15 +13,9 @@ const Header = () => {
     const { authUser, logout } = useAuthStore();
 
     const handleLogout = () => {
-<<<<<<< HEAD
-        axiosInstance.post('/users/logout')
-        .then(response => {
-            localStorage.removeItem('token');
-            navigate('/login');
-        })
-        .catch(error => {
-            console.log(error);
-        });
+        logout();
+        localStorage.removeItem('token');
+        navigate('/login');
     };
 
     const handleProfileClick = () => {
@@ -29,12 +23,6 @@ const Header = () => {
             navigate(`/profile/${authUser.id}`);
         }
     };
-=======
-        logout();
-        localStorage.removeItem('token');
-        navigate('/login');
-    }
->>>>>>> e21aecc0b37b159a306c734a6f9d3bd612c2e97e
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top d-flex justify-content-between ">
@@ -110,7 +98,10 @@ const Header = () => {
                         {isOpen && (
                             <ul className="dropdown-menu dropdown-menu-end show" style={{ position: "absolute" }}>
                                 <li>
-                                    <a className="dropdown-item" href="#" onClick={handleProfileClick}>Profile</a>
+                                    <button className="dropdown-item" 
+                                    onClick={handleProfileClick}
+                                    style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer' }}
+                                    > Profile</button>
                                 </li>
                                 <li><a className="dropdown-item" href="#">Settings</a></li>
                                 <li><hr className="dropdown-divider" /></li>

@@ -2,6 +2,8 @@ import { House, CircleEllipsis, UsersRound, MessageCircle, MonitorPlay, Store, G
 import TitleProfile from "../../assets/TitleProfile.svg";
 import styles from "./LeftSideBar.module.css";
 import { useAuthStore } from "../../store/useAuthStore";
+import { Link } from "react-router-dom";
+
 
 const LeftSideBar = () => {
 
@@ -59,11 +61,12 @@ const LeftSideBar = () => {
                 </a>
             </li>
             <li>
-                <a href="#" className={` ${styles.navLink} nav-link link-dark p-3`}>
-                    <Gamepad size={18}/>
-                    <span className="ms-3">Gaming Video</span> 
-                </a>
-            </li>
+    <Link to="/gaming" className={` ${styles.navLink} nav-link link-dark p-3`}>
+        <Gamepad size={18}/>
+        <span className="ms-3">Gaming</span>
+    </Link>
+           </li>
+
             <li>
                 <a href="#" className={` ${styles.navLink} nav-link link-dark p-3`}>
                     <LayoutDashboard size={18}/>

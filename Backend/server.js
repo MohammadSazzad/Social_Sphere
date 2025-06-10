@@ -8,11 +8,10 @@ import friendRouter from './route/friends.js';
 import cookieParser from 'cookie-parser';
 import messagesRouter from './route/messages.js';
 import cors from 'cors';
-<<<<<<< HEAD
-import profileRouter from './route/profile.js'; 
-=======
+// import profileRouter from './route/profile.js'; 
+
 import { app, server, injectSocketIO } from './config/socket.js';
->>>>>>> e21aecc0b37b159a306c734a6f9d3bd612c2e97e
+
 
 dotenv.config();
 
@@ -35,7 +34,7 @@ app.use('/api/stories', storiesRouter);
 app.use('/api/posts', postsRouter);
 app.use('/api/friends', friendRouter);
 app.use('/api/messages', messagesRouter);
-app.use('/api/profile', profileRouter);
+// app.use('/api/profile', profileRouter);
 
 app.get('/', (req, res) => {
     res.send('Hello World');

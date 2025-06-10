@@ -1,0 +1,93 @@
+:root {
+  --uno-card-width: 80px;
+  --uno-card-height: 120px;
+}
+
+.container {
+  margin-top: 80px; /* Avoid being hidden under fixed header */
+  padding: 2rem;
+  text-align: center;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.hand {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.card {
+  width: var(--uno-card-width);
+  height: var(--uno-card-height);
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1rem;
+  text-shadow: 1px 1px 3px black;
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: scale(1.1);
+}
+
+.card.red {
+  background-color: #d32f2f;
+}
+.card.green {
+  background-color: #388e3c;
+}
+.card.blue {
+  background-color: #1976d2;
+}
+.card.yellow {
+  background-color: #fbc02d;
+}
+.card.wild {
+  background-color: #424242;
+}
+
+.currentCard {
+  margin: 2rem auto;
+  width: var(--uno-card-width);
+  height: var(--uno-card-height);
+  font-size: 1.2rem;
+}
+
+.drawCardBtn,
+.wildColorBtn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #333;
+  color: white;
+  transition: background 0.3s;
+}
+
+.drawCardBtn:hover,
+.wildColorBtn:hover {
+  background-color: #555;
+}
+
+.wildColorBtn {
+  margin: 0.3rem;
+}
+
+.status {
+  font-size: 1.2rem;
+  margin: 1rem 0;
+  color: #333;
+}

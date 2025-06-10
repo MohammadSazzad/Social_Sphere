@@ -13,6 +13,12 @@ import ShowStory from './pages/ShowStory.jsx'
 import Messenger from './pages/Messenger.jsx'
 import { ProtectedRoute } from './lib/ProtectRoute.jsx'
 import { AuthRedirect } from './lib/AuthRedirect.jsx'
+import Profile from './users/Profile.jsx';
+import Gaming from './components/Gaming/Gaming.jsx'
+import Chess from './pages/chess.jsx'
+import Ludo from './pages/Ludo.jsx'
+import Uno from './pages/Uno.jsx'
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,7 +34,19 @@ const router = createBrowserRouter(
           <Login />
         </AuthRedirect>
       }/>
-      
+        <Route path='gaming' element={
+    <ProtectedRoute>
+      <Gaming />
+    </ProtectedRoute>
+  }/>
+  <Route path="/gaming/chess" element={<Chess />} />
+      <Route path='profile/:userId' element={
+  <ProtectedRoute>
+    <Profile />
+  </ProtectedRoute>
+} />
+      <Route path="/gaming/ludo" element={<Ludo />} />
+      <Route path="/gaming/Uno" element={<Uno/>} />
       <Route path='users'>
         <Route path='signup' element={
           <AuthRedirect>
@@ -50,7 +68,6 @@ const router = createBrowserRouter(
         }/>
         <Route path='viewStory/:id' element={<ShowStory />}/> 
       </Route>
-
       <Route path='message' element={
         <ProtectedRoute>
           <Messenger />
