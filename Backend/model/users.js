@@ -5,14 +5,11 @@ export const getUsers = async () => {
     return result.rows;
 }
 
-<<<<<<< HEAD
-=======
 export const getUserById = async (id) => {
     const result = await pool.query('SELECT * FROM users WHERE id = $1', [id]);
     return result.rows[0];
 }
 
->>>>>>> 7f826afbd4d82d70e90c4278383f16e0070a0add
 export const getUserByEmail = async (email) => {
     const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
     return result.rows[0];
@@ -26,12 +23,10 @@ export const verifyUser = async (username) => {
     const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
     return result.rows[0];
  }
-<<<<<<< HEAD
-=======
 
  export const uploadImage = async (id, profile_picture_url) => {
     const result = await pool.query('UPDATE users SET profile_picture_url = $1 WHERE id = $2', [profile_picture_url, id]);
     return result.rows[0];
  }
->>>>>>> 7f826afbd4d82d70e90c4278383f16e0070a0add
+
  
