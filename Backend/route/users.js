@@ -1,4 +1,3 @@
-import { getUsersController, signUpController, verifyUserController, loginController } from "../controller/users.js";
 import { protectRoute } from "../auth/authCheck.js";
 import { upload } from "../auth/multer.js";
 import { getUsersController, signUpController, verifyUserController, loginController, uploadImageController, logoutController, authCheckController, getUserByIdController } from "../controller/users.js";
