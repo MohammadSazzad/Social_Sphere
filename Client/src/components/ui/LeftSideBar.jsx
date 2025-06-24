@@ -13,7 +13,7 @@ const LeftSideBar = () => {
         logout();
         window.location.href = "/login";
     }
-
+    
     return (
         <div className="d-flex flex-column flex-shrink-0 p-3 bg-light" style={{
             position: "fixed", 

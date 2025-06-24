@@ -15,6 +15,13 @@ import {
 const usersRouter = express.Router();
 
 usersRouter.get("/", getUsersController);
+<<<<<<< HEAD
+=======
+usersRouter.post("/signup", signUpController);
+usersRouter.post("/verify", verifyUserController);
+usersRouter.post("/login", loginController);
+usersRouter.get("/friendProfile/:id", getUserByIdController);
+>>>>>>> d6765076326d9ae6bea7d79575d1ba374e11fc87
 usersRouter.post("/signup", signUpController);
 usersRouter.post("/verify", verifyUserController);
 usersRouter.post("/login", loginController);

@@ -69,6 +69,7 @@ export const verifyUserController = async (req, res) => {
             phone_number : user.phone_number
         }
         
+
         const token = createJWT(res, payload, '30d');
         res.status(200).json({token});
         
@@ -111,6 +112,7 @@ export const verifyUserController = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
  }
+
 
  export const uploadImageController = async (req, res) => {
     try {

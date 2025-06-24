@@ -41,4 +41,12 @@ export const uploadImage = async (id, profile_picture_url) => {
     return result.rows[0];
  }
 
+<<<<<<< HEAD
+=======
+ export const uploadImage = async (id, profile_picture_url) => {
+    const result = await pool.query('UPDATE users SET profile_picture_url = $1 WHERE id = $2', [profile_picture_url, id]);
+    return result.rows[0];
+ }
+
+>>>>>>> d6765076326d9ae6bea7d79575d1ba374e11fc87
  
