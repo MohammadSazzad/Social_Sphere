@@ -1,14 +1,5 @@
 export const Footer = () => {
     return (
-<<<<<<< HEAD
-        <footer>
-            <p>My App</p>
-        </footer>
-    );
-}
-
-export default Footer;
-=======
         <section>
             <footer className="text-center text-md-start">
                 <div className="container p-4">
@@ -62,4 +53,3 @@ export default Footer;
 }
 
 export default Footer;
->>>>>>> 7f826afbd4d82d70e90c4278383f16e0070a0add
