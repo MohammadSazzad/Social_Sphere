@@ -1,13 +1,8 @@
 import { createJWT } from "../auth/createJWT.js";
 import { sendVerificationEmail } from "../auth/UserVerification.js";
-<<<<<<< HEAD
-import { getUsers, getUserByEmail, signUp, verifyUser } from "../model/users.js";
-import bcrypt from 'bcrypt';
-=======
 import { getUsers, getUserByEmail, signUp, verifyUser, uploadImage, getUserById } from "../model/users.js";
 import bcrypt from 'bcrypt';
 import uploadOnCloudinary from "../utility/cloudinary.js";
->>>>>>> 7f826afbd4d82d70e90c4278383f16e0070a0add
 
 export const getUsersController = async (req, res) => {
     try {
@@ -18,8 +13,6 @@ export const getUsersController = async (req, res) => {
     }
 }
 
-<<<<<<< HEAD
-=======
 export const getUserByIdController = async (req, res) => {
     try {
         const { id } = req.params;
@@ -34,7 +27,6 @@ export const getUserByIdController = async (req, res) => {
     }
 }
 
->>>>>>> 7f826afbd4d82d70e90c4278383f16e0070a0add
 export const signUpController = async (req, res) => {
     try {
         const { first_name, last_name, date_of_birth, gender, email, password } = req.body;
@@ -77,11 +69,8 @@ export const verifyUserController = async (req, res) => {
             phone_number : user.phone_number
         }
         
-<<<<<<< HEAD
-        const token = createJWT(payload, '30d');
-=======
+
         const token = createJWT(res, payload, '30d');
->>>>>>> 7f826afbd4d82d70e90c4278383f16e0070a0add
         res.status(200).json({token});
         
     }catch (error) {
@@ -113,17 +102,10 @@ export const verifyUserController = async (req, res) => {
             created_at : user.created_at,
             date_of_birth : user.date_of_birth,
             gender : user.gender,
-<<<<<<< HEAD
-            phone_number : user.phone_numberl
-        }
-
-        const token = createJWT(payload, '30d');
-=======
             phone_number : user.phone_number
         }
 
         const token = createJWT(res, payload, '30d');
->>>>>>> 7f826afbd4d82d70e90c4278383f16e0070a0add
         res.status(200).json({token});
 
     }catch(error){
@@ -131,9 +113,7 @@ export const verifyUserController = async (req, res) => {
     }
  }
 
-<<<<<<< HEAD
 
-=======
  export const uploadImageController = async (req, res) => {
     try {
         const { id } = req.params;
@@ -167,6 +147,5 @@ export const verifyUserController = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
  }
->>>>>>> 7f826afbd4d82d70e90c4278383f16e0070a0add
  
 
