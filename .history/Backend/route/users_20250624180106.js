@@ -9,8 +9,7 @@ import {
   uploadImageController,
   logoutController,
   authCheckController,
-  getUserByIdController,
-  getUserProfileController
+  getUserProfileController,
 } from "../controller/users.js";
 
 const usersRouter = express.Router();
@@ -26,5 +25,6 @@ usersRouter.post("/login", loginController);
 usersRouter.post("/upload/:id", upload.single("file"), uploadImageController);
 usersRouter.post("/logout", logoutController);
 usersRouter.get("/check", protectRoute, authCheckController);
+
 
 export default usersRouter;

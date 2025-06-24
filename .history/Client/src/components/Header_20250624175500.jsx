@@ -1,6 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+<<<<<<< HEAD
+import { Bell, MessageCircle, Search, ChevronDown, Grip, House, MonitorPlay, Store, UsersRound, Gamepad } from "lucide-react";
+=======
 import { Bell, MessageCircle, ChevronDown, Grip, House, MonitorPlay, Store,  UsersRound, Gamepad } from "lucide-react";
+>>>>>>> d6765076326d9ae6bea7d79575d1ba374e11fc87
 import Logo from "../assets/Logo2.png";
 import TitleProfile from "../assets/TitleProfile.svg";
 import styles from "./Header.module.css";

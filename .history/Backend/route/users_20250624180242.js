@@ -9,8 +9,7 @@ import {
   uploadImageController,
   logoutController,
   authCheckController,
-  getUserByIdController,
-  getUserProfileController
+  getUserByIdController
 } from "../controller/users.js";
 
 const usersRouter = express.Router();

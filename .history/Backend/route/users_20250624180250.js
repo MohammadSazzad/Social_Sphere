@@ -9,7 +9,7 @@ import {
   uploadImageController,
   logoutController,
   authCheckController,
-  getUserByIdController,
+  getUserByIdController
   getUserProfileController
 } from "../controller/users.js";
 

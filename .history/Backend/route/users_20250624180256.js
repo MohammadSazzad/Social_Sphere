@@ -10,7 +10,7 @@ import {
   logoutController,
   authCheckController,
   getUserByIdController,
-  getUserProfileController
+  getUserProfileController,
 } from "../controller/users.js";
 
 const usersRouter = express.Router();

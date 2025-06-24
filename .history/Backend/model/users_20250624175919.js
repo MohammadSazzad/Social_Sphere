@@ -31,7 +31,10 @@ export const uploadImage = async (id, profile_picture_url) => {
   const result = await pool.query('UPDATE users SET profile_picture_url = $1 WHERE id = $2', [profile_picture_url, id]);
   return result.rows[0];
 };
-
+//  export const getUserById = async(userId) => {
+//     const result = await pool.query('GET * FROM users u WHERE u.id = $1', [userId]);
+//     return result.rows[0];
+//  }
 
  export const getUserPosts = async(userId) => {
     const result = await pool.query('GET * FROM users WHERE id = &1', [userId]);
@@ -39,3 +42,10 @@ export const uploadImage = async (id, profile_picture_url) => {
  }
 
 
+ export const uploadImage = async (id, profile_picture_url) => {
+    const result = await pool.query('UPDATE users SET profile_picture_url = $1 WHERE id = $2', [profile_picture_url, id]);
+    return result.rows[0];
+ }
+
+
+ 
