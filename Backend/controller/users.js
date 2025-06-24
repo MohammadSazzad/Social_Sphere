@@ -1,13 +1,8 @@
 import { createJWT } from "../auth/createJWT.js";
 import { sendVerificationEmail } from "../auth/UserVerification.js";
-<<<<<<< HEAD
-import { getUsers, getUserByEmail, signUp, verifyUser } from "../model/users.js";
-import bcrypt from 'bcrypt';
-=======
 import { getUsers, getUserByEmail, signUp, verifyUser, uploadImage, getUserById } from "../model/users.js";
 import bcrypt from 'bcrypt';
 import uploadOnCloudinary from "../utility/cloudinary.js";
->>>>>>> 7f826afbd4d82d70e90c4278383f16e0070a0add
 
 export const getUsersController = async (req, res) => {
     try {
