@@ -15,7 +15,7 @@ import { ProtectedRoute } from './lib/ProtectRoute.jsx'
 import { AuthRedirect } from './lib/AuthRedirect.jsx'
 import Profile from './users/Profile.jsx';
 import Gaming from './components/Gaming/Gaming.jsx'
-import Chess from './pages/chess.jsx'
+import Chess from './pages/Chess.jsx'
 import Ludo from './pages/Ludo.jsx'
 import Uno from './pages/Uno.jsx'
 
@@ -41,9 +41,9 @@ const router = createBrowserRouter(
   }/>
   <Route path="/gaming/chess" element={<Chess />} />
       <Route path='profile/:userId' element={
-  <ProtectedRoute>
-    <Profile />
-  </ProtectedRoute>
+    <ProtectedRoute>
+   <Profile />
+   </ProtectedRoute>
 } />
       <Route path="/gaming/ludo" element={<Ludo />} />
       <Route path="/gaming/Uno" element={<Uno/>} />

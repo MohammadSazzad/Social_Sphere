@@ -50,6 +50,8 @@ const Context = createContext(
         setPosts: () => {},
         setAllStories: () => {},
         formatTimeDifference: () => {},
+        selectFriendId: null,
+        setselectFriendId: () => {}
     }
 );
 
