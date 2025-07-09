@@ -5,6 +5,7 @@ import { useState, useRef } from "react";
 import { useDropzone } from "react-dropzone";
 import { axiosInstance } from "../../lib/axios";
 import { useAuthStore } from "../../store/useAuthStore";
+import toast, { Toaster } from "react-hot-toast";
 
 const CreatePostContainer = () => {
     const { authUser } = useAuthStore();
@@ -19,6 +20,7 @@ const CreatePostContainer = () => {
     const handleFileChange = () => {
         setDragNdrop(true);
     };
+    
     const onDrop = (acceptedFiles) => {
         const file = acceptedFiles[0];
         if (file) {
@@ -31,12 +33,14 @@ const CreatePostContainer = () => {
     const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
     const handleCreatePost = async () => {
-        if (!postContent.current?.value.trim() && !mediaFile) {
-            console.log("No content or media to post.");
+        const content = postContent.current?.value.trim() || '';
+        if (!content && !mediaFile) {
+            toast.error("Please add content or media to create a post");
             return;
         }
 
         setIsUploading(true);
+        const toastId = toast.loading("Creating your post...");
 
         try {
             const formData = new FormData();
@@ -44,10 +48,8 @@ const CreatePostContainer = () => {
                 formData.append("file", mediaFile);
             }
             formData.append("user_id", authUser.id);
-            formData.append("content", postContent.current?.value.trim());
+            formData.append("content", content);
             formData.append("privacy_setting", privacy);
-            formData.append("created_at", new Date().toISOString());
-            formData.append("updated_at", new Date().toISOString());
 
             const response = await axiosInstance.post("/posts/create", formData, {
                 headers: {
@@ -55,21 +57,52 @@ const CreatePostContainer = () => {
                 },
             });
 
-            console.log("Post created:", response.data);
-
+            toast.success("Post created successfully!", { id: toastId });
+            
+            toast.success("Post created successfully!", { 
+                id: toastId,
+                style: {
+                    background: '#51cf66',
+                    color: '#fff',
+                },  
+            });
             setModal(false);
-            postContent.current.value = "";
+            if (postContent.current) postContent.current.value = "";
             setPrivacy("public");
             setMediaPreview(null);
             setMediaFile(null);
+            setDragNdrop(false);
         } catch (error) {
             console.error("Error creating post:", error);
-        }finally{
+            
+
+            if (error.response?.status === 400 && 
+                error.response.data?.error?.includes("prohibited content")) {
+                toast.error("Post rejected: Contains prohibited content", { 
+                    id: toastId,
+                    icon: '🚫',
+                    style: {
+                        background: '#ff6b6b',
+                        color: '#fff',
+                    },
+                });
+            } else {
+                let errorMessage = "Failed to create post. Please try again.";
+                if (error.response?.data?.error) {
+                    errorMessage = error.response.data.error;
+                }
+                toast.error(errorMessage, { 
+                    id: toastId,
+                    style: {
+                        background: '#ff6b6b',
+                        color: '#fff',
+                    },
+                });
+            }
+        } finally {
             setIsUploading(false);
         }
     };
-
-
 
     return (
         <>
@@ -199,6 +232,31 @@ const CreatePostContainer = () => {
                     )}
                 </div>
             )}
+            
+            <Toaster
+                position="top-center"
+                toastOptions={{
+                    duration: 5000,
+                    success: {
+                        style: {
+                            background: '#51cf66',
+                            color: '#fff',
+                        },
+                    },
+                    error: {
+                        style: {
+                            background: '#ff6b6b',
+                            color: '#fff',
+                        },
+                    },
+                    loading: {
+                        style: {
+                            background: '#4dabf7',
+                            color: '#fff',
+                        },
+                    },
+                }}
+            />
         </>
     );
 };

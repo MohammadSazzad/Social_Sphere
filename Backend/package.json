@@ -12,6 +12,9 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@azure-rest/ai-content-safety": "^1.0.1",
+    "@tensorflow/tfjs-node": "^4.22.0",
+    "bad-words": "^4.0.0",
     "bcrypt": "^5.1.1",
     "cloudinary": "^2.5.1",
     "cookie-parser": "^1.4.7",

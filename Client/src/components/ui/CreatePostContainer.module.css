@@ -238,3 +238,27 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+/* Custom toast styles */
+.hot-toast {
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  padding: 12px 16px;
+}
+
+.hot-toast-success {
+  background-color: #51cf66 !important;
+  color: white !important;
+}
+
+.hot-toast-error {
+  background-color: #ff6b6b !important;
+  color: white !important;
+}
+
+.hot-toast-loading {
+  background-color: #4dabf7 !important;
+  color: white !important;
+}
