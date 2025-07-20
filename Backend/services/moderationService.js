@@ -1,6 +1,5 @@
 import { Filter } from 'bad-words';
 
-// Expanded list of explicit terms
 const customAdultTerms = [
   'porn', 'xxx', 'nude', 'nsfw', 'sex', 'sexual', 'naked', 'pornography',
   'erotic', 'hardcore', 'blowjob', 'handjob', 'vagina', 'penis', 'dick',
@@ -62,14 +61,11 @@ class ModerationService {
   }
 
   async isAdultContent(text) {
-    // 1. Keyword filter
     if (this.keywordFilter.isProfane(text)) return true;
     
-    // 2. Regex patterns
     return this.adultPatterns.some(pattern => pattern.test(text));
   }
 }
 
-// Initialize singleton instance
 const service = new ModerationService();
 export default service;

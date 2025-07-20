@@ -13,19 +13,24 @@
   "description": "",
   "dependencies": {
     "@azure-rest/ai-content-safety": "^1.0.1",
+    "@azure-rest/ai-vision-image-analysis": "^1.0.0-beta.3",
     "@tensorflow/tfjs-node": "^4.22.0",
     "bad-words": "^4.0.0",
     "bcrypt": "^5.1.1",
+    "canvas": "^3.1.2",
     "cloudinary": "^2.5.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "jimp": "^1.6.0",
     "jsonwebtoken": "^9.0.2",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.10.0",
     "nodemon": "^3.1.9",
+    "nsfwjs": "^4.2.1",
     "pg": "^8.13.1",
+    "sharp": "^0.34.3",
     "socket.io": "^4.8.1"
   }
 }

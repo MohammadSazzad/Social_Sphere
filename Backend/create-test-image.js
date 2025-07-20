@@ -1,0 +1,41 @@
+import fs from 'fs';
+import path from 'path';
+
+// Create a simple test image buffer (PNG header + minimal data)
+const createTestImageBuffer = () => {
+    // PNG file signature
+    const pngSignature = Buffer.from([0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A]);
+    
+    // Minimal PNG data (this creates a tiny valid PNG)
+    const pngData = Buffer.from([
+        // IHDR chunk
+        0x00, 0x00, 0x00, 0x0D, // chunk length
+        0x49, 0x48, 0x44, 0x52, // "IHDR"
+        0x00, 0x00, 0x00, 0x01, // width: 1
+        0x00, 0x00, 0x00, 0x01, // height: 1
+        0x08, 0x02, 0x00, 0x00, 0x00, // bit depth, color type, compression, filter, interlace
+        0x90, 0x77, 0x53, 0xDE, // CRC
+        
+        // IDAT chunk (image data)
+        0x00, 0x00, 0x00, 0x0C, // chunk length
+        0x49, 0x44, 0x41, 0x54, // "IDAT"
+        0x08, 0x99, 0x01, 0x01, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x02, // compressed data
+        0x00, 0x01, 0x73, 0x75, // CRC
+        
+        // IEND chunk
+        0x00, 0x00, 0x00, 0x00, // chunk length
+        0x49, 0x45, 0x4E, 0x44, // "IEND"
+        0xAE, 0x42, 0x60, 0x82  // CRC
+    ]);
+    
+    return Buffer.concat([pngSignature, pngData]);
+};
+
+// Create test image
+const testImageBuffer = createTestImageBuffer();
+const testImagePath = './test-image.png';
+
+fs.writeFileSync(testImagePath, testImageBuffer);
+console.log(`Created test image: ${testImagePath} (${testImageBuffer.length} bytes)`);
+console.log('You can now test this image with the moderation endpoint');
+console.log(`curl -X POST http://localhost:3000/api/posts/test-moderation -F "file=@${testImagePath}"`);

@@ -8,6 +8,7 @@ import friendRouter from './route/friends.js';
 import cookieParser from 'cookie-parser';
 import messagesRouter from './route/messages.js';
 import cors from 'cors';
+import multer from 'multer';
 // import profileRouter from './route/profile.js'; 
 
 import { app, server, injectSocketIO } from './config/socket.js';
@@ -38,6 +39,22 @@ app.use('/api/messages', messagesRouter);
 
 app.get('/', (req, res) => {
     res.send('Hello World');
+});
+
+app.use((err, req, res, next) => {
+  if (err instanceof multer.MulterError) {
+    // Multer errors (file too large, etc)
+    return res.status(400).json({
+      error: err.message || 'File upload error'
+    });
+  } else if (err) {
+    // Generic errors
+    console.error('Unhandled error:', err);
+    return res.status(500).json({
+      error: 'Internal server error'
+    });
+  }
+  next();
 });
 
 server.listen(PORT, () => {
