@@ -4,6 +4,7 @@ export const getAllPost = async () => {
     const result = await pool.query(`
         SELECT 
             p.id AS post_id, 
+            u.id AS user_id,
             u.profile_picture_url, 
             u.first_name, 
             u.last_name, 
@@ -26,6 +27,7 @@ export const getAllPost = async () => {
             (p.privacy_setting = 'friends' AND (f.user_id IS NOT NULL OR f.friend_id IS NOT NULL))
         GROUP BY 
             p.id, 
+            u.id,
             u.profile_picture_url, 
             u.first_name, 
             u.last_name, 
@@ -51,4 +53,28 @@ export const createMedia = async ( post_id, user_id, url, created_at ) => {
         VALUES ($1, $2, $3, $4)
         RETURNING *`, [post_id, user_id, url, created_at]);
     return result.rows[0];
+}
+
+export const deletePost = async (post_id, user_id) => {
+    const result = await pool.query(`
+        DELETE FROM posts 
+        WHERE id = $1 AND user_id = $2
+        RETURNING *`, [post_id, user_id]);
+    return result.rows[0];
+}
+
+export const deleteMedia = async (post_id, user_id) => {
+    const result = await pool.query(`
+        DELETE FROM media 
+        WHERE post_id = $1 AND user_id = $2
+        RETURNING *`, [post_id, user_id]);
+    return result.rows[0];
+}
+
+export const getUserIdByPostId = async (post_id) => {
+    const result = await pool.query(`
+        SELECT user_id 
+        FROM posts 
+        WHERE id = $1`, [post_id]);
+    return result.rows[0] ? result.rows[0].user_id : null;
 }

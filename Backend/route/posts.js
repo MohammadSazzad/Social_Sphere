@@ -1,13 +1,15 @@
 import { upload } from "../auth/multer.js";
-import { createPostController, getAllPostController } from "../controller/posts.js";
+import { createPostController, deletePostController, getAllPostController } from "../controller/posts.js";
 import express from "express";
 import imageModerationService from "../services/imageModerationService.js";
 import fallbackImageModerationService from "../services/fallbackImageModerationService.js";
+import { protectRoute } from "../auth/authCheck.js";
 
 const postsRouter = express.Router();
 
 postsRouter.get("/", getAllPostController);
 postsRouter.post("/create", upload.single('file'), createPostController);
+postsRouter.delete("/delete/:post_id/:user_id", protectRoute, deletePostController);
 
 // Test endpoint for image moderation
 postsRouter.post("/test-moderation", upload.single('file'), async (req, res) => {

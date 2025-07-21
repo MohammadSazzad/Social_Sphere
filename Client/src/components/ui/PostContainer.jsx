@@ -1,14 +1,98 @@
 import TitleProfile from "../../assets/TitleProfile.svg";
-import { EllipsisVertical, ThumbsUp, MessageCircleMore, Send, Share, Link , Smile, SendHorizontal} from 'lucide-react';
+import { EllipsisVertical, ThumbsUp, MessageCircleMore, Send, Share, Link , Smile, SendHorizontal, Edit3, Trash2, Flag, Copy} from 'lucide-react';
 import styles from './PostContainer.module.css';
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Context from "../../store/Context";
 import { useAuthStore } from "../../store/useAuthStore";
+import { useState } from "react";
+import { axiosInstance } from "../../lib/axios";
+import toast from "react-hot-toast";
 
 const PostContainer = () => {
 
     const { authUser } = useAuthStore();
-    const { posts, formatTimeDifference } = useContext(Context);
+    const { posts, setPosts, formatTimeDifference } = useContext(Context);
+    const [ openDropdown, setOpenDropdown ] = useState(null);
+
+    // Close dropdown when clicking outside - optimized to prevent interference
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            // Use requestAnimationFrame for better performance
+            requestAnimationFrame(() => {
+                const isDropdownClick = event.target.closest('.dropdown-menu') || 
+                                      event.target.closest('[data-dropdown-toggle]');
+                
+                if (!isDropdownClick && openDropdown !== null) {
+                    setOpenDropdown(null);
+                }
+            });
+        };
+
+        if (openDropdown !== null) {
+            document.addEventListener('click', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, [openDropdown]);
+
+    const handleDeletePost = async (postId) => {
+        setOpenDropdown(null);
+        
+        
+        setTimeout(async () => {
+            const confirmDelete = window.confirm('Are you sure you want to delete this post? This action cannot be undone.');
+            
+            if (!confirmDelete) {
+                return;
+            }
+
+            // Show loading toast
+            const loadingToast = toast.loading('Deleting post...');
+
+            try {
+                const response = await axiosInstance.delete(`/posts/delete/${postId}/${authUser.id}`);
+                
+                if (response.status === 200 || response.status === 204) {
+                    setPosts(prevPosts => {
+                        const updatedPosts = prevPosts.filter(post => post.postId !== postId);
+                        return updatedPosts;
+                    });
+                    
+                    // Dismiss loading and show success
+                    toast.dismiss(loadingToast);
+                    toast.success('Post deleted successfully');
+                } else {
+                    throw new Error(`Unexpected response status: ${response.status}`);
+                }
+                
+            } catch (error) {
+                console.error('Error deleting post:', error);
+                console.error('Error response:', error.response?.data);
+                toast.dismiss(loadingToast);
+                toast.error(`Failed to delete post: ${error.response?.data?.message || error.message}`);
+            }
+        }, 10);
+    }
+
+    const toggleDropdown = (postId) => {
+        setOpenDropdown(openDropdown === postId ? null : postId);
+    }
+
+    const handleCopyLink = (postId) => {
+        setOpenDropdown(null);
+        const postLink = `${window.location.origin}/post/${postId}`;
+        navigator.clipboard.writeText(postLink);
+        toast.success('Post link copied to clipboard!');
+    }
+
+    const handleReportPost = () => {
+        setOpenDropdown(null);
+        toast.info('Report functionality coming soon!');
+    }
+
+
 
     return (
         <> 
@@ -23,10 +107,68 @@ const PostContainer = () => {
                                     <small>{formatTimeDifference(post.createdAt)}</small>
                                 </div>
                             </div>
-                            <div>
-                                <div type="button" className={ styles.postOptions }>
+                            <div className="position-relative">
+                                <div 
+                                    type="button" 
+                                    className={ styles.postOptions } 
+                                    onClick={ () => toggleDropdown(post.postId) }
+                                    data-dropdown-toggle="true"
+                                >
                                     <EllipsisVertical size={20}/>
                                 </div>
+                                
+                                {openDropdown === post.postId && (
+                                    <div className={`dropdown-menu dropdown-menu-end show ${styles.customDropdown}`} style={{ position: "absolute", right: 0, top: "100%", zIndex: 1000 }}>
+                                        {/* Show Edit and Delete only for the post owner */}
+                                        {post.userId === authUser.id && (
+                                            <>
+                                                <div className="dropdown-item d-flex align-items-center gap-2" style={{ cursor: "pointer" }}>
+                                                    <Edit3 size={16} className="text-primary" />
+                                                    <span>Edit Post</span>
+                                                </div>
+                                                <div 
+                                                    className="dropdown-item d-flex align-items-center gap-2" 
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        handleDeletePost(post.postId);
+                                                    }} 
+                                                    style={{ cursor: "pointer" }}
+                                                >
+                                                    <Trash2 size={16} className="text-danger" />
+                                                    <span>Delete Post</span>
+                                                </div>
+                                                <div className="dropdown-divider"></div>
+                                            </>
+                                        )}
+                                        
+                                        {/* Universal options for all users */}
+                                        <div 
+                                            className="dropdown-item d-flex align-items-center gap-2" 
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleCopyLink(post.postId);
+                                            }} 
+                                            style={{ cursor: "pointer" }}
+                                        >
+                                            <Copy size={16} className="text-info" />
+                                            <span>Copy Link</span>
+                                        </div>
+                                        
+                                        {post.userId !== authUser.id && (
+                                            <div 
+                                                className="dropdown-item d-flex align-items-center gap-2" 
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleReportPost();
+                                                }} 
+                                                style={{ cursor: "pointer" }}
+                                            >
+                                                <Flag size={16} className="text-warning" />
+                                                <span>Report Post</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>

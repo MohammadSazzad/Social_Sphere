@@ -1,4 +1,4 @@
-import { createMedia, createPost, getAllPost } from "../model/posts.js";
+import { createMedia, createPost, deleteMedia, deletePost, getAllPost, getUserIdByPostId } from "../model/posts.js";
 import moderationService from "../services/moderationService.js";
 import imageModerationService from "../services/imageModerationService.js";
 import FallbackImageModerationService from "../services/fallbackImageModerationService.js";
@@ -140,6 +140,40 @@ export const createPostController = async (req, res) => {
         });
     } catch (error) {
         console.error('Post creation error:', error);
+        res.status(500).json({ 
+            message: "Internal Server Error",
+            error: error.message 
+        });
+    }
+};
+
+export const deletePostController = async (req, res) => {
+    try {
+        const { post_id, user_id } = req.params;
+        const userId = req.user.id;
+        if(user_id != userId) {
+            return res.status(403).json({ message: "You are not authorized to delete this post" });
+        }
+
+        const userIdFromPost = await getUserIdByPostId(post_id);
+        if (userIdFromPost !== userId) {
+            return res.status(403).json({ message: "You are not authorized to delete this post" });
+        }
+
+        const deletedPost = await deletePost(post_id, userId);
+        
+        if (!deletedPost) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+
+        const deletedMedia = await deleteMedia(post_id, userId);
+
+        res.status(200).json({ 
+            message: "Post deleted successfully",
+            post_id: deletedPost.id 
+        });
+    }catch (error) {
+        console.error('Post deletion error:', error);
         res.status(500).json({ 
             message: "Internal Server Error",
             error: error.message 

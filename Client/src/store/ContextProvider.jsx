@@ -115,6 +115,7 @@ const ContextProvider = ({children}) => {
         .then( response => {
             setPosts(response.data.map ( (item) => ({
                 postId : item.post_id,
+                userId : item.user_id,
                 profilePicture: item.profile_picture_url,
                 firstName: item.first_name,
                 lastName: item.last_name,
@@ -165,6 +166,7 @@ const ContextProvider = ({children}) => {
         events,
         stories,
         posts,
+        setPosts,
         allStories,
         formatTimeDifference,
         searchTerm, 
