@@ -7,12 +7,14 @@ import { useAuthStore } from "../../store/useAuthStore";
 import { useState } from "react";
 import { axiosInstance } from "../../lib/axios";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const PostContainer = () => {
 
     const { authUser } = useAuthStore();
     const { posts, setPosts, formatTimeDifference } = useContext(Context);
     const [ openDropdown, setOpenDropdown ] = useState(null);
+    const navigate = useNavigate();
 
     // Close dropdown when clicking outside - optimized to prevent interference
     useEffect(() => {
@@ -76,6 +78,12 @@ const PostContainer = () => {
         }, 10);
     }
 
+    const handleEditPost = async(postId) => {
+        console.log("Edit post clicked for postId:", postId);
+        setOpenDropdown(null);
+        navigate(`/post/edit/${postId}`);
+    }
+
     const toggleDropdown = (postId) => {
         setOpenDropdown(openDropdown === postId ? null : postId);
     }
@@ -89,7 +97,7 @@ const PostContainer = () => {
 
     const handleReportPost = () => {
         setOpenDropdown(null);
-        toast.info('Report functionality coming soon!');
+        toast.success('Report functionality coming soon!');
     }
 
 
@@ -122,7 +130,14 @@ const PostContainer = () => {
                                         {/* Show Edit and Delete only for the post owner */}
                                         {post.userId === authUser.id && (
                                             <>
-                                                <div className="dropdown-item d-flex align-items-center gap-2" style={{ cursor: "pointer" }}>
+                                                <div 
+                                                    className="dropdown-item d-flex align-items-center gap-2" 
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        handleEditPost(post.postId);
+                                                    }}
+                                                    style={{ cursor: "pointer" }}
+                                                >
                                                     <Edit3 size={16} className="text-primary" />
                                                     <span>Edit Post</span>
                                                 </div>

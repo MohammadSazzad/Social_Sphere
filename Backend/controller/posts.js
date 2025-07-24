@@ -1,4 +1,4 @@
-import { createMedia, createPost, deleteMedia, deletePost, getAllPost, getUserIdByPostId } from "../model/posts.js";
+import { createMedia, createPost, deleteMedia, deletePost, getAllPost, getUserIdByPostId, updatePost, updateMedia } from "../model/posts.js";
 import moderationService from "../services/moderationService.js";
 import imageModerationService from "../services/imageModerationService.js";
 import FallbackImageModerationService from "../services/fallbackImageModerationService.js";
@@ -180,3 +180,134 @@ export const deletePostController = async (req, res) => {
         });
     }
 };
+
+export const updatePostController = async (req, res) => {
+    try {
+        const { post_id, user_id, content } = req.body;
+        const userId = req.user.id;
+
+        // Validate required fields
+        if (!post_id) {
+            return res.status(400).json({ error: "Post ID is required" });
+        }
+
+        if (!content || typeof content !== 'string' || content.trim().length === 0) {
+            return res.status(400).json({ error: "Content is required" });
+        }
+
+        // Authorization checks
+        if (user_id && user_id != userId) {
+            return res.status(403).json({ message: "You are not authorized to update this post" });
+        }
+
+        const userIdFromPost = await getUserIdByPostId(post_id);
+        if (userIdFromPost !== userId) {
+            return res.status(403).json({ message: "You are not authorized to update this post" });
+        }
+
+        // Text moderation
+        const isAdultText = await moderationService.isAdultContent(content);
+        if (isAdultText) {
+            return res.status(400).json({
+                error: "Post rejected: Contains prohibited content"
+            });
+        }
+
+        // Update post content
+        const updatedAt = new Date();
+        await updatePost(post_id, userId, content, updatedAt);
+
+        let mediaUrl = null;
+        // Handle media update if file is provided
+        if (req.file) {
+            try {
+                console.log(`Processing image: ${req.file.originalname}, size: ${req.file.size} bytes`);
+                
+                let isAdultImage = false;
+                let moderationMethod = "unknown";
+                
+                try {
+                    console.log('Attempting Azure image moderation...');
+                    isAdultImage = await imageModerationService.isAdultContent(req.file.buffer);
+                    moderationMethod = "Azure Vision";
+                    console.log('Azure moderation result:', isAdultImage);
+                    
+                    // If Azure returns false but we know it's failing (403 errors), use fallback
+                    if (!isAdultImage) {
+                        console.log('Azure returned false - attempting fallback analysis for verification...');
+                        try {
+                            const fallbackResult = await fallbackImageModerationService.isAdultContent(req.file.buffer);
+                            if (fallbackResult) {
+                                isAdultImage = true;
+                                moderationMethod = "Fallback Service (Override)";
+                                console.log('Fallback detected adult content that Azure missed');
+                            } else {
+                                moderationMethod = "Azure + Fallback Verification";
+                                console.log('Both Azure and Fallback agree: content is safe');
+                            }
+                        } catch (fallbackError) {
+                            console.warn('Fallback verification failed:', fallbackError.message);
+                            // Keep Azure result if fallback fails
+                        }
+                    }
+                } catch (azureError) {
+                    console.warn('Azure moderation failed, using fallback service:', azureError.message);
+                    
+                    try {
+                        isAdultImage = await fallbackImageModerationService.isAdultContent(req.file.buffer);
+                        moderationMethod = "Fallback Service";
+                        console.log('Fallback moderation result:', isAdultImage);
+                    } catch (fallbackError) {
+                        console.error('Both moderation services failed:', fallbackError.message);
+                        isAdultImage = true;
+                        moderationMethod = "Emergency Block";
+                    }
+                }
+                
+                console.log(`Final moderation decision: ${isAdultImage ? 'BLOCKED' : 'ALLOWED'} (Method: ${moderationMethod})`);
+                
+                if (isAdultImage) {
+                    console.log('Image rejected due to adult content');
+                    return res.status(400).json({
+                        error: "Post rejected: Image contains prohibited content"
+                    });
+                }
+
+                console.log('Image passed moderation, uploading to Cloudinary...');
+                const result = await uploadOnCloudinary(req.file.buffer, req.file.originalname);
+                mediaUrl = result.url;
+                console.log('Image uploaded successfully to Cloudinary');
+
+                // Update or create media record
+                try {
+                    await updateMedia(post_id, userId, mediaUrl, updatedAt);
+                    console.log('Media record updated successfully');
+                } catch (mediaUpdateError) {
+                    // If update fails, try to create new media record
+                    console.log('Media update failed, creating new media record...');
+                    await createMedia(post_id, userId, mediaUrl, updatedAt);
+                    console.log('New media record created successfully');
+                }
+
+            } catch (uploadError) {
+                console.error('Media processing error:', uploadError);
+                return res.status(500).json({
+                    error: "Media upload failed"
+                });
+            }
+        }
+
+        res.status(200).json({
+            message: "Post updated successfully",
+            post_id: post_id,
+            mediaUrl: mediaUrl
+        });
+
+    } catch (error) {
+        console.error('Post update error:', error);
+        res.status(500).json({ 
+            message: "Internal Server Error",
+            error: error.message 
+        });
+    }
+}

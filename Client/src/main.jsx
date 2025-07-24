@@ -18,6 +18,7 @@ import Gaming from './components/Gaming/Gaming.jsx'
 import Chess from './pages/Chess.jsx'
 import Ludo from './pages/Ludo.jsx'
 import Uno from './pages/Uno.jsx'
+import EditPost from './components/ui/EditPost.jsx'
 
 
 const router = createBrowserRouter(
@@ -28,6 +29,11 @@ const router = createBrowserRouter(
           <App />
         </ProtectedRoute>
       }/>
+      <Route path = 'post/edit/:postId' element={
+          <ProtectedRoute>
+            <EditPost />
+          </ProtectedRoute>
+        }/>
       
       <Route path='login' element={
         <AuthRedirect>
@@ -39,6 +45,7 @@ const router = createBrowserRouter(
       <Gaming />
     </ProtectedRoute>
   }/>
+  
   <Route path="/gaming/chess" element={<Chess />} />
       <Route path='profile/:userId' element={
     <ProtectedRoute>
@@ -66,6 +73,7 @@ const router = createBrowserRouter(
             <CreateStory/>
           </ProtectedRoute>
         }/>
+
         <Route path='viewStory/:id' element={<ShowStory />}/> 
       </Route>
       <Route path='message' element={
@@ -73,6 +81,7 @@ const router = createBrowserRouter(
           <Messenger />
         </ProtectedRoute>
       }/>
+      
     </Route>
   )
 );

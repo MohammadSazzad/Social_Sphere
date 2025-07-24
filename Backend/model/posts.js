@@ -78,3 +78,21 @@ export const getUserIdByPostId = async (post_id) => {
         WHERE id = $1`, [post_id]);
     return result.rows[0] ? result.rows[0].user_id : null;
 }
+
+export const updatePost = async (post_id, user_id, content, updated_at) => {
+    const result = await pool.query(`
+        UPDATE posts 
+        SET content = $1, updated_at = $2 
+        WHERE id = $3 AND user_id = $4
+        RETURNING *`, [content, updated_at, post_id, user_id]);
+    return result.rows[0];
+}
+
+export const updateMedia = async (post_id, user_id, url, updated_at) => {
+    const result = await pool.query(`
+        UPDATE media 
+        SET url = $1, updated_at = $2 
+        WHERE post_id = $3 AND user_id = $4
+        RETURNING *`, [url, updated_at, post_id, user_id]);
+    return result.rows[0];
+}

@@ -259,6 +259,251 @@ const context = {
 - 📱 **Mobile Responsive**: Touch-friendly dropdown interactions
 - ⌨️ **Keyboard Support**: Accessible navigation
 
+## ✏️ **Advanced Post Editing System**
+
+Social Sphere features a **comprehensive post editing interface** with real-time preview, image upload capabilities, and full responsive design.
+
+### 🎨 **EditPost Component Features**
+
+#### **🖼️ Unified Interface Design**
+- **Single Card Layout**: All editing features contained in one beautiful frame
+- **Gradient Header**: Modern design with Edit3 icon and responsive titles
+- **Color-coded Sections**: Visual separation with themed colors
+- **Glass Morphism Effects**: Modern styling with backdrop blur
+
+#### **👤 User Information Display**
+```jsx
+// Dynamic user info with profile picture
+<div className="user-info-section">
+  <img src={post.profilePicture || TitleProfile} />
+  <div>
+    <h6>{post.firstName} {post.lastName}</h6>
+    <small>Editing post from your timeline</small>
+  </div>
+</div>
+```
+
+#### **📝 Content Editing Features**
+- **Auto-expanding Textarea**: Intelligent height adjustment
+- **Character Counter**: Real-time character tracking
+- **Content Validation**: Empty content prevention
+- **Rich Text Support**: Preserves line breaks and formatting
+
+#### **📸 Advanced Image Management**
+```javascript
+// Smart image handling system
+const imageStates = {
+  ORIGINAL: 'post.mediaUrl',      // Current post image
+  SELECTED: 'base64 data',        // New uploaded image
+  REMOVED: 'REMOVED',             // Image marked for deletion
+  NONE: null                      // No image present
+};
+```
+
+#### **🔍 Live Preview System**
+- **Real-time Updates**: Preview changes as you type
+- **Exact Post Replica**: Shows exactly how the post will appear
+- **Image Preview**: Dynamic image display with fallback handling
+- **Responsive Scaling**: Adapts to different screen sizes
+
+### 📱 **Responsive Design Excellence**
+
+#### **Mobile-First Breakpoints**
+```css
+/* Extra Small (< 576px) - Phones */
+@media (max-width: 575.98px) {
+  .card-footer { flex-direction: column; }
+  .btn { width: 100%; }
+  .profileImage { height: 40px !important; }
+}
+
+/* Small (576px - 768px) - Landscape Phones */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .card-footer { justify-content: space-between; }
+  .btn { flex: 1; margin: 0 0.25rem; }
+}
+
+/* Medium+ (768px+) - Tablets & Desktop */
+@media (min-width: 768px) {
+  .postImage { max-height: 400px; }
+}
+```
+
+#### **Adaptive Text & Icons**
+- **Smart Text Display**: "Edit Post" → "Edit" on mobile
+- **Flexible Buttons**: Full-width on mobile, inline on desktop
+- **Touch-Friendly Targets**: Larger buttons and spacing on mobile
+- **Responsive Images**: Proper scaling across all devices
+
+### 🔧 **Technical Implementation**
+
+#### **State Management**
+```javascript
+const [post, setPost] = useState({});              // Current post data
+const [editedContent, setEditedContent] = useState(''); // Edited content
+const [selectedImage, setSelectedImage] = useState(null); // Image state
+const [isLoading, setIsLoading] = useState(false);     // Loading state
+```
+
+#### **Image Processing Pipeline**
+```javascript
+// Convert base64 to File object for upload
+const handleImageUpload = async (base64Image) => {
+  const response = await fetch(base64Image);
+  const blob = await response.blob();
+  const file = new File([blob], 'updated-image.jpg', { 
+    type: blob.type 
+  });
+  return file;
+};
+```
+
+#### **API Integration**
+```javascript
+// FormData preparation for multipart upload
+const formData = new FormData();
+formData.append('post_id', post.postId.toString());
+formData.append('user_id', post.userId.toString());
+formData.append('content', editedContent.trim());
+
+// Conditional file attachment
+if (hasNewImage) {
+  formData.append('file', imageFile);
+}
+
+// Axios PUT request with proper headers
+const response = await axiosInstance.put('/posts/update', formData, {
+  headers: { 'Content-Type': 'multipart/form-data' }
+});
+```
+
+### 🛡️ **Error Handling & Validation**
+
+#### **Frontend Validation**
+```javascript
+// Content validation before submission
+if (!editedContent || editedContent.trim().length === 0) {
+  toast.error("Post content cannot be empty");
+  return;
+}
+
+// Image processing error handling
+try {
+  const file = await processImageFile(selectedImage);
+  formData.append('file', file);
+} catch (fileError) {
+  toast.error("Error processing image file");
+  return;
+}
+```
+
+#### **Comprehensive Error Messages**
+```javascript
+// Detailed error handling for different scenarios
+if (error.response?.status === 400) {
+  toast.error(error.response.data?.error || "Bad request");
+} else if (error.response?.status === 403) {
+  toast.error("You are not authorized to update this post");
+} else if (error.response?.status === 404) {
+  toast.error("Post not found");
+} else {
+  toast.error("Network error - please check your connection");
+}
+```
+
+### 🎯 **User Experience Enhancements**
+
+#### **Loading States**
+- **Button Spinners**: Visual feedback during save operations
+- **Disabled States**: Prevent multiple submissions
+- **Toast Notifications**: Success/error feedback
+- **Optimistic Updates**: Immediate UI feedback
+
+#### **Interaction Design**
+- **Confirmation Dialogs**: Prevent accidental data loss
+- **Auto-save Indicators**: Show unsaved changes
+- **Image Hover Effects**: Interactive image management
+- **Smooth Animations**: Fade-in effects for all sections
+
+#### **Accessibility Features**
+- **Screen Reader Support**: Proper ARIA labels
+- **Keyboard Navigation**: Full keyboard accessibility
+- **Focus Management**: Logical tab order
+- **Color Contrast**: WCAG compliant color schemes
+
+### 🚀 **Performance Optimizations**
+
+#### **Image Optimization**
+```javascript
+// Intelligent image handling
+const imageConditions = {
+  showImage: (selectedImage && selectedImage !== 'REMOVED') || 
+            (post.mediaUrl && selectedImage !== 'REMOVED'),
+  imageSource: selectedImage && selectedImage !== 'REMOVED' 
+              ? selectedImage : post.mediaUrl
+};
+```
+
+#### **Render Optimization**
+- **Conditional Rendering**: Only render necessary components
+- **Memoized Calculations**: Prevent unnecessary re-calculations
+- **Lazy Loading**: Load images on demand
+- **Debounced Updates**: Prevent excessive API calls
+
+### 📊 **Component Architecture**
+
+```
+EditPost Component
+├── User Info Section
+│   ├── Profile Image
+│   ├── User Name
+│   └── Edit Context
+├── Content Section
+│   ├── Textarea Input
+│   ├── Character Counter
+│   └── Validation Messages
+├── Media Section
+│   ├── Current Image Display
+│   ├── Image Upload Controls
+│   └── Remove Image Option
+├── Live Preview
+│   ├── Post Replica
+│   ├── User Info
+│   ├── Content Preview
+│   └── Image Preview
+└── Action Buttons
+    ├── Discard Changes
+    └── Save Post
+```
+
+### 🔗 **Integration Points**
+
+#### **Backend API Endpoints**
+```javascript
+PUT /api/posts/update
+- Authentication: JWT token required
+- Content-Type: multipart/form-data
+- Moderation: Text and image content filtering
+- Response: Success/error with detailed messages
+```
+
+#### **Context Integration**
+```javascript
+// Seamless integration with global state
+const { posts } = useContext(Context);
+const foundPost = posts.find(p => p.postId === parseInt(postId));
+```
+
+#### **Navigation Integration**
+```javascript
+// React Router integration for seamless navigation
+const navigate = useNavigate();
+const { postId } = useParams();
+
+// Success navigation
+navigate('/'); // Return to home feed
+```
+
 ## 📝 Text Moderation System
 
 ### Multi-Layer Text Analysis
