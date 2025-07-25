@@ -18,7 +18,7 @@
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
 }
 
-/* User Info Section */
+
 .userInfoSection {
     background: white;
     padding: 2rem;
@@ -61,7 +61,6 @@
     transform: translateY(-2px);
 }
 
-/* Media Section */
 .mediaSection {
     background: white;
     padding: 2rem;
@@ -100,7 +99,6 @@
     opacity: 1;
 }
 
-/* Preview Section */
 .previewSection {
     background: white;
     padding: 2rem;
@@ -115,7 +113,6 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Form Enhancements */
 .form-label {
     color: #495057;
     font-weight: 600;
@@ -156,7 +153,6 @@
     color: white;
 }
 
-/* Main Card Styling */
 .card {
     border: none !important;
     border-radius: 20px !important;
@@ -180,7 +176,6 @@
     padding: 1.5rem !important;
 }
 
-/* Profile Image */
 .profileImage {
     height: 50px !important;
     width: 50px !important;
@@ -189,7 +184,6 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Content Textarea */
 .contentTextarea {
     border: 2px solid #e9ecef !important;
     border-radius: 15px !important;
@@ -212,8 +206,6 @@
     border-radius: 25px;
 }
 
-/* Responsive Design */
-/* Mobile First - Extra Small devices (phones, less than 576px) */
 @media (max-width: 575.98px) {
     .editPostContainer {
         padding: 0.5rem 0;
@@ -284,7 +276,6 @@
     }
 }
 
-/* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) and (max-width: 767.98px) {
     .editPostContainer {
         padding: 1rem 0;
@@ -314,7 +305,7 @@
     }
 }
 
-/* Medium devices (tablets, 768px and up) */
+
 @media (min-width: 768px) and (max-width: 991.98px) {
     .editPostContainer {
         padding: 1.5rem 0;
@@ -333,7 +324,7 @@
     }
 }
 
-/* Large devices (desktops, 992px and up) */
+
 @media (min-width: 992px) {
     .editPostContainer {
         padding: 2rem 0;
@@ -348,14 +339,14 @@
     }
 }
 
-/* Extra large devices (large desktops, 1200px and up) */
+
 @media (min-width: 1200px) {
     .content {
         padding: 0 3rem;
     }
 }
 
-/* Animations */
+
 @keyframes fadeIn {
     from {
         opacity: 0;

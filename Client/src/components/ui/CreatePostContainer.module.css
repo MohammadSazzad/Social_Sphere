@@ -1,12 +1,101 @@
-.CreatePostContainer{
-    margin: 25px;
+/* Create Post Container Wrapper - Match PostContainer */
+.createPostWrapper {
+    width: 100%;
+    padding: 0 20px;
+}
+
+.CreatePostContainer {
+    margin-bottom: 1.5rem !important;
+    padding: 1rem !important;
+    border-radius: 16px !important;
+    background: #fff;
+    transition: all 0.3s ease;
+}
+
+.CreatePostContainer:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
+}
+
+.cardBody {
+    padding: 0 !important;
+}
+
+.postTriggerContainer {
+    margin-bottom: 1rem;
+    padding: 0.5rem 0;
+}
+
+.postTrigger {
+    flex: 1;
+}
+
+.mobileImageIcon {
+    flex-shrink: 0;
+    margin-left: 0.5rem;
+}
+
+.profileImage {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #f8f9fa;
+    transition: border-color 0.3s ease;
+}
+
+.profileImage:hover {
+    border-color: #007bff;
 }
 
 .createPostButton {
-    background-color: #F8F9FA;
-    padding: 10px 20px;
-    color: #3B5998;
-    cursor: pointer;        
+    background-color: #F8F9FA !important;
+    border: 1px solid #e9ecef !important;
+    border-radius: 25px !important;
+    padding: 12px 16px !important;
+    color: #6c757d !important;
+    cursor: pointer !important;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    text-align: left !important;
+}
+
+.createPostButton:hover {
+    background-color: #e9ecef !important;
+    color: #495057 !important;
+    border-color: #dee2e6 !important;
+}
+
+.actionsContainer {
+    padding-top: 0.75rem;
+    border-top: 1px solid #f1f1f1;
+    margin-top: 0.5rem;
+}
+
+.actionIcons {
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.actionIcon {
+    background: none !important;
+    border: none !important;
+    color: #6c757d !important;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+}
+
+.actionIcon:hover {
+    background-color: #f8f9fa !important;
+    color: #007bff !important;
+    transform: translateY(-1px);
 }
 
 .modalBackdrop {
@@ -261,4 +350,128 @@
 .hot-toast-loading {
   background-color: #4dabf7 !important;
   color: white !important;
+}
+
+
+@media (max-width: 991.98px) {
+    .createPostWrapper {
+        padding: 0 8px;
+        margin-top: 10px; 
+    }
+    
+    .CreatePostContainer {
+        margin-bottom: 1rem !important;
+        padding: 0.75rem !important;
+        border-radius: 12px !important;
+    }
+    
+    .profileImage {
+        height: 36px;
+        width: 36px;
+    }
+    
+    .createPostButton {
+        padding: 10px 14px !important;
+        font-size: 0.9rem !important;
+        border-radius: 18px !important;
+    }
+    
+    .postTriggerContainer {
+        margin-bottom: 0; 
+    }
+    
+    .mobileImageIcon .actionIcon {
+        padding: 0.5rem;
+        min-width: 40px;
+        height: 40px;
+        background-color: #f8f9fa !important;
+        border-radius: 50% !important;
+    }
+    
+    .mobileImageIcon .actionIcon:hover {
+        background-color: #e9ecef !important;
+    }
+    
+    .actionsContainer {
+        display: none !important; 
+    }
+    
+    .modalContainer {
+        width: 95%;
+        max-width: 400px;
+        margin: 10px;
+    }
+    
+    .modalHeader {
+        padding: 12px 16px;
+    }
+    
+    .modalBody {
+        padding: 12px 16px;
+    }
+    
+    .modalFooter {
+        padding: 12px 16px;
+    }
+    
+    .postTextarea {
+        font-size: 1rem;
+        min-height: 80px;
+    }
+    
+    .mediaButton {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .modalMedia {
+        margin: 12px;
+        padding: 8px;
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+    }
+    
+    .modalMedia > div {
+        justify-content: center;
+    }
+}
+
+@media (min-width: 992px) {
+    .createPostWrapper {
+        margin-top: 20px; 
+    }
+    
+    .postTriggerContainer {
+        margin-bottom: 1rem; 
+    }
+    
+    .mobileImageIcon {
+        display: none !important; 
+    }
+    
+    .actionsContainer {
+        display: flex !important; 
+    }
+}
+
+@media (min-width: 1200px) {
+    .CreatePostContainer {
+        margin-bottom: 2rem !important;
+        padding: 1.25rem !important;
+    }
+    
+    .createPostButton {
+        padding: 14px 18px !important;
+        font-size: 1.1rem !important;
+    }
+    
+    .actionIcon {
+        padding: 0.875rem 1.25rem;
+    }
+    
+    .modalContainer {
+        width: 550px;
+        max-width: 650px;
+    }
 }

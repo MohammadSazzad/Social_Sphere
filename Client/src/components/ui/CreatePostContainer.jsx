@@ -105,32 +105,41 @@ const CreatePostContainer = () => {
     };
 
     return (
-        <>
+        <div className={styles.createPostWrapper}>
             <div className={`${styles.CreatePostContainer} card bg-color-white rounded shadow border-0`}>
-                <div className="card-body p-3 p-md-3">
-                    <div className="d-flex flex-column text-start ">
-                        <div className="d-flex align-items-center gap-3 p-1">
-                            <img
-                                src={authUser?.image || TitleProfile}
-                                alt="Profile"
-                                style={{ height: "40px", width: "40px", borderRadius: "50%" }}
-                            />
-                            <div className="w-100">
-                                <button
-                                    className={`${styles.createPostButton} btn w-100 border rounded text-start`}
-                                    onClick={() => setModal(true)}
-                                >
-                                    {`What's happening, ${authUser?.first_name}?`}
+                <div className={`card-body ${styles.cardBody}`}>
+                    <div className="d-flex flex-column text-start">
+                        <div className={`d-flex align-items-center justify-content-between ${styles.postTriggerContainer}`}>
+                            <div className={`d-flex align-items-center gap-3 ${styles.postTrigger}`}>
+                                <img
+                                    src={authUser?.image || TitleProfile}
+                                    alt="Profile"
+                                    className={styles.profileImage}
+                                />
+                                <div className="flex-grow-1">
+                                    <button
+                                        className={`${styles.createPostButton} btn w-100 border rounded text-start`}
+                                        onClick={() => setModal(true)}
+                                    >
+                                        {`What's happening, ${authUser?.first_name}?`}
+                                    </button>
+                                </div>
+                            </div>
+                            <div className={`${styles.mobileImageIcon} d-xl-none`}>
+                                <button className={styles.actionIcon} onClick={handleFileChange}>
+                                    <Image size={20} />
                                 </button>
                             </div>
                         </div>
-                        <div className="d-flex justify-content-between">
-                            <div className="d-flex gap-3 ms-4 mt-3 ps-5">
-                                <div><Image /></div>
-                                <div><Gift /></div>
-                                <div><TextQuote /></div>
-                                <div><Smile /></div>
-                                <div><CalendarClock /></div>
+                        <div className={`d-none d-xl-flex justify-content-between ${styles.actionsContainer}`}>
+                            <div className={`d-flex gap-3 ${styles.actionIcons}`}>
+                                <button className={styles.actionIcon} onClick={handleFileChange}>
+                                    <Image size={20} />
+                                </button>
+                                <button className={styles.actionIcon}><Gift size={20} /></button>
+                                <button className={styles.actionIcon}><TextQuote size={20} /></button>
+                                <button className={styles.actionIcon}><Smile size={20} /></button>
+                                <button className={styles.actionIcon}><CalendarClock size={20} /></button>
                             </div>
                         </div>
                     </div>
@@ -257,7 +266,7 @@ const CreatePostContainer = () => {
                     },
                 }}
             />
-        </>
+        </div>
     );
 };
 

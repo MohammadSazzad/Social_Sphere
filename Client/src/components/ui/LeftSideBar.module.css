@@ -7,16 +7,20 @@
     background-color: #e0e5e9; 
 }
 
-/* Mobile Responsive - Hide sidebar on screens smaller than 768px */
-@media (max-width: 767.98px) {
+@media (max-width: 991.98px) {
     .leftSidebar {
         display: none !important;
     }
 }
 
-/* Tablet - Reduce width on medium screens */
-@media (min-width: 768px) and (max-width: 991.98px) {
+@media (min-width: 992px) and (max-width: 1199.98px) {
     .leftSidebar {
-        width: 280px !important;
+        width: 320px !important;
+    }
+}
+
+@media (min-width: 1200px) {
+    .leftSidebar {
+        width: 380px !important;
     }
 }

@@ -36,7 +36,7 @@ const Stories = () => {
         dots: false,
         infinite: false,
         speed: 500,
-        slidesToShow: 5.5,
+        slidesToShow: 5.4,
         slidesToScroll: 3,
         arrows: true,
         draggable: true,
@@ -44,21 +44,38 @@ const Stories = () => {
         prevArrow: <PrevArrow />,
         responsive: [
             {
-                breakpoint: 1024,
+                breakpoint: 1199,
                 settings: {
-                    slidesToShow: 5,
+                    slidesToShow: 5.8,
+                    slidesToScroll: 2,
                 },
             },
             {
-                breakpoint: 768,
+                breakpoint: 991,
+                settings: {
+                    slidesToShow: 5.5,
+                    slidesToScroll: 2,
+                },
+            },
+            {
+                breakpoint: 767,
+                settings: {
+                    slidesToShow: 4.5,
+                    slidesToScroll: 2,
+                },
+            },
+            {
+                breakpoint: 575,
                 settings: {
                     slidesToShow: 4,
+                    slidesToScroll: 2,
                 },
             },
             {
                 breakpoint: 480,
                 settings: {
-                    slidesToShow: 3,
+                    slidesToShow: 3.5,
+                    slidesToScroll: 1,
                 },
             },
         ],
@@ -70,9 +87,10 @@ const Stories = () => {
     }
 
     return (
-        <div className='container-fluid px-4 py-2 position-relative'>
-            <Slider {...settings}>
-                <div className="px-1" onClick={handleCreateStory}>
+        <div className={styles.storiesWrapper}>
+            <div className='container-fluid px-0 py-2 position-relative'>
+                <Slider {...settings}>
+                <div className="px-0" onClick={handleCreateStory}>
                         <div className="d-flex flex-column align-items-center story-item">
                             <div className={styles.storyContainer}>
                                 <div className="d-flex align-items-center justify-content-center border border-2 border-white" style={{ height: '30px', width:'30px', position: 'absolute', top:'66%', left:'39%', right: '39%', backgroundColor: `#075CE5`, borderRadius: '50%', cursor: 'pointer', color: 'white' }}>
@@ -102,7 +120,7 @@ const Stories = () => {
                         </div>
                     </div>
                 {allStories.map((story) => (
-                    <div key={story.id} className="px-1" onClick={ () => handleShowStory (story.id) }>
+                    <div key={story.id} className="px-0" onClick={ () => handleShowStory (story.id) }>
                         <div className="d-flex flex-column align-items-center story-item">
                             <div className={styles.storyContainer}>
                                 <div className={styles.profileIcon}>
@@ -130,6 +148,7 @@ const Stories = () => {
                     </div>
                 ))}
             </Slider>
+            </div>
         </div>
     )
 }

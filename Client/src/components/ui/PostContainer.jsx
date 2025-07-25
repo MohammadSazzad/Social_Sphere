@@ -103,16 +103,20 @@ const PostContainer = () => {
 
 
     return (
-        <> 
+        <div className={styles.postContainerWrapper}>
             {posts.map( (post) => (
-                <div key={post.id} className="card m-4 border-0 shadow p-3">
-                    <div className="">
-                        <div className="d-flex justify-content-between">
-                            <div className="d-flex gap-2">
-                                <img src={post.profilePicture || TitleProfile} alt="profile" className="rounded-circle" style={{height:'40px', width:'40px'}}/>
-                                <div className="d-flex flex-column ml-2">
-                                    <h6 className="mb-0">{post.firstName + " " + post.lastName}</h6>
-                                    <small>{formatTimeDifference(post.createdAt)}</small>
+                <div key={post.id} className={`card border-0 shadow ${styles.postCard}`}>
+                    <div className={styles.postHeader}>
+                        <div className={`d-flex justify-content-between align-items-start ${styles.postHeaderContent}`}>
+                            <div className={`d-flex gap-2 ${styles.authorInfo}`}>
+                                <img 
+                                    src={post.profilePicture || TitleProfile} 
+                                    alt="profile" 
+                                    className={`rounded-circle ${styles.profileImage}`}
+                                />
+                                <div className={`d-flex flex-column ${styles.authorDetails}`}>
+                                    <h6 className={`mb-0 ${styles.authorName}`}>{post.firstName + " " + post.lastName}</h6>
+                                    <small className={styles.postTime}>{formatTimeDifference(post.createdAt)}</small>
                                 </div>
                             </div>
                             <div className="position-relative">
@@ -187,67 +191,81 @@ const PostContainer = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="card-body">
-                        <p className="card-text">
+                    <div className={`card-body ${styles.postBody}`}>
+                        <p className={`card-text ${styles.postContent}`}>
                             {post.content}
                         </p>
-                        {post.mediaUrl &&  <div className={styles.postImageContainer}>
-                            <img src={ post.mediaUrl } alt="post" className={`img-fluid ${styles.PostImage}`} />
-                        </div>}
-                        
+                        {post.mediaUrl && (
+                            <div className={styles.postImageContainer}>
+                                <img src={post.mediaUrl} alt="post" className={`img-fluid ${styles.PostImage}`} />
+                            </div>
+                        )}
                     </div>
-                    <div className="d-flex justify-content-between ">
-                        <div>
+                    
+                   
+                    <div className={`d-flex justify-content-between ${styles.postStats}`}>
+                        <div className={styles.reactCount}>
                             {post.reactionCount} reacts
                         </div>
-                        <div className="d-flex gap-3">
+                        <div className={`d-flex gap-3 ${styles.interactionCounts}`}>
                             <div>{post.commentCount} comments</div>
                             <div>2 shares</div>
                         </div>
                     </div>
-                    <hr />
-                    <div className="d-flex justify-content-around">
-                        <div className="d-flex gap-2">
-                        <ThumbsUp size={20} />
-                            Like
-                        </div>
-                        <div className="d-flex gap-2">
-                        <MessageCircleMore  size={20}/>
-                            Comment
-                        </div>
-                        <div className="d-flex gap-2">
-                        <Send size={20}/>
-                            Send
-                        </div>
-                        <div className="d-flex gap-2">
-                        <Share size={20}/>
-                            Share
-                        </div>
+                    
+                    <hr className={styles.divider} />
+                    
+                   
+                    <div className={`d-flex justify-content-around ${styles.actionButtons}`}>
+                        <button className={`d-flex gap-2 align-items-center ${styles.actionButton}`}>
+                            <ThumbsUp size={20} />
+                            <span className={styles.actionText}>Like</span>
+                        </button>
+                        <button className={`d-flex gap-2 align-items-center ${styles.actionButton}`}>
+                            <MessageCircleMore size={20}/>
+                            <span className={styles.actionText}>Comment</span>
+                        </button>
+                        <button className={`d-flex gap-2 align-items-center ${styles.actionButton}`}>
+                            <Send size={20}/>
+                            <span className={styles.actionText}>Send</span>
+                        </button>
+                        <button className={`d-flex gap-2 align-items-center ${styles.actionButton}`}>
+                            <Share size={20}/>
+                            <span className={styles.actionText}>Share</span>
+                        </button>
                     </div>
-                    <hr />
-                    <div className="d-flex justify-content-between">
-                        <div className="d-flex align-items-center gap-1 ">
-                        <img 
-                            src={authUser?.image || TitleProfile} 
-                            alt="profile" 
-                            style={{
-                                height: '32px', 
-                                width: '32px', 
-                                borderRadius: '50%', 
-                            }}
+                    
+                    <hr className={styles.divider} />
+                    
+                    
+                    <div className={`d-flex justify-content-between align-items-center ${styles.commentSectionWrapper}`}>
+                        <div className={`d-flex align-items-center gap-2 ${styles.commentInputSection}`}>
+                            <img 
+                                src={authUser?.image || TitleProfile} 
+                                alt="profile" 
+                                className={styles.commentProfileImage}
                             />
-
-                            <input type="text" className={`${styles.commentSection} form-control`} placeholder="Write a comment." />
+                            <input 
+                                type="text" 
+                                className={`${styles.commentSection} form-control`} 
+                                placeholder="Write a comment..." 
+                            />
                         </div>
-                        <div className="d-flex gap-2">
-                            <button className="btn btn block rounded-circle  border-black"><Link size={15} /> </button>
-                            <button className="btn btn block rounded-circle  border-black"><Smile size={15}/></button>
-                            <button className="btn btn block rounded-circle  border-black"><SendHorizontal size={15} /></button>
+                        <div className={`d-flex gap-2 ${styles.commentActions}`}>
+                            <button className={`btn btn-outline-secondary ${styles.commentActionBtn}`}>
+                                <Link size={15} /> 
+                            </button>
+                            <button className={`btn btn-outline-secondary ${styles.commentActionBtn}`}>
+                                <Smile size={15}/>
+                            </button>
+                            <button className={`btn btn-outline-secondary ${styles.commentActionBtn}`}>
+                                <SendHorizontal size={15} />
+                            </button>
                         </div>
                     </div>
                 </div>
             ))}
-        </>
+        </div>
     );
 }
 

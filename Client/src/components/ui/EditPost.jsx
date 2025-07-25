@@ -155,13 +155,12 @@ const EditPost = () => {
 
     return (    
         <div className={styles.editPostContainer}>
-            {/* Main Content Area - Full Width */}
             <div className={styles.content}>
                 <div className="container-fluid">
                     <div className="row justify-content-center">
                         <div className="col-12 col-sm-11 col-md-10 col-lg-8 col-xl-6">
                             
-                            {/* Single Unified Edit Post Frame */}
+                            
                             <div className="card shadow-lg border-0">
                                 <div className="card-header bg-gradient text-white">
                                     <h5 className="mb-0 d-flex align-items-center">
@@ -172,7 +171,7 @@ const EditPost = () => {
                                 </div>
                                 
                                 <div className="card-body p-4">
-                                    {/* User Info */}
+                                    
                                     <div className="d-flex align-items-center gap-2 gap-sm-3 mb-4 p-2 p-sm-3 bg-light rounded">
                                         <img 
                                             src={post.profilePicture || TitleProfile} 
@@ -188,7 +187,7 @@ const EditPost = () => {
                                         </div>
                                     </div>
 
-                                    {/* Content Editing */}
+                                    
                                     <div className="mb-4">
                                         <label className="form-label fw-bold text-primary d-flex align-items-center">
                                             <Edit3 size={16} className="me-2" />
@@ -209,14 +208,14 @@ const EditPost = () => {
                                         </div>
                                     </div>
 
-                                    {/* Media Section */}
+                                    
                                     <div className="mb-4">
                                         <label className="form-label fw-bold text-warning d-flex align-items-center">
                                             <Image size={16} className="me-2" />
                                             Media
                                         </label>
                                         
-                                        {/* Current Image Display */}
+                                        
                                         {(selectedImage && selectedImage !== 'REMOVED') || (post.mediaUrl && !selectedImage) ? (
                                             <div className={`${styles.currentImageContainer} mb-3 text-center`}>
                                                 <img 
@@ -244,7 +243,7 @@ const EditPost = () => {
                                             </div>
                                         ) : null}
 
-                                        {/* Image Upload Controls */}
+                                        
                                         <div className="d-flex gap-2 flex-wrap justify-content-center justify-content-sm-start">
                                             <input
                                                 type="file"
@@ -279,7 +278,7 @@ const EditPost = () => {
                                         </div>
                                     </div>
 
-                                    {/* Live Preview */}
+                                    
                                     <div className="border-top pt-4">
                                         <h6 className="text-info mb-3 d-flex align-items-center flex-wrap">
                                             <span className="badge bg-info me-2 mb-1">Preview</span>
@@ -323,8 +322,7 @@ const EditPost = () => {
                                         </div>
                                     </div>
                                 </div>
-                                
-                                {/* Card Footer with Action Buttons */}
+                            
                                 <div className="card-footer bg-light border-0 d-flex justify-content-end gap-2 flex-column flex-sm-row">
                                     <button 
                                         type="button" 

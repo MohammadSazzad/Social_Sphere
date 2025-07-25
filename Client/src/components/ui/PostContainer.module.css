@@ -1,6 +1,182 @@
+/* Post Container Wrapper */
+.postContainerWrapper {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Post Card */
+.postCard {
+    margin-bottom: 1.5rem !important;
+    padding: 1rem !important;
+    border-radius: 16px !important;
+    background: #fff;
+    transition: all 0.3s ease;
+}
+
+.postCard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Post Header */
+.postHeader {
+    margin-bottom: 1rem;
+}
+
+.postHeaderContent {
+    width: 100%;
+}
+
+.authorInfo {
+    flex: 1;
+    align-items: center;
+}
+
+.profileImage {
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    border: 2px solid #f8f9fa;
+    transition: border-color 0.3s ease;
+}
+
+.profileImage:hover {
+    border-color: #007bff;
+}
+
+.authorDetails {
+    margin-left: 0.5rem;
+}
+
+.authorName {
+    font-weight: 600;
+    color: #1a202c;
+    font-size: 1rem;
+}
+
+.postTime {
+    color: #6c757d;
+    font-size: 0.875rem;
+}
+
+/* Post Body */
+.postBody {
+    padding: 0 !important;
+    margin-bottom: 1rem;
+}
+
+.postContent {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #2d3748;
+    margin-bottom: 0.75rem;
+    word-wrap: break-word;
+}
+
+.postStats {
+    padding: 0.5rem 0;
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+.reactCount {
+    font-weight: 500;
+}
+
+.interactionCounts {
+    font-weight: 500;
+}
+
+.divider {
+    margin: 0.75rem 0 !important;
+    border-color: #e9ecef !important;
+    opacity: 0.7;
+}
+
+
+.actionButtons {
+    padding: 0.5rem 0;
+}
+
+.actionButton {
+    background: none !important;
+    border: none !important;
+    color: #6c757d !important;
+    font-weight: 500;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    flex: 1;
+    max-width: none;
+    justify-content: center;
+}
+
+.actionButton:hover {
+    background-color: #f8f9fa !important;
+    color: #007bff !important;
+    transform: translateY(-1px);
+}
+
+.actionText {
+    font-size: 0.9rem;
+}
+
+
+.commentSectionWrapper {
+    gap: 0.75rem;
+}
+
+.commentInputSection {
+    flex: 1;
+    min-width: 0;
+}
+
+.commentProfileImage {
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #f8f9fa;
+    flex-shrink: 0;
+}
+
 .commentSection{
     width: 100%;
-    border-radius: 20px;
+    border-radius: 20px !important;
+    border: 1px solid #e9ecef !important;
+    padding: 0.5rem 1rem !important;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.commentSection:focus {
+    border-color: #007bff !important;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
+}
+
+.commentActions {
+    flex-shrink: 0;
+}
+
+.commentActionBtn {
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-color: #dee2e6 !important;
+    transition: all 0.3s ease;
+}
+
+.commentActionBtn:hover {
+    background-color: #007bff !important;
+    border-color: #007bff !important;
+    color: white !important;
+    transform: scale(1.05);
 }
 
 .postOptions{
@@ -10,26 +186,32 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: all 0.3s ease;
 }
 
 .postOptions:hover{
     cursor: pointer;
     background-color: #F8F9FA;
+    transform: scale(1.05);
 }
 
 .postImageContainer {
     width: 100%;
-    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #EDF2FE;
     border-radius: 16px;
+    margin: 1rem 0;
+    overflow: hidden;
 }
 
 .PostImage {
-    max-width: 600px;
+    max-width: 100%;
+    height: auto;
     max-height: 600px;
+    object-fit: contain;
+    border-radius: 12px;
 }
 
 .customDropdown {
@@ -86,5 +268,152 @@
     to {
         opacity: 1;
         transform: translateY(0) scale(1);
+    }
+}
+
+@media (max-width: 575.98px) {
+    .postContainerWrapper {
+        padding: 0 8px;
+    }
+    
+    .postCard {
+        margin-bottom: 1rem !important;
+        padding: 0.75rem !important;
+        border-radius: 12px !important;
+    }
+    
+    .profileImage {
+        height: 36px;
+        width: 36px;
+    }
+    
+    .authorName {
+        font-size: 0.9rem;
+    }
+    
+    .postTime {
+        font-size: 0.8rem;
+    }
+    
+    .postContent {
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+    
+    .postStats {
+        font-size: 0.8rem;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .interactionCounts {
+        display: flex;
+        gap: 1rem;
+        margin-top: 0;
+    }
+    
+    .actionButtons {
+        flex-wrap: nowrap;
+        gap: 0;
+        justify-content: space-around;
+    }
+    
+    .actionButton {
+        padding: 0.5rem 0.25rem;
+        font-size: 0.75rem;
+        min-width: 0;
+        flex: 1;
+        max-width: none;
+    }
+    
+    .actionText {
+        font-size: 0.7rem;
+        margin-left: 0.25rem;
+    }
+    
+    .commentSectionWrapper {
+        flex-direction: row;
+        gap: 0.5rem;
+        align-items: center;
+    }
+    
+    .commentInputSection {
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .commentActions {
+        flex-shrink: 0;
+        gap: 0.25rem;
+    }
+    
+    .commentActionBtn {
+        width: 32px !important;
+        height: 32px !important;
+    }
+    
+    .PostImage {
+        max-height: 400px;
+    }
+    
+    .customDropdown {
+        min-width: 180px;
+        left: -140px !important;
+        right: auto !important;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .postContainerWrapper {
+        padding: 0 12px;
+    }
+    
+    .postCard {
+        padding: 0.875rem !important;
+    }
+    
+    .actionButton {
+        padding: 0.625rem 0.875rem;
+    }
+    
+    .PostImage {
+        max-height: 500px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .postContainerWrapper {
+        padding: 0 16px;
+    }
+    
+    .actionButtons {
+        padding: 0.75rem 0;
+    }
+    
+    .actionButton {
+        padding: 0.75rem 1rem;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .postCard {
+        margin-bottom: 1.75rem !important;
+    }
+}
+
+@media (min-width: 1200px) {
+    .postCard {
+        margin-bottom: 2rem !important;
+        padding: 1.25rem !important;
+    }
+    
+    .postContent {
+        font-size: 1.1rem;
+    }
+    
+    .actionButton {
+        padding: 0.875rem 1.25rem;
     }
 }

@@ -12,16 +12,20 @@
     border-radius: 20px;
 }
 
-/* Mobile Responsive - Hide right sidebar on screens smaller than 992px */
 @media (max-width: 991.98px) {
     .rightSidebar {
         display: none !important;
     }
 }
 
-/* Large Desktop - Full width sidebar */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .rightSidebar {
+        width: 320px !important;
+    }
+}
+
 @media (min-width: 1200px) {
     .rightSidebar {
-        width: 400px !important;
+        width: 380px !important;
     }
 }

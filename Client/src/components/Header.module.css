@@ -1,4 +1,478 @@
+/* Logo Styles */
+.logo {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+/* Desktop Navigation */
+.desktopLayout {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+
+@media (max-width: 1199.98px) {
+    .desktopLayout {
+        display: none !important;
+    }
+}
+
+
+@media (min-width: 1200px) {
+    .desktopLayout {
+        display: flex !important;
+    }
+}
+
+.logoSearchContainer {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    flex: 1;
+    min-width: 0;
+    max-width: none;
+}
+.desktopRightActions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+    justify-content: flex-end;
+    min-width: 0;
+    max-width: none;
+}
+.desktopNav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 2;
+    padding: 0;
+    min-width: 0;
+    max-width: none;
+}
+
+.desktopNav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 2;
+    padding: 0;
+    min-width: 0;
+    max-width: none;
+}
+
+.navButton {
+    padding: 0.75rem 1.5rem !important;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    border: none;
+    background: transparent;
+}
+
 .navButton:hover {
-    background-color: #f1f1f1;
+    background-color: #f1f1f1 !important;
     color: #000;
+    transform: translateY(-1px);
+}
+
+.actionButton {
+    padding: 0.5rem !important;
+    border-radius: 50%;
+    border: 1px solid #e9ecef;
+    transition: all 0.2s ease;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.actionButton:hover {
+    background-color: #e9ecef !important;
+    transform: scale(1.05);
+}
+
+.profileButton {
+    padding: 0.25rem !important;
+    border: none !important;
+    background: transparent !important;
+    border-radius: 20px;
+    transition: background-color 0.2s ease;
+}
+
+.profileButton:hover {
+    background-color: #f8f9fa !important;
+}
+
+.profileImage {
+    width: 32px;
+    height: 32px;
+    border: 2px solid #e9ecef;
+    transition: border-color 0.2s ease;
+    object-fit: cover;
+}
+
+.profileImage:hover {
+    border-color: #007bff;
+}
+
+.mobileHeaderIcon {
+    padding: 0.5rem !important;
+    border-radius: 8px !important;
+    transition: all 0.2s ease !important;
+    border: none !important;
+    background: transparent !important;
+    color: #6c757d !important;
+    margin: 0 0.1rem !important;
+    min-width: 40px !important;
+    height: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.mobileHeaderIcon:hover,
+.mobileHeaderIcon:focus {
+    background-color: #f1f1f1 !important;
+    color: #007bff !important;
+    transform: translateY(-1px) !important;
+}
+
+.mobileHeaderIcon:active {
+    background-color: #e9ecef !important;
+    transform: translateY(0) !important;
+}
+
+
+.mobileSearchContainer {
+    max-width: 200px;
+    width: auto;
+}
+
+
+@media (max-width: 480px) {
+    .mobileSearchContainer {
+        max-width: 150px;
+    }
+}
+
+@media (max-width: 375px) {
+    .mobileSearchContainer {
+        max-width: 120px;
+    }
+}
+
+.mobileMenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 1px solid #e9ecef;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+    padding: 1rem;
+}
+
+.mobileNavButton {
+    padding: 0.75rem 1rem !important;
+    margin-bottom: 0.25rem;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+}
+
+.mobileNavButton:hover {
+    background-color: #f8f9fa !important;
+}
+
+
+.mobileBottomNav {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: white !important;
+    border-top: 1px solid #e9ecef !important;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1) !important;
+    z-index: 1050 !important;
+    display: flex !important;
+    justify-content: space-around !important;
+    align-items: center !important;
+    padding: 0.5rem 0 !important;
+    height: 60px !important;
+    width: 100vw !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+@media (max-width: 1199.98px) {
+    .mobileBottomNav {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+}
+
+@media (min-width: 1200px) {
+    .mobileBottomNav {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+    }
+}
+
+.mobileNavIcon {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0.25rem !important;
+    border-radius: 8px !important;
+    transition: all 0.2s ease !important;
+    flex: 1 !important;
+    color: #6c757d !important;
+    font-size: 0.75rem !important;
+    font-weight: 500 !important;
+    min-height: 50px !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+}
+
+.mobileNavIcon:hover,
+.mobileNavIcon:focus,
+.mobileNavIcon:active {
+    background-color: #f8f9fa !important;
+    color: #007bff !important;
+    transform: translateY(-1px) !important;
+}
+
+.mobileNavIcon span {
+    margin-top: 0.25rem !important;
+    font-size: 0.7rem !important;
+    line-height: 1 !important;
+    display: block !important;
+}
+
+@media (max-width: 575.98px) {
+    .logo {
+        height: 32px;
+        width: 32px;
+    }
+    
+    .profileImage {
+        width: 28px !important;
+        height: 28px !important;
+        border-width: 1px;
+    }
+    
+    .mobileHeaderIcon {
+        padding: 0.4rem !important;
+        margin: 0 0.05rem !important;
+        min-width: 36px !important;
+        height: 36px !important;
+    }
+    
+    .mobileSearchContainer {
+        max-width: 120px !important;
+    }
+    
+    .mobileMenu {
+        padding: 0.5rem;
+    }
+    
+    .mobileNavButton {
+        font-size: 0.9rem;
+        padding: 0.5rem 0.75rem !important;
+    }
+    
+    .mobileBottomNav {
+        height: 55px !important;
+        padding: 0.25rem 0;
+    }
+    
+    .mobileNavIcon {
+        font-size: 0.65rem !important;
+        min-height: 45px;
+        padding: 0.2rem;
+    }
+    
+    .mobileNavIcon span {
+        font-size: 0.6rem !important;
+        margin-top: 0.15rem;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .navButton {
+        padding: 0.5rem 1rem !important;
+    }
+    
+    .mobileHeaderIcon {
+        padding: 0.45rem !important;
+        min-width: 38px !important;
+        height: 38px !important;
+    }
+    
+    .mobileSearchContainer {
+        max-width: 180px !important;
+    }
+    
+    .mobileBottomNav {
+        height: 65px !important;
+        display: flex !important; 
+    }
+    
+    .mobileNavIcon {
+        font-size: 0.75rem !important;
+    }
+    
+    .mobileNavIcon span {
+        font-size: 0.65rem !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .navButton {
+        padding: 0.6rem 1.25rem !important;
+    }
+    
+    
+    .logoSearchContainer {
+        flex: 1;
+        gap: 2rem;
+    }
+    
+    .mobileSearchContainer {
+        max-width: 200px !important;
+    }
+    
+    .mobileBottomNav {
+        display: flex !important; 
+        height: 65px !important;
+    }
+}
+
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .logoSearchContainer {
+        flex: 1.2;
+        gap: 3rem;
+        padding-left: 1rem;
+    }
+    
+    .desktopNav {
+        flex: 2;
+    }
+    
+    .desktopRightActions {
+        flex: 1.2;
+        gap: 0.5rem;
+        padding-right: 1rem;
+    }
+    
+    .desktopNav ul {
+        gap: 1rem;
+    }
+}
+
+
+@media (min-width: 1200px) and (max-width: 1399.98px) {
+    .logoSearchContainer {
+        flex: 1.5;
+        gap: 4rem;
+        padding-left: 2rem;
+    }
+    
+    .desktopNav {
+        flex: 1.8;
+    }
+    
+    .desktopRightActions {
+        flex: 1.5;
+        gap: 0.75rem;
+        padding-right: 2rem;
+    }
+    
+    .desktopNav ul {
+        gap: 1.5rem;
+    }
+}
+
+
+@media (min-width: 1400px) {
+    .logoSearchContainer {
+        flex: 2;
+        gap: 5rem;
+        padding-left: 3rem;
+    }
+    
+    .desktopNav {
+        flex: 1.5;
+    }
+    
+    .desktopRightActions {
+        flex: 2;
+        gap: 1rem;
+        padding-right: 3rem;
+    }
+    
+    .desktopNav ul {
+        gap: 2rem;
+    }
+}
+
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .logo,
+    .profileImage {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+:global(.main-content) {
+    padding-top: 60px; 
+}
+
+
+@media (max-width: 1199.98px) {
+    :global(.main-content) {
+        padding-bottom: 65px !important; 
+    }
+}
+
+
+@media (min-width: 1200px) {
+    :global(.main-content) {
+        padding-bottom: 0 !important; 
+    }
+}
+
+@media (max-width: 575.98px) {
+    :global(.main-content) {
+        padding-bottom: 60px !important; 
+    }
+}
+
+
+@media (max-width: 1199.98px) {
+    :global(body) {
+        margin-bottom: 0 !important;
+        overflow-x: hidden;
+    }
 }
