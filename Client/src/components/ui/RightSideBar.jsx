@@ -9,7 +9,7 @@ const RightSideBar = () => {
     const { users, events } = useContext(Context);
 
     return (
-        <div className="d-flex flex-column flex-shrink-0 p-3 bg-light" style={{
+        <div className={`d-flex flex-column flex-shrink-0 p-3 bg-light ${styels.rightSidebar}`} style={{
             position: "fixed", 
             top: 60,
             right: 0, 

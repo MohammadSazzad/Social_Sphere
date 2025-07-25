@@ -1,5 +1,22 @@
-  
-  .navLink:hover {
-    background-color: #e0e5e9; /* Choose any color you like */
-  }
-  
+/* Left Sidebar Styles */
+.leftSidebar {
+    transition: transform 0.3s ease-in-out;
+}
+
+.navLink:hover {
+    background-color: #e0e5e9; 
+}
+
+/* Mobile Responsive - Hide sidebar on screens smaller than 768px */
+@media (max-width: 767.98px) {
+    .leftSidebar {
+        display: none !important;
+    }
+}
+
+/* Tablet - Reduce width on medium screens */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .leftSidebar {
+        width: 280px !important;
+    }
+}

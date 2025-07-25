@@ -15,7 +15,7 @@ const LeftSideBar = () => {
     }
     
     return (
-        <div className="d-flex flex-column flex-shrink-0 p-3 bg-light" style={{
+        <div className={`d-flex flex-column flex-shrink-0 p-3 bg-light ${styles.leftSidebar}`} style={{
             position: "fixed", 
             top: 60,
             left: 0,

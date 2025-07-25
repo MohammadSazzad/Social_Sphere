@@ -1,3 +1,8 @@
+/* Right Sidebar Styles */
+.rightSidebar {
+    transition: transform 0.3s ease-in-out;
+}
+
 .friendContainer {
     background-color: #F8F9FA;
 }
@@ -5,4 +10,18 @@
 .cardContainer {
     background-color: #EDF2FE;
     border-radius: 20px;
+}
+
+/* Mobile Responsive - Hide right sidebar on screens smaller than 992px */
+@media (max-width: 991.98px) {
+    .rightSidebar {
+        display: none !important;
+    }
+}
+
+/* Large Desktop - Full width sidebar */
+@media (min-width: 1200px) {
+    .rightSidebar {
+        width: 400px !important;
+    }
 }
