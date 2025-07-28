@@ -48,9 +48,9 @@ jobs:
       - name: Azure Login
         uses: azure/login@v2
         with:
-          client-id:     ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id:     ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_11DB3CB680A64735BA8ED233638DE1B7 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_BE67D73BC6E84FD8AD4154ABEE526109 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_CFF5C0A625F645799EE7EAB96B646BC2 }}
 
       # 7. Deploy backend (including frontend inside public/) to Azure Web App
       - name: Deploy to Azure Web App
