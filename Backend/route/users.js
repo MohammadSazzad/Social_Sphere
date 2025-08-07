@@ -10,9 +10,7 @@ import {
   logoutController,
   authCheckController,
   getUserByIdController,
-  getUserProfileController,
-  updateUserBioController,
-  updateUserAboutController
+  getUserPostsController,
 } from "../controller/users.js";
 
 const usersRouter = express.Router();
@@ -28,7 +26,7 @@ usersRouter.post("/login", loginController);
 usersRouter.post("/upload/:id", upload.single("file"), uploadImageController);
 usersRouter.post("/logout", logoutController);
 usersRouter.get("/check", protectRoute, authCheckController);
-usersRouter.put("/user/:id/bio", protectRoute, updateUserBioController);
-usersRouter.put("/user/:id/about", protectRoute, updateUserAboutController);
+usersRouter.get("/post/:userId", protectRoute, getUserPostsController);
+//usersRouter.put("/user/:id/about", protectRoute, updateUserAboutController);
 
 export default usersRouter;

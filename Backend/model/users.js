@@ -34,13 +34,22 @@ export const uploadImage = async (id, profile_picture_url) => {
 
 
  export const getUserPosts = async(userId) => {
-    const result = await pool.query('GET * FROM users WHERE id = &1', [userId]);
-    return result.rows[0];
- }
-export const updateUserBio = async (userId, bio) => {
     const result = await pool.query(
-        'UPDATE users SET bio = $1 WHERE id = $2 RETURNING id, bio',
-        [bio, userId]
+      `SELECT 
+        p.Id as postId,
+        p.content,
+        m.url,
+        p.privacy_setting,
+        c.content AS comments,
+        p.created_at,
+        p.updated_at,
+        p.is_adult,
+        p.toxicity_score
+        FROM posts p
+        LEFT JOIN media   m ON p.id = m.post_id
+        LEFT JOIN comments c ON p.id = c.post_id
+        WHERE p.user_id = $1`, [userId]
+
     );
-    return result.rows[0];
-};
+    return result.rows;
+ }

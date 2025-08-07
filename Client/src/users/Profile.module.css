@@ -1,0 +1,961 @@
+.profilePage {
+  max-width: 960px;
+  margin: 40px auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profilePage {
+    margin: 10px;
+    border-radius: 12px;
+    max-width: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .profilePage {
+    margin: 5px;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.coverWrapper {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background: #ddd;
+}
+
+/* Cover Responsive */
+@media (max-width: 768px) {
+  .coverWrapper {
+    height: 220px;
+  }
+}
+
+@media (max-width: 480px) {
+  .coverWrapper {
+    height: 180px;
+  }
+}
+
+.coverImg {
+  width: 100%;
+  height: 100%;
+  background-color: #fc25bb;
+  object-fit: cover;
+  filter: brightness(0.75);
+}
+
+.changeCover {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  background: #2575fc;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Change Cover Button Responsive */
+@media (max-width: 768px) {
+  .changeCover {
+    padding: 6px 12px;
+    font-size: 14px;
+    bottom: 10px;
+    right: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .changeCover {
+    padding: 5px 10px;
+    font-size: 12px;
+    bottom: 8px;
+    right: 8px;
+    gap: 4px;
+  }
+}
+
+.profileInfo {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+  /* Position profile name below cover photo and center it for all screens */
+  position: static;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-top: 20px;
+  padding: 0 30px;
+}
+
+.profileInfo h1 {
+  color: #333;
+  font-size: 2rem;
+  font-weight: bold;
+  text-shadow: none;
+  margin: 0;
+}
+
+/* Profile Info Responsive */
+@media (max-width: 768px) {
+  .profileInfo {
+    margin-top: 15px;
+    padding: 0 20px;
+  }
+
+  .profileInfo h1 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .profileInfo {
+    margin-top: 15px;
+    padding: 0 15px;
+  }
+
+  .profileInfo h1 {
+    font-size: 1.5rem;
+  }
+}
+
+.profileImg {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  border: 5px solid #fff;
+  position: absolute;
+  /* Center the profile picture on cover photo for all screens */
+  top: 85%;
+  left: 10%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+}
+.profileDetails{
+  flex: 1;
+  text-align: left;
+  position: absolute;
+  top: 85%;
+  left: 20%;
+}
+
+/* Profile Image Responsive */
+@media (max-width: 768px) {
+  .profileImg {
+    width: 120px;
+    height: 120px;
+    border-width: 4px;
+    top: 70%;
+    left: 17%;
+  }
+  .profileDetails {
+    top: 60%;
+    left: 35%;
+  }
+}
+
+@media (max-width: 480px) {
+  .profileImg {
+    width: 100px;
+    height: 100px;
+    border-width: 3px;
+  }
+}
+
+.profileImg__img {
+  width: 100%;
+  height: 100%;
+  
+  object-fit: cover;
+  
+  border-radius: 50%;
+}
+
+
+.bioInput {
+  width: 100%;
+  min-height: 40px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  padding: 8px;
+  font-size: 16px;
+  resize: vertical;
+}
+
+.tabNav {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 30px;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  background-color: #fafafa;
+}
+
+/* Tab Navigation Responsive */
+@media (max-width: 768px) {
+  .tabNav {
+    margin-top: 25px;
+    overflow-x: auto;
+    white-space: nowrap;
+    justify-content: flex-start;
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tabNav {
+    margin-top: 20px;
+    padding: 0 5px;
+  }
+}
+
+.tab, .activeTab {
+  flex: 1;
+  padding: 14px;
+  font-weight: 500;
+  font-size: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  min-width: 100px;
+}
+
+/* Tab Button Responsive */
+@media (max-width: 768px) {
+  .tab, .activeTab {
+    padding: 12px;
+    font-size: 0.9rem;
+    min-width: 80px;
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .tab, .activeTab {
+    padding: 10px 8px;
+    font-size: 0.8rem;
+    min-width: 70px;
+  }
+}
+
+.tab:hover {
+  background-color: #f0f0f0;
+}
+
+.activeTab {
+  border-bottom: 3px solid #2575fc;
+  font-weight: bold;
+  background-color: #fff;
+}
+
+.tabContent {
+  padding: 30px;
+  font-size: 1rem;
+  color: #444;
+}
+
+/* Tab Content Responsive */
+@media (max-width: 768px) {
+  .tabContent {
+    padding: 20px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .tabContent {
+    padding: 15px;
+    font-size: 0.9rem;
+  }
+}
+
+.createPost {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+/* Create Post Responsive */
+@media (max-width: 768px) {
+  .createPost {
+    gap: 8px;
+    margin-bottom: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .createPost {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+.createPost input {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* Create Post Input Responsive */
+@media (max-width: 480px) {
+  .createPost input {
+    padding: 12px;
+    font-size: 16px;
+  }
+}
+
+.createPost button {
+  padding: 10px 20px;
+  background: #2575fc;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Create Post Button Responsive */
+@media (max-width: 768px) {
+  .createPost button {
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .createPost button {
+    padding: 12px;
+    width: 100%;
+    font-size: 16px;
+  }
+}
+
+.postCard {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Post Card Responsive */
+@media (max-width: 768px) {
+  .postCard {
+    padding: 14px;
+    margin-bottom: 16px;
+    border-radius: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .postCard {
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 4px;
+  }
+}
+
+.postHeader {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+/* Post Header Responsive */
+@media (max-width: 768px) {
+  .postHeader {
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .postHeader {
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
+
+.postActions {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+/* Post Actions Responsive */
+@media (max-width: 768px) {
+  .postActions {
+    gap: 10px;
+    margin-top: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .postActions {
+    gap: 8px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+  }
+}
+
+.postActions button {
+  background: none;
+  border: none;
+  color: #2575fc;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 16px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+
+/* Post Actions Button Responsive */
+@media (max-width: 768px) {
+  .postActions button {
+    font-size: 14px;
+    padding: 3px 6px;
+    gap: 3px;
+  }
+}
+
+@media (max-width: 480px) {
+  .postActions button {
+    font-size: 13px;
+    padding: 4px 6px;
+    min-height: 36px;
+    justify-content: center;
+  }
+}
+
+.postActions button:hover {
+  background: #f0f6ff;
+}
+
+.liked {
+  color: #e0245e;
+  font-weight: bold;
+}
+
+/* About section inputs */
+.tabContent p {
+  margin: 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tabContent input,
+.tabContent select {
+  padding: 6px;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+/* Tab Content Inputs Responsive */
+@media (max-width: 768px) {
+  .tabContent input,
+  .tabContent select {
+    padding: 8px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .tabContent input,
+  .tabContent select {
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+h4 {
+  margin-bottom: 10px;
+  font-size: 1.4rem;
+  color: #222;
+}
+
+/* H4 Responsive */
+@media (max-width: 768px) {
+  h4 {
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  h4 {
+    font-size: 1.2rem;
+    margin-bottom: 6px;
+  }
+}
+
+textarea:focus, input:focus {
+  outline: none;
+  border-color: #2575fc;
+  box-shadow: 0 0 0 2px rgba(37, 117, 252, 0.2);
+}
+
+button:focus {
+  outline: none;
+}
+
+/* Post Container Wrapper */
+.postContainerWrapper {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Post Container Wrapper Responsive */
+@media (max-width: 768px) {
+    .postContainerWrapper {
+        padding: 0 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .postContainerWrapper {
+        padding: 0 10px;
+    }
+}
+
+/* Post Card */
+.postCard {
+    margin-bottom: 1.5rem !important;
+    padding: 1rem !important;
+    border-radius: 16px !important;
+    background: #fff;
+    transition: all 0.3s ease;
+}
+
+.postCard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Post Header */
+.postHeader {
+    margin-bottom: 1rem;
+}
+
+.postHeaderContent {
+    width: 100%;
+}
+
+.authorInfo {
+    flex: 1;
+    align-items: center;
+}
+
+.profileImage {
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    border: 2px solid #f8f9fa;
+    transition: border-color 0.3s ease;
+}
+
+.profileImage:hover {
+    border-color: #007bff;
+}
+
+.authorDetails {
+    margin-left: 0.5rem;
+}
+
+.authorName {
+    font-weight: 600;
+    color: #1a202c;
+    font-size: 1rem;
+}
+
+.postTime {
+    color: #6c757d;
+    font-size: 0.875rem;
+}
+
+/* Post Body */
+.postBody {
+    padding: 0 !important;
+    margin-bottom: 1rem;
+}
+
+.postContent {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #2d3748;
+    margin-bottom: 0.75rem;
+    word-wrap: break-word;
+}
+
+.postStats {
+    padding: 0.5rem 0;
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+.reactCount {
+    font-weight: 500;
+}
+
+.interactionCounts {
+    font-weight: 500;
+}
+
+.divider {
+    margin: 0.75rem 0 !important;
+    border-color: #e9ecef !important;
+    opacity: 0.7;
+}
+
+
+.actionButtons {
+    padding: 0.5rem 0;
+}
+
+.actionButton {
+    background: none !important;
+    border: none !important;
+    color: #6c757d !important;
+    font-weight: 500;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    flex: 1;
+    max-width: none;
+    justify-content: center;
+}
+
+.actionButton:hover {
+    background-color: #f8f9fa !important;
+    color: #007bff !important;
+    transform: translateY(-1px);
+}
+
+.actionText {
+    font-size: 0.9rem;
+}
+
+
+.commentSectionWrapper {
+    gap: 0.75rem;
+}
+
+.commentInputSection {
+    flex: 1;
+    min-width: 0;
+}
+
+.commentProfileImage {
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #f8f9fa;
+    flex-shrink: 0;
+}
+
+.commentSection{
+    width: 100%;
+    border-radius: 20px !important;
+    border: 1px solid #e9ecef !important;
+    padding: 0.5rem 1rem !important;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.commentSection:focus {
+    border-color: #007bff !important;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
+}
+
+.commentActions {
+    flex-shrink: 0;
+}
+
+.commentActionBtn {
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-color: #dee2e6 !important;
+    transition: all 0.3s ease;
+}
+
+.commentActionBtn:hover {
+    background-color: #007bff !important;
+    border-color: #007bff !important;
+    color: white !important;
+    transform: scale(1.05);
+}
+
+.postOptions{
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.postOptions:hover{
+    cursor: pointer;
+    background-color: #F8F9FA;
+    transform: scale(1.05);
+}
+
+.postImageContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #EDF2FE;
+    border-radius: 16px;
+    margin: 1rem 0;
+    overflow: hidden;
+}
+
+.PostImage {
+    max-width: 100%;
+    height: auto;
+    max-height: 600px;
+    object-fit: contain;
+    border-radius: 12px;
+}
+
+.customDropdown {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    padding: 8px 0;
+    background: #fff;
+    min-width: 200px;
+    animation: dropdownFadeIn 0.3s ease-out;
+    backdrop-filter: blur(10px);
+}
+
+.customDropdown .dropdown-item {
+    padding: 12px 16px;
+    border-radius: 0;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    font-weight: 500;
+    margin: 2px 8px;
+    border-radius: 8px;
+}
+
+.customDropdown .dropdown-item:hover {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    transform: translateX(4px);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.customDropdown .dropdown-item:active {
+    transform: translateX(2px) scale(0.98);
+}
+
+.customDropdown .dropdown-item span {
+    transition: all 0.3s ease;
+}
+
+.customDropdown .dropdown-item:hover span {
+    font-weight: 600;
+}
+
+.customDropdown .dropdown-divider {
+    margin: 8px 16px;
+    border-top: 1px solid #e9ecef;
+    opacity: 0.7;
+}
+
+@keyframes dropdownFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (max-width: 575.98px) {
+    .postContainerWrapper {
+        padding: 0 8px;
+    }
+    
+    .postCard {
+        margin-bottom: 1rem !important;
+        padding: 0.75rem !important;
+        border-radius: 12px !important;
+    }
+    
+    .profileImage {
+        height: 36px;
+        width: 36px;
+    }
+    
+    .authorName {
+        font-size: 0.9rem;
+    }
+    
+    .postTime {
+        font-size: 0.8rem;
+    }
+    
+    .postContent {
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+    
+    .postStats {
+        font-size: 0.8rem;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .interactionCounts {
+        display: flex;
+        gap: 1rem;
+        margin-top: 0;
+    }
+    
+    .actionButtons {
+        flex-wrap: nowrap;
+        gap: 0;
+        justify-content: space-around;
+    }
+    
+    .actionButton {
+        padding: 0.5rem 0.25rem;
+        font-size: 0.75rem;
+        min-width: 0;
+        flex: 1;
+        max-width: none;
+    }
+    
+    .actionText {
+        font-size: 0.7rem;
+        margin-left: 0.25rem;
+    }
+    
+    .commentSectionWrapper {
+        flex-direction: row;
+        gap: 0.5rem;
+        align-items: center;
+    }
+    
+    .commentInputSection {
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .commentActions {
+        flex-shrink: 0;
+        gap: 0.25rem;
+    }
+    
+    .commentActionBtn {
+        width: 32px !important;
+        height: 32px !important;
+    }
+    
+    .PostImage {
+        max-height: 400px;
+    }
+    
+    .customDropdown {
+        min-width: 180px;
+        left: -140px !important;
+        right: auto !important;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .postContainerWrapper {
+        padding: 0 12px;
+    }
+    
+    .postCard {
+        padding: 0.875rem !important;
+    }
+    
+    .actionButton {
+        padding: 0.625rem 0.875rem;
+    }
+    
+    .PostImage {
+        max-height: 500px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .postContainerWrapper {
+        padding: 0 16px;
+    }
+    
+    .actionButtons {
+        padding: 0.75rem 0;
+    }
+    
+    .actionButton {
+        padding: 0.75rem 1rem;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .postCard {
+        margin-bottom: 1.75rem !important;
+    }
+}
+
+@media (min-width: 1200px) {
+    .postCard {
+        margin-bottom: 2rem !important;
+        padding: 1.25rem !important;
+    }
+    
+    .postContent {
+        font-size: 1.1rem;
+    }
+    
+    .actionButton {
+        padding: 0.875rem 1.25rem;
+    }
+}

@@ -1,7 +1,7 @@
 import { createJWT } from "../auth/createJWT.js";
 import { sendVerificationEmail } from "../auth/UserVerification.js";
 import { pool } from '../config/db.js';
-import { getUsers, getUserByEmail, signUp, verifyUser, uploadImage, getUserById, updateUserBio } from "../model/users.js";
+import { getUsers, getUserByEmail, signUp, verifyUser, uploadImage, getUserById, getUserPosts } from "../model/users.js";
 import bcrypt from 'bcrypt';
 import uploadOnCloudinary from "../utility/cloudinary.js";
 
@@ -147,79 +147,22 @@ export const verifyUserController = async (req, res) => {
     }catch(error){
         res.status(500).json({ message: error.message });
     }
- }
- export const getUserProfileController = async (req, res) => {
-  const { id } = req.params;
+ };
 
-  try {
-    const user = await getUserById(id);
-    if (!user) return res.status(404).json({ message: "User not found" });
-
-    res.json(user);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server error" });
-  }
-};
-export const updateUserAboutController = async (req, res) => {
-    const { id } = req.params;
-    const { work, school, college, university, currentCity, hometown, phone, birthdate, relationship } = req.body;
+export const getUserPostsController = async (req, res) => {
+    const { userId } = req.params;
+    const Id = req.user.id;
+    if(Id != userId) {
+        return res.status(403).json({ message: "You are not authorized to view this user's posts" });
+    }
 
     try {
-        const result = await pool.query(
-            `UPDATE users 
-             SET work = $1, school = $2, college = $3, university = $4, currentCity = $5, hometown = $6, 
-                 phone = $7, birthdate = $8, relationship = $9
-             WHERE id = $10 RETURNING *`,
-            [work, school, college, university, currentCity, hometown, phone, birthdate, relationship, id]
-        );
+        const posts = await getUserPosts(userId);
+        if (!posts) return res.status(404).json({ message: "No posts found for this user" });
 
-        if (!result.rows[0]) {
-            return res.status(404).json({ message: "User not found" });
-        }
-
-        res.status(200).json({ message: 'Profile information updated successfully', user: result.rows[0] });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.json(posts);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Server error" });
     }
-};
-
-export const updateUserBioController = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { bio } = req.body;
-
-        const updatedUser = await updateUserBio(id, bio);
-
-        if (!updatedUser) {
-            return res.status(404).json({ message: "User not found" });
-        }
-
-        res.status(200).json({ message: "Bio updated successfully", bio: updatedUser.bio });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
-
-// export const updateUserProfileController = async (req, res) => {
-//     try {
-//         const userId = req.params.id;
-//         const { first_name, last_name, bio, profile_picture_url } = req.body;
-
-        
-//         const updatedProfile = await updateUserProfile(userId, {
-//             first_name,
-//             last_name,
-//             bio,
-//             profile_picture_url,
-//         });
-
-//         if (!updatedProfile) {
-//             return res.status(404).json({ message: "User not found" });
-//         }
-
-//         res.status(200).json(updatedProfile);
-//     } catch (error) {
-//         res.status(500).json({ message: error.message });
-//     }
-// };
+}
