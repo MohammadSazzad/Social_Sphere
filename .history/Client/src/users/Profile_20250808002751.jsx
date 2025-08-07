@@ -32,7 +32,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const res = await axios.get(`/api/users/${userId}`);
+        const res = await axios.get(/api/users/${userId});
         const user = res.data;
 
         setBio(user.bio || "This is my bio...");
@@ -66,7 +66,7 @@ const Profile = () => {
 
   const handleAboutSave = async () => {
     try {
-      await axios.put(`/api/users/${userId}/about`, about);
+      await axios.put(/api/users/${userId}/about, about);
       setEditingAbout(false);
     } catch (error) {
       console.error("Error updating about info:", error);

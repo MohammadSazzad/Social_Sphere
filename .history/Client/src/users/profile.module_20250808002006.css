@@ -1,0 +1,106 @@
+.profileWrapper {
+  max-width: 900px;
+  margin: 100px auto 40px; /* added more top margin for fixed header */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.15);
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.coverSection {
+  position: relative;
+  width: 100%;
+  height: 260px;
+  overflow: hidden;
+  background-color: #ddd;
+}
+
+.coverImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.75);
+  transition: filter 0.3s ease;
+}
+
+.coverSection:hover .coverImg {
+  filter: brightness(1);
+}
+
+.profileImg {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid white;
+  position: absolute;
+  bottom: -80px;
+  left: 30px;
+  background-color: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.profileDetails {
+  padding: 100px 40px 40px 40px; /* top padding for profileImg overlap */
+}
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.username {
+  margin: 0;
+  font-size: 2.5rem;
+  color: #222;
+}
+
+.followBtn {
+  background-color: #007bff;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 25px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+
+.followBtn:hover {
+  background-color: #0056b3;
+}
+
+.bio {
+  margin-top: 15px;
+  font-size: 1.1rem;
+  color: #444;
+  line-height: 1.5;
+}
+
+.additionalInfo {
+  margin-top: 25px;
+  font-size: 1rem;
+  color: #555;
+}
+
+.additionalInfo strong {
+  color: #222;
+}
+
+.additionalInfo a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.additionalInfo a:hover {
+  text-decoration: underline;
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 50px 20px;
+  font-size: 1.3rem;
+  color: #666;
+}

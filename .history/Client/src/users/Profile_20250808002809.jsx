@@ -66,7 +66,7 @@ const Profile = () => {
 
   const handleAboutSave = async () => {
     try {
-      await axios.put(`/api/users/${userId}/about`, about);
+      await axios.put(/api/users/${userId}/about, about);
       setEditingAbout(false);
     } catch (error) {
       console.error("Error updating about info:", error);
