@@ -54,9 +54,10 @@ export const useAuthStore = create((set, get) => ({
         const { authUser } = get();
         if (!authUser || get().socket?.connected) return;
     
-        const socket = io("http://localhost:3000", {
-             auth: { userId: authUser.id }}, 
-        {
+        const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'http://localhost:3000';
+        
+        const socket = io(SOCKET_URL, {
+            auth: { userId: authUser.id },
             withCredentials: true,
             transports: ['websocket', 'polling'],
         });

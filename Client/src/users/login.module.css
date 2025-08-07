@@ -22,3 +22,103 @@
 .mainContainer {
   background-color: #F2F2F2;
 }
+
+@media (max-width: 768px) {
+  .mainContainer {
+    padding: 10px !important;
+    min-height: 100vh;
+  }
+  
+  .mobileContainer {
+    padding: 15px !important;
+    min-height: 100vh;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+  }
+  
+
+  .mobileContainer .d-flex > div:first-child {
+    display: none !important;
+  }
+  
+
+  .mobileContainer .d-flex > div:last-child {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  .mobileWrapper {
+    width: 100% !important;
+    max-width: 400px !important;
+    margin: 0 auto !important;
+  }
+  
+  .mobileLogo {
+    width: 200px !important;
+    height: auto !important;
+    margin: 40px auto 50px auto !important;
+    display: block !important;
+  }
+  
+  .mobileCard {
+    border-radius: 15px !important;
+    margin: 0 !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+  }
+  
+  .mobileForm {
+    padding: 25px !important;
+  }
+  
+  .mobileInput {
+    padding: 14px !important;
+    font-size: 16px !important;
+    margin-bottom: 15px !important;
+    border-radius: 8px !important;
+  }
+  
+  .mobileButton {
+    padding: 14px !important;
+    font-size: 16px !important;
+    margin: 15px 0 !important;
+    border-radius: 8px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .mobileContainer {
+    padding: 10px !important;
+  }
+  
+  .mobileWrapper {
+    margin: 0 auto !important;
+    max-width: 350px !important;
+  }
+  
+  .mobileLogo {
+    width: 260px !important;
+    margin: 30px auto 30px auto !important;
+  }
+  
+  .mobileForm {
+    padding: 20px !important;
+  }
+  
+  .mobileInput {
+    padding: 12px !important;
+    font-size: 16px !important;
+  }
+  
+  .mobileButton {
+    padding: 12px !important;
+    font-size: 15px !important;
+  }
+  
+  .titleStyling {
+    font-size: 1.2rem !important;
+  }
+}

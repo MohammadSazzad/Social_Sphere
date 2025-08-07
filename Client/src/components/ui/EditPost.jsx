@@ -47,14 +47,12 @@ const EditPost = () => {
     const handleSave = async () => {
         setIsLoading(true);
         try {
-            // Validate content before sending
             if (!editedContent || editedContent.trim().length === 0) {
                 toast.error("Post content cannot be empty");
                 setIsLoading(false);
                 return;
             }
 
-            // Create FormData for the API call
             const formData = new FormData();
             formData.append('post_id', post.postId.toString());
             formData.append('user_id', post.userId.toString());
@@ -67,9 +65,7 @@ const EditPost = () => {
                 hasSelectedImage: !!selectedImage
             });
             
-            // Add the selected image if there is one and it's different from current
             if (selectedImage && selectedImage !== post.mediaUrl) {
-                // Convert base64 to File object if it's a new upload
                 if (selectedImage.startsWith('data:')) {
                     try {
                         const response = await fetch(selectedImage);
@@ -86,7 +82,6 @@ const EditPost = () => {
                 }
             }
 
-            // Make the API call to update the post using axiosInstance
             const response = await axiosInstance.put('/posts/update', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -102,7 +97,6 @@ const EditPost = () => {
         } catch (error) {
             console.error("Error updating post:", error);
             
-            // Handle axios error response with detailed logging
             if (error.response) {
                 console.error("Error response:", error.response.data);
                 console.error("Error status:", error.response.status);
@@ -228,10 +222,8 @@ const EditPost = () => {
                                                         className="btn btn-sm btn-danger"
                                                         onClick={() => {
                                                             if (selectedImage && selectedImage !== post.mediaUrl) {
-                                                                // If it's a new selected image, just remove it
                                                                 setSelectedImage(null);
                                                             } else {
-                                                                // If it's the original image, mark as removed
                                                                 setSelectedImage('REMOVED');
                                                             }
                                                         }}

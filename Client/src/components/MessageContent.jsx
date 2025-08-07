@@ -4,7 +4,7 @@ import styles from './MessageContent.module.css';
 import { useEffect, useRef, useState } from "react";
 import { axiosInstance } from "../lib/axios";
 import toast from 'react-hot-toast';
-import { ImagePlus, CirclePlus, X, Phone, Video, CircleAlert } from "lucide-react";
+import { ImagePlus, CirclePlus, X, Phone, Video, CircleAlert, SendHorizontal } from "lucide-react";
 import { useDropzone } from "react-dropzone";
 import TitleProfile from '../assets/TitleProfile.svg'
 import { useMessageStore } from "../store/useMessageStore";
@@ -175,7 +175,7 @@ const MessageContent = ({ selectedUser }) => {
                                 </div>
                             ) : (
                                 <div className={styles.messagesList} ref={messagesListRef}>
-                                    {messages.map((message) => (
+                                    {Array.isArray(messages) && messages.map((message) => (
                                         <div 
                                             key={message?.id }
                                             className={`${styles.messageContainer} ${
@@ -203,12 +203,19 @@ const MessageContent = ({ selectedUser }) => {
                                                 )}
                                                 <p>{message.content}</p>
                                                 <span className={styles.timestamp}>
-                                                    {new Date(message.created_at)
-                                                        .toLocaleTimeString('en-US', {
-                                                            hour: 'numeric',
-                                                            minute: '2-digit',
-                                                            hour12: true
-                                                        })}
+                                                    {message.created_at ? 
+                                                        (() => {
+                                                            const date = new Date(message.created_at);
+                                                            return isNaN(date.getTime()) ? 
+                                                                'Now' : 
+                                                                date.toLocaleTimeString('en-US', {
+                                                                    hour: 'numeric',
+                                                                    minute: '2-digit',
+                                                                    hour12: true
+                                                                });
+                                                        })() : 
+                                                        'Now'
+                                                    }
                                                 </span>
                                             </div>
                                         </div>
@@ -312,7 +319,7 @@ const MessageContent = ({ selectedUser }) => {
                                         <div className={styles.loaderOverlay}>
                                             <div className={styles.loader}></div>
                                         </div>  
-                                    ) : ( 'Send' )}
+                                    ) : ( <SendHorizontal /> )}
                                     </button>
                                 </form>
                             </div>

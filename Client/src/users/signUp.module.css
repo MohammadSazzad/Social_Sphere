@@ -1,20 +1,391 @@
-.Buttn{
+/* Professional SignUp Component Styling */
+
+/* Container and Layout */
+.signUpContainer {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    position: relative;
+}
+
+.signUpWrapper {
+    width: 100%;
+    max-width: 500px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.signUpWrapper:hover {
+    transform: translateY(-5px);
+}
+
+/* Header Styling */
+.titleStyling {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+}
+
+.headerSection {
+    text-align: center;
+    padding: 2rem 2rem 1rem 2rem;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+}
+
+.subtitle {
+    color: #6b7280;
+    font-size: 1.1rem;
+    margin-bottom: 0;
+    font-weight: 400;
+}
+
+.description {
+    color: #9ca3af;
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+}
+
+/* Form Styling */
+.formContainer {
+    padding: 2rem;
+}
+
+.inputGroup {
+    margin-bottom: 1.5rem;
+}
+
+.inputField {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    font-size: 1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    background: #ffffff;
+    color: #374151;
+}
+
+.inputField:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    transform: translateY(-1px);
+}
+
+.inputField::placeholder {
+    color: #9ca3af;
+    font-weight: 400;
+}
+
+/* Label Styling */
+.label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #374151;
+    font-size: 0.95rem;
+}
+
+/* Gender Selection */
+.genderSection {
+    margin-bottom: 1.5rem;
+}
+
+.genderTitle {
+    font-weight: 600;
+    color: #374151;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+}
+
+.genderOptions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.genderOption {
+    flex: 1;
+    min-width: 120px;
+}
+
+.radioContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #ffffff;
+}
+
+.radioContainer:hover {
+    border-color: #667eea;
+    background: rgba(102, 126, 234, 0.02);
+}
+
+.radioContainer.selected {
+    border-color: #667eea;
+    background: rgba(102, 126, 234, 0.05);
+}
+
+.radioInput {
+    margin-right: 0.5rem;
+    accent-color: #667eea;
+}
+
+.radioLabel {
+    font-weight: 500;
+    color: #374151;
+    cursor: pointer;
+    margin: 0;
+}
+
+/* Checkbox Styling */
+.checkboxContainer {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: rgba(102, 126, 234, 0.02);
+    border-radius: 12px;
+    border: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+.checkbox {
+    margin-top: 0.125rem;
+    accent-color: #667eea;
+}
+
+.checkboxLabel {
+    color: #6b7280;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin: 0;
+}
+
+.termsLink {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.termsLink:hover {
+    color: #5a67d8;
+    text-decoration: underline;
+}
+
+/* Button Styling */
+.Buttn {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.Buttn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
     width: 100%;
     height: 100%;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    background-image: linear-gradient(to right, #84FAB1, #8FD4F2);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
 }
 
-.Buttn:hover{
-    background-image: linear-gradient(to right, #8FD4F2, #84FAB1);
-    transform: scale(1.01);
-    transition: transform 0.1s;
-    box-shadow: #5f5a49 0px 0px 10px;
+.Buttn:hover::before {
+    left: 100%;
 }
 
-.titleStyling {
-    font-size: 1.5rem;
-    font-weight: bold;
+.Buttn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+}
+
+.Buttn:active {
+    transform: translateY(0);
+}
+
+/* Login Link */
+.loginLink {
+    display: block;
+    text-align: center;
+    margin-top: 1.5rem;
+    color: #6b7280;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.loginLink:hover {
+    color: #667eea;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .signUpContainer {
+        min-height: 100vh !important;
+        height: auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        padding: 20px 15px;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        overflow-y: auto !important;
+    }
+    
+    .signUpWrapper {
+        margin: 20px auto;
+        transform: none !important;
+        position: relative;
+        width: 100%;
+    }
+    
+    .titleStyling {
+        font-size: 2rem;
+    }
+    
+    .headerSection {
+        padding: 1.5rem 1.5rem 1rem 1.5rem;
+    }
+    
+    .formContainer {
+        padding: 1.5rem;
+    }
+    
+    .genderOptions {
+        flex-direction: row;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+    
+    .genderOption {
+        flex: 1;
+        min-width: 100px;
+    }
+}
+
+@media (max-width: 480px) {
+    .signUpContainer {
+        min-height: 100vh !important;
+        height: auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        padding: 10px;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        overflow-y: auto !important;
+    }
+    
+    .signUpWrapper {
+        margin: 10px auto;
+        transform: none !important;
+        position: relative;
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    .titleStyling {
+        font-size: 1.5rem;
+    }
+    
+    .headerSection {
+        padding: 1rem 1rem 0.5rem 1rem;
+    }
+    
+    .formContainer {
+        padding: 1rem;
+    }
+    
+    .inputField {
+        padding: 0.75rem;
+        font-size: 0.95rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .inputGroup {
+        margin-bottom: 1rem;
+    }
+    
+    .genderOptions {
+        flex-direction: row;
+        gap: 0.4rem;
+        flex-wrap: wrap;
+    }
+    
+    .genderOption {
+        flex: 1;
+        min-width: 90px;
+    }
+    
+    .radioContainer {
+        padding: 0.6rem 0.4rem;
+        font-size: 0.9rem;
+    }
+    
+    .checkboxContainer {
+        margin-bottom: 1.5rem;
+        padding: 0.75rem;
+    }
+    
+    .Buttn {
+        padding: 0.875rem;
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .loginLink {
+        margin-top: 1rem;
+        margin-bottom: 2rem;
+    }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+    .Buttn:hover {
+        transform: none;
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+    }
+    
+    .signUpWrapper:hover {
+        transform: none;
+    }
+    
+    .inputField:focus {
+        transform: none;
+    }
+}
+
+/* High DPI Displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .signUpWrapper {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
 }

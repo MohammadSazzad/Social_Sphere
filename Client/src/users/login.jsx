@@ -35,17 +35,19 @@ const Login = () => {
 
   return (
     <section className={`${styles.mainContainer} pt-5 vh-90`}>
-      <div className={` container py-5 h-90`} >
+      <div className={`container py-5 h-90 ${styles.mobileContainer}`} >
+        <img src={TitleLogo} alt="Title" className={`${styles.mobileLogo} d-block d-lg-none`} />
+        
         <div className="d-flex justify-content-center align-items-center h-100 gap-5">
-          <div>
+          <div className="d-none d-lg-block">
             <img src={TitleLogo} alt="Title" />
           </div>
-          <div className="col-md-6 col-lg-5">
+          <div className={`col-md-6 col-lg-5 ${styles.mobileWrapper}`}>
             <div
-              className="card shadow-2-strong card-registration"
+              className={`card shadow-2-strong card-registration ${styles.mobileCard}`}
               style={{ borderRadius: "15px" }}
             >
-              <div className="card-body p-4 p-md-3">
+              <div className={`card-body p-4 p-md-3 ${styles.mobileForm}`}>
                 <form onSubmit={handleLogin}>
                   <div className="row">
                     <div className="col-md-12 mb-4 pb-2">
@@ -53,7 +55,7 @@ const Login = () => {
                         type="email"
                         ref={email}
                         id="emailAddress"
-                        className="form-control form-control-lg"
+                        className={`form-control form-control-lg ${styles.mobileInput}`}
                         placeholder="Email address"
                         required
                       />
@@ -66,7 +68,7 @@ const Login = () => {
                         type="password"
                         ref={pass}
                         id="password"
-                        className="form-control form-control-lg"
+                        className={`form-control form-control-lg ${styles.mobileInput}`}
                         placeholder="Password"
                         required
                       />
@@ -80,7 +82,7 @@ const Login = () => {
                   <div className="d-flex justify-content-center">
                     <button
                       type="submit"
-                      className={`${styles.Buttn} btn btn-primary btn-block btn-lg text-body`}
+                      className={`${styles.Buttn} ${styles.mobileButton} btn btn-primary btn-block btn-lg text-body`}
                     >
                       Login
                     </button>
@@ -96,7 +98,7 @@ const Login = () => {
                   <div className="d-flex justify-content-center">
                     <button
                       type="button"
-                      className= "btn btn-primary btn-block btn-lg text-body" onClick={handleSignUp}
+                      className={`btn btn-primary btn-block btn-lg text-body ${styles.mobileButton}`} onClick={handleSignUp}
                     >
                       Create New Account
                     </button>

@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import styles from './ShowStory.module.css';
-import { Plus, X, Heart, Smile, Angry, Annoyed , ThumbsUp, Laugh, ThumbsDown } from 'lucide-react';
+import { Plus, X, Heart, Smile, ThumbsUp, Laugh } from 'lucide-react';
 import { useContext, useEffect, useState } from "react";
 import Context from "../store/Context";
 import TitleProfile from "../assets/TitleProfile.svg";
@@ -35,13 +35,13 @@ const ShowStory = () => {
     return (
         <div className={styles.showStoryContainer}>
             <div className={styles.sideBar} style={{
-            position: "fixed", 
-            top: 0,
-            left: 0,
-            width: "380px",
-            height: "100vh", 
-            overflowY: "auto", 
-        }}> 
+                position: "fixed", 
+                top: 0,
+                left: 0,
+                width: "380px",
+                height: "100vh", 
+                overflowY: "auto", 
+            }}> 
                 <div className="d-flex justify-content-between pt-1">
                     <h4>Stories</h4>
                     <div type='button' className={styles.Button} onClick={handleBackButton}> <X /> </div>   
@@ -100,10 +100,31 @@ const ShowStory = () => {
                                 <p >{storyById.storycontent}</p>
                             </div>
                         )}
+                        
+                        <div className={styles.mobileInputContainer}>
+                            <div style={{flex: 1}}>
+                                <input type="text" placeholder="Reply..." className={styles.inputRegion}/>
+                            </div>
+                            <div style={{display: 'flex', gap: '8px', alignItems: 'center'}}>
+                                <div className={styles.emojiButton}>
+                                    <Laugh size={18} />
+                                </div>
+                                <div className={styles.emojiButton}>
+                                    <Heart size={18} />
+                                </div> 
+                                <div className={styles.emojiButton}>  
+                                    <Smile size={18} />
+                                </div>
+                                <div className={styles.emojiButton}>
+                                    <ThumbsUp size={18} />
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    
                     <div className="d-flex gap-2 p-2">
-                        <div>
-                            <input type="text" placeholder="Reply." className={styles.inputRegion}/>
+                        <div style={{flex: 1}}>
+                            <input type="text" placeholder="Reply..." className={styles.inputRegion}/>
                         </div>
                         <div className="d-flex gap-2 align-items-center">
                             <div className={styles.emojiButton}>
@@ -117,15 +138,6 @@ const ShowStory = () => {
                             </div>
                             <div className={styles.emojiButton}>
                                 <ThumbsUp />
-                            </div>
-                            <div className={styles.emojiButton}>
-                                <Annoyed />
-                            </div>
-                            <div className={styles.emojiButton}>
-                                <ThumbsDown />
-                            </div>
-                            <div className={styles.emojiButton}>
-                                <Angry />
                             </div>
                         </div>
                     </div>

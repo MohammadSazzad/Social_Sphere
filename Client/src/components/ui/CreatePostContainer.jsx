@@ -51,7 +51,7 @@ const CreatePostContainer = () => {
             formData.append("content", content);
             formData.append("privacy_setting", privacy);
 
-            const response = await axiosInstance.post("/posts/create", formData, {
+            await axiosInstance.post("/posts/create", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },

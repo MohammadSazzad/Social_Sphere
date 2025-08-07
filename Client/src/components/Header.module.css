@@ -10,7 +10,6 @@
     transform: scale(1.05);
 }
 
-/* Desktop Navigation */
 .desktopLayout {
     display: flex;
     align-items: center;
@@ -84,6 +83,12 @@
     transform: translateY(-1px);
 }
 
+.navButtonActive {
+    background-color: #1877f2 !important;
+    color: white !important;
+    box-shadow: 0 2px 8px rgba(24, 119, 242, 0.3);
+}
+
 .actionButton {
     padding: 0.5rem !important;
     border-radius: 50%;
@@ -99,6 +104,13 @@
 .actionButton:hover {
     background-color: #e9ecef !important;
     transform: scale(1.05);
+}
+
+.actionButtonActive {
+    background-color: #1877f2 !important;
+    color: white !important;
+    border-color: #1877f2 !important;
+    box-shadow: 0 2px 8px rgba(24, 119, 242, 0.3);
 }
 
 .profileButton {
@@ -259,6 +271,17 @@
     background-color: #f8f9fa !important;
     color: #007bff !important;
     transform: translateY(-1px) !important;
+}
+
+.mobileNavIconActive {
+    background-color: #1877f2 !important;
+    color: white !important;
+    border-radius: 8px !important;
+    box-shadow: 0 2px 8px rgba(24, 119, 242, 0.3) !important;
+}
+
+.mobileNavIconActive span {
+    color: white !important;
 }
 
 .mobileNavIcon span {

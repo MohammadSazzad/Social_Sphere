@@ -62,7 +62,6 @@ const PostContainer = () => {
                         return updatedPosts;
                     });
                     
-                    // Dismiss loading and show success
                     toast.dismiss(loadingToast);
                     toast.success('Post deleted successfully');
                 } else {

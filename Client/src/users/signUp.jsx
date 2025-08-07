@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
 import styles from './signUp.module.css';
-import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { axiosInstance } from "../lib/axios";
 
@@ -40,91 +39,147 @@ const SignUp = () => {
     }
 
     return (
-        <section className="vh-100">
-            <div className="container py-5 h-100">
-                <div className="row justify-content-center align-items-center h-100">
-                    <div className="col-md-6 col-lg-5">
-                    <h1 className={` ${styles.titleStyling}d-block text-center mb-3`}>Social Sphere</h1>
-                        <div className="card shadow-2-strong card-registration" style={{ borderRadius: "15px" }}>
-                            <div className="card-body p-4 p-md-5">
-                                <div className="text-center">
-                                    <h3 className="pb-md-0 mb-md-1">Create a new account</h3>
-                                    <p>It's easy and quick.</p>
+        <div className={styles.signUpContainer}>
+            <div className={styles.signUpWrapper}>
+                <div className={styles.headerSection}>
+                    <h1 className={styles.titleStyling}>Social Sphere</h1>
+                    <h3 className={styles.subtitle}>Create a new account</h3>
+                    <p className={styles.description}>It&apos;s quick and easy.</p>
+                </div>
+                
+                <div className={styles.formContainer}>
+                    <form onSubmit={handleSubmitButton}>
+                        <div className="row">
+                            <div className="col-md-6">
+                                <div className={styles.inputGroup}>
+                                    <input 
+                                        type="text" 
+                                        ref={fName} 
+                                        id="firstName" 
+                                        className={styles.inputField}
+                                        placeholder="First Name" 
+                                        required
+                                    />
                                 </div>
-                                <form onSubmit={handleSubmitButton} >
-                                    <div className="row">
-                                        <div className="col-md-6 mb-4">
-                                            <input type="text" ref={fName} id="firstName" className="form-control form-control-lg" placeholder="First Name" />
-                                        </div>
-                                        <div className="col-md-6 mb-4">
-                                            <input type="text" ref={lName} id="lastName" className="form-control form-control-lg" placeholder="Last Name" />
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-md-12 mb-4">
-                                            <label htmlFor="birthdayDate" className="form-label">Date of Birth</label>
-                                            <input type="date" ref={dob} className="form-control form-control-lg" id="birthdayDate" />
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-md-12 mb-4">
-                                            <h6 className="mb-2 pb-1">Gender:</h6>
-                                            <div className="row">
-                                                <div className="col-md-4">
-                                                    <div className="form-check">
-                                                        <input className="form-check-input" type="radio" name="gender" id="femaleGender"
-                                                            value="Female" checked={gender === "Female"} onChange={(e) => setGender(e.target.value)} />
-                                                        <label className="form-check-label" htmlFor="femaleGender">Female</label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-4">
-                                                    <div className="form-check">
-                                                        <input className="form-check-input" type="radio" name="gender" id="maleGender"
-                                                            value="Male" checked={gender === "Male"} onChange={(e) => setGender(e.target.value)} />
-                                                        <label className="form-check-label" htmlFor="maleGender">Male</label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-4">
-                                                    <div className="form-check">
-                                                        <input className="form-check-input" type="radio" name="gender" id="otherGender"
-                                                            value="Other" checked={gender === "Other"} onChange={(e) => setGender(e.target.value)} />
-                                                        <label className="form-check-label" htmlFor="otherGender">Other</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="row">
-                                        <div className="col-md-12 mb-4 pb-2">
-                                            <input type="email" ref={email} id="emailAddress" className="form-control form-control-lg" placeholder="Email address" />
-                                        </div>
-                                    </div>
-
-                                    <div className="row">
-                                        <div className="col-md-12 mb-4 pb-2">
-                                            <input type="password" ref={pass} id="password" className="form-control form-control-lg" placeholder="New password" />
-                                        </div>
-                                    </div>
-
-                                    <div className="form-check d-flex justify-content-center mb-4">
-                                        <input className="form-check-input me-2" type="checkbox" id="termsCheckbox" />
-                                        <label className="form-check-label" htmlFor="termsCheckbox">
-                                            I agree to all statements in <a href="#!">Terms of service</a>
-                                        </label>
-                                    </div>
-
-                                    <div className='d-flex justify-content-center '>
-                                        <button type='submit' className={`${styles.Buttn} btn btn-success btn-block btn-lg text-body`}>Sign Up</button>
-                                    </div>
-                                    <a href="" className="text-decoration-none d-block text-center mt-3 pt-0">Already have an account?</a>
-                                </form>
+                            </div>
+                            <div className="col-md-6">
+                                <div className={styles.inputGroup}>
+                                    <input 
+                                        type="text" 
+                                        ref={lName} 
+                                        id="lastName" 
+                                        className={styles.inputField}
+                                        placeholder="Last Name" 
+                                        required
+                                    />
+                                </div>
                             </div>
                         </div>
-                    </div>
+
+                        <div className={styles.inputGroup}>
+                            <label htmlFor="birthdayDate" className={styles.label}>Date of Birth</label>
+                            <input 
+                                type="date" 
+                                ref={dob} 
+                                className={styles.inputField}
+                                id="birthdayDate" 
+                                required
+                            />
+                        </div>
+
+                        <div className={styles.genderSection}>
+                            <h6 className={styles.genderTitle}>Gender</h6>
+                            <div className={styles.genderOptions}>
+                                <div className={styles.genderOption}>
+                                    <div className={`${styles.radioContainer} ${gender === "Female" ? styles.selected : ""}`}>
+                                        <input 
+                                            className={styles.radioInput}
+                                            type="radio" 
+                                            name="gender" 
+                                            id="femaleGender"
+                                            value="Female" 
+                                            checked={gender === "Female"} 
+                                            onChange={(e) => setGender(e.target.value)} 
+                                        />
+                                        <label className={styles.radioLabel} htmlFor="femaleGender">Female</label>
+                                    </div>
+                                </div>
+                                <div className={styles.genderOption}>
+                                    <div className={`${styles.radioContainer} ${gender === "Male" ? styles.selected : ""}`}>
+                                        <input 
+                                            className={styles.radioInput}
+                                            type="radio" 
+                                            name="gender" 
+                                            id="maleGender"
+                                            value="Male" 
+                                            checked={gender === "Male"} 
+                                            onChange={(e) => setGender(e.target.value)} 
+                                        />
+                                        <label className={styles.radioLabel} htmlFor="maleGender">Male</label>
+                                    </div>
+                                </div>
+                                <div className={styles.genderOption}>
+                                    <div className={`${styles.radioContainer} ${gender === "Other" ? styles.selected : ""}`}>
+                                        <input 
+                                            className={styles.radioInput}
+                                            type="radio" 
+                                            name="gender" 
+                                            id="otherGender"
+                                            value="Other" 
+                                            checked={gender === "Other"} 
+                                            onChange={(e) => setGender(e.target.value)} 
+                                        />
+                                        <label className={styles.radioLabel} htmlFor="otherGender">Other</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className={styles.inputGroup}>
+                            <input 
+                                type="email" 
+                                ref={email} 
+                                id="emailAddress" 
+                                className={styles.inputField}
+                                placeholder="Email address" 
+                                required
+                            />
+                        </div>
+
+                        <div className={styles.inputGroup}>
+                            <input 
+                                type="password" 
+                                ref={pass} 
+                                id="password" 
+                                className={styles.inputField}
+                                placeholder="New password" 
+                                required
+                            />
+                        </div>
+
+                        <div className={styles.checkboxContainer}>
+                            <input 
+                                className={styles.checkbox}
+                                type="checkbox" 
+                                id="termsCheckbox" 
+                                required
+                            />
+                            <label className={styles.checkboxLabel} htmlFor="termsCheckbox">
+                                I agree to all statements in <a href="#!" className={styles.termsLink}>Terms of service</a>
+                            </label>
+                        </div>
+
+                        <button type='submit' className={styles.Buttn}>
+                            Create Account
+                        </button>
+                        
+                        <a href="/users/login" className={styles.loginLink}>
+                            Already have an account? Sign in
+                        </a>
+                    </form>
                 </div>
             </div>
-        </section>
+        </div>
     );
 }
 

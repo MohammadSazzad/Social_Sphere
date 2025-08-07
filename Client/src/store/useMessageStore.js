@@ -26,10 +26,12 @@ export const useMessageStore = create((set, get) => ({
         set({ isMessagesLoading: true });
         try {
             const res = await axiosInstance.get(`/messages/${friendId}`);
-            set({ messages: res.data , selectedUser: friendId });
+            const messages = res.data?.data || res.data || [];
+            set({ messages: Array.isArray(messages) ? messages : [], selectedUser: friendId });
         } catch (error) {
-            toast.error(error.response.data.messages);
-            set({ selectedUser: null });
+            console.error('Get messages error:', error);
+            toast.error(error.response?.data?.message || 'Failed to load messages');
+            set({ messages: [], selectedUser: null });
         } finally {
             set({ isMessagesLoading: false });
         }
@@ -37,21 +39,26 @@ export const useMessageStore = create((set, get) => ({
 
     sendMessage: async (content, file, friendId) => {
         try {
-        const formData = new FormData();
-        formData.append("content", content);
-        if (file) {
-            formData.append("file", file);
-        }
-        const res = await axiosInstance.post(
-            `/messages/create/${friendId}`,
-            formData,
-            { headers: { "Content-Type": "multipart/form-data" } }
-        );
-        set((state) => ({ messages: [...state.messages, res.data] }));
-        return res.data;
+            const formData = new FormData();
+            formData.append("content", content);
+            if (file) {
+                formData.append("file", file);
+            }
+            const res = await axiosInstance.post(
+                `/messages/create/${friendId}`,
+                formData,
+                { headers: { "Content-Type": "multipart/form-data" } }
+            );
+            
+            const newMessage = res.data?.data || res.data;
+            set((state) => ({ 
+                messages: Array.isArray(state.messages) ? [...state.messages, newMessage] : [newMessage]
+            }));
+            return newMessage;
         } catch (err) {
-        toast.error(err.response?.data?.message || "Failed to send message");
-        throw err;
+            console.error('Send message error:', err);
+            toast.error(err.response?.data?.message || "Failed to send message");
+            throw err;
         }
     },
     subscribeToMessage: () => {
@@ -60,8 +67,21 @@ export const useMessageStore = create((set, get) => ({
         const socket = useAuthStore.getState().socket;
 
         socket.on("newMessage", (newMessage) => {
+            const currentMessages = get().messages;
+            
+            const normalizedMessage = {
+                id: newMessage.id,
+                sender_id: newMessage.senderId || newMessage.sender_id,
+                receiver_id: newMessage.receiverId || newMessage.receiver_id,
+                content: newMessage.content,
+                media_url: newMessage.media_url,
+                is_read: newMessage.is_read,
+                created_at: newMessage.created_at,
+                sender_name: newMessage.sender_name
+            };
+            
             set({ 
-                messages: [...get().messages, newMessage] 
+                messages: Array.isArray(currentMessages) ? [...currentMessages, normalizedMessage] : [normalizedMessage]
             });
         });
     },
