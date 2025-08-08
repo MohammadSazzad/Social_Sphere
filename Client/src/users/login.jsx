@@ -1,104 +1,113 @@
-import { useRef, useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./login.module.css";
 import { useNavigate } from "react-router-dom";
 import TitleLogo from "../assets/TitleLogo.png";
 import { useAuthStore } from "../store/useAuthStore";
-import LoaderX from "../components/Loader";
+import toast, { Toaster } from 'react-hot-toast';
+
+const EMAIL_REGEX = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
 const Login = () => {
-  const email = useRef();
-  const pass = useRef();
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const { authUser, login } = useAuthStore();
-  console.log(authUser);
+  const { authUser, login, isLoggingIn, isSignedIn } = useAuthStore();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (authUser && isSignedIn) {
+      navigate("/", { replace: true });
+    }
+  }, [authUser, isSignedIn, navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError(null);
+    setError("");
 
-    const data = {
-      email: email.current.value,
-      password: pass.current.value,
+    if (!EMAIL_REGEX.test(email.trim())) {
+      const errorMsg = "Please enter a valid email address";
+      setError(errorMsg);
+      toast.error(errorMsg);
+      return;
     }
-    login(data);
-    if(!authUser) {
-      LoaderX(authUser);
-    }else {
-      navigate("/");
+
+    if (!password) {
+      const errorMsg = "Please enter your password";
+      setError(errorMsg);
+      toast.error(errorMsg);
+      return;
+    }
+
+    try {
+      await login({ email: email.trim().toLowerCase(), password });
+      toast.success("Login successful!");
+    } catch (err) {
+      const errorMsg = err.message || "Login failed. Please try again.";
+      setError(errorMsg);
+      toast.error(errorMsg);
     }
   };
 
-  const handleSignUp = () => {
-    navigate("/users/signup");
-  }
-
   return (
     <section className={`${styles.mainContainer} pt-5 vh-90`}>
-      <div className={`container py-5 h-90 ${styles.mobileContainer}`} >
-        <img src={TitleLogo} alt="Title" className={`${styles.mobileLogo} d-block d-lg-none`} />
-        
+      <div className={`container py-5 h-90 ${styles.mobileContainer}`}>
+        <img
+          src={TitleLogo}
+          alt="Title"
+          className={`${styles.mobileLogo} d-block d-lg-none`}
+        />
         <div className="d-flex justify-content-center align-items-center h-100 gap-5">
           <div className="d-none d-lg-block">
             <img src={TitleLogo} alt="Title" />
           </div>
+
           <div className={`col-md-6 col-lg-5 ${styles.mobileWrapper}`}>
             <div
-              className={`card shadow-2-strong card-registration ${styles.mobileCard}`}
+              className={`card shadow-2-strong ${styles.mobileCard}`}
               style={{ borderRadius: "15px" }}
             >
               <div className={`card-body p-4 p-md-3 ${styles.mobileForm}`}>
                 <form onSubmit={handleLogin}>
-                  <div className="row">
-                    <div className="col-md-12 mb-4 pb-2">
-                      <input
-                        type="email"
-                        ref={email}
-                        id="emailAddress"
-                        className={`form-control form-control-lg ${styles.mobileInput}`}
-                        placeholder="Email address"
-                        required
-                      />
-                    </div>
+                  <div className="mb-4">
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className={`form-control form-control-lg ${styles.mobileInput}`}
+                      placeholder="Email address"
+                      required
+                    />
                   </div>
 
-                  <div className="row">
-                    <div className="col-md-12 mb-4 pb-2">
-                      <input
-                        type="password"
-                        ref={pass}
-                        id="password"
-                        className={`form-control form-control-lg ${styles.mobileInput}`}
-                        placeholder="Password"
-                        required
-                      />
-                    </div>
+                  <div className="mb-4">
+                    <input
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className={`form-control form-control-lg ${styles.mobileInput}`}
+                      placeholder="Password"
+                      required
+                    />
                   </div>
 
-                  {error && (
-                    <p className="text-danger text-center">{error}</p>
-                  )}
+                  {error && <p className="text-danger text-center">{error}</p>}
 
                   <div className="d-flex justify-content-center">
                     <button
                       type="submit"
+                      disabled={isLoggingIn}
                       className={`${styles.Buttn} ${styles.mobileButton} btn btn-primary btn-block btn-lg text-body`}
                     >
-                      Login
+                      {isLoggingIn ? "Logging in..." : "Login"}
                     </button>
                   </div>
 
-                  <a
-                    href="#!"
-                    className="text-decoration-none d-block text-center mt-3 pt-0"
-                  >
-                    Forgotten password? Cnagne
-                  </a>
-                  <hr />
-                  <div className="d-flex justify-content-center">
+                  <div className="text-center mt-3">
                     <button
                       type="button"
-                      className={`btn btn-primary btn-block btn-lg text-body ${styles.mobileButton}`} onClick={handleSignUp}
+                      className="btn btn-link"
+                      onClick={() => navigate("/users/signup")}
                     >
                       Create New Account
                     </button>
@@ -109,6 +118,16 @@ const Login = () => {
           </div>
         </div>
       </div>
+      <Toaster 
+        position="top-right"
+        toastOptions={{
+          duration: 4000,
+          style: {
+            background: '#363636',
+            color: '#fff',
+          },
+        }}
+      />
     </section>
   );
 };

@@ -14,6 +14,7 @@
   "dependencies": {
     "@azure-rest/ai-content-safety": "^1.0.1",
     "@azure-rest/ai-vision-image-analysis": "^1.0.0-beta.3",
+    "@sendgrid/mail": "^8.1.5",
     "@tensorflow/tfjs-node": "^4.22.0",
     "bad-words": "^4.0.0",
     "bcrypt": "^5.1.1",
@@ -31,6 +32,7 @@
     "nsfwjs": "^4.2.1",
     "pg": "^8.13.1",
     "sharp": "^0.34.3",
-    "socket.io": "^4.8.1"
+    "socket.io": "^4.8.1",
+    "validator": "^13.15.15"
   }
 }

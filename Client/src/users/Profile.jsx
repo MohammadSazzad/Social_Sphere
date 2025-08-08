@@ -1,17 +1,12 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import axios from "axios";
 import styles from "./Profile.module.css";
 import { FaEdit, FaCamera, FaBriefcase, FaGraduationCap, FaMapMarkerAlt, FaHome, FaPhone, FaBirthdayCake, FaHeart } from "react-icons/fa";
-import { BsThreeDots } from "react-icons/bs";
-import { AiOutlineLike } from "react-icons/ai";
-import { BiCommentDetail, BiShare } from "react-icons/bi";
 import { useAuthStore } from "../store/useAuthStore";
 import { axiosInstance } from "../lib/axios";
 import TitleProfile from "../assets/TitleProfile.svg";
 import { useContext } from "react";
 import Context from "../store/Context";
-import { ThumbsUp, MessageCircleMore, Send, Share, Copy, Flag, Edit3, Trash2, EllipsisVertical, Link, Smile, SendHorizontal } from "lucide-react";
+import { ThumbsUp, MessageCircleMore, Send, Share, Copy, Edit3, Trash2, EllipsisVertical, Link, Smile, SendHorizontal } from "lucide-react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
@@ -37,10 +32,8 @@ const Profile = () => {
   const [ openDropdown, setOpenDropdown ] = useState(null);
     const navigate = useNavigate();
 
-    // Close dropdown when clicking outside - optimized to prevent interference
     useEffect(() => {
         const handleClickOutside = (event) => {
-            // Use requestAnimationFrame for better performance
             requestAnimationFrame(() => {
                 const isDropdownClick = event.target.closest('.dropdown-menu') || 
                                       event.target.closest('[data-dropdown-toggle]');
@@ -61,7 +54,6 @@ const Profile = () => {
     }, [openDropdown]);
 
     const handleDeletePost = async (postId) => {
-        console.log("Delete post called with ID:", postId); // Debug log
         setOpenDropdown(null);
         
         
@@ -76,7 +68,6 @@ const Profile = () => {
             const loadingToast = toast.loading('Deleting post...');
 
             try {
-                console.log("Attempting to delete post with ID:", postId); // Debug log
                 const response = await axiosInstance.delete(`/posts/delete/${postId}/${authUser.id}`);
                 
                 if (response.status === 200 || response.status === 204) {
@@ -93,7 +84,6 @@ const Profile = () => {
                 
             } catch (error) {
                 console.error('Error deleting post:', error);
-                console.error('Error response:', error.response?.data);
                 toast.dismiss(loadingToast);
                 toast.error(`Failed to delete post: ${error.response?.data?.message || error.message}`);
             }
@@ -101,8 +91,6 @@ const Profile = () => {
     }
 
     const handleEditPost = async(postId) => {
-        console.log("Edit post clicked for postId:", postId);
-        console.log("Post ID type:", typeof postId); // Debug log
         setOpenDropdown(null);
         navigate(`/post/edit/${postId}`);
     }
@@ -179,7 +167,6 @@ const Profile = () => {
               <button onClick={() => setPosts([{ id: Date.now(), content: newPost, likes: 0, liked: false, comments: [] }, ...posts])}>Post</button>
             </div>
             <div className={styles.postContainerWrapper}>
-            {console.log("Posts state:", posts)} {/* Debug log */}
             {posts.length === 0 ? (
               <div className="text-center p-4">
                 <p>No posts found. Create your first post!</p>

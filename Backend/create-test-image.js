@@ -36,6 +36,3 @@ const testImageBuffer = createTestImageBuffer();
 const testImagePath = './test-image.png';
 
 fs.writeFileSync(testImagePath, testImageBuffer);
-console.log(`Created test image: ${testImagePath} (${testImageBuffer.length} bytes)`);
-console.log('You can now test this image with the moderation endpoint');
-console.log(`curl -X POST http://localhost:3000/api/posts/test-moderation -F "file=@${testImagePath}"`);

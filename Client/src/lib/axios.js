@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-// Use environment variable for API URL, fallback to development default
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
 export const axiosInstance = axios.create({
@@ -10,7 +9,9 @@ export const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
     (config) => {
-        console.log(`Making ${config.method?.toUpperCase()} request to: ${config.baseURL}${config.url}`);
+        if (import.meta.env.MODE === 'development') {
+            console.log(`Making ${config.method?.toUpperCase()} request to: ${config.baseURL}${config.url}`);
+        }
         return config;
     },
     (error) => {

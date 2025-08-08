@@ -1,25 +1,30 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { axiosInstance } from "../lib/axios";
+import { useAuthStore } from "../store/useAuthStore";
+import toast, { Toaster } from 'react-hot-toast';
+import LoaderX from "../components/Loader";
 
 const VerifyUser = () => {
-
     const otp = useRef();
     const navigate = useNavigate();
+    const { verify } = useAuthStore();
+    const [isLoading, setIsLoading] = useState(false);
 
-    const handleSubmitButton = async(e) => {
+    const handleSubmitButton = async (e) => {
         e.preventDefault();
-        try{
-            const response = await axiosInstance.post('/users/verify', {
-                otp : otp.current.value
-            });
-            console.log(response.data);
+        setIsLoading(true);
+        try {
+            await verify(otp.current.value);
+            toast.success("Email verified successfully! Welcome!");
             navigate('/');
-        }catch(err){
-            console.log(err);
+        } catch (err) {
+            console.error(err);
+            toast.error("Verification failed. Please check your OTP and try again.");
+        } finally {
+            setIsLoading(false);
         }
         e.target.reset();
-    }
+    };
 
     return (
         <section className="vh-80">
@@ -53,7 +58,9 @@ const VerifyUser = () => {
                                     <hr className="my-4" />
                                     <div className="text-end">
                                         <button className="btn btn-light btn-block btn-lg text-body me-2 ">Update </button>
-                                        <button type="submit" className="btn btn-light btn-block btn-lg text-body gap-2" id="verifyButton">Continue</button>
+                                        <button type="submit" className="btn btn-light btn-block btn-lg text-body gap-2" id="verifyButton" disabled={isLoading}>
+                                            {isLoading ? <LoaderX /> : "Continue"}
+                                        </button>
                                     </div>
                                 </form>
                             </div>
@@ -61,6 +68,16 @@ const VerifyUser = () => {
                     </div>
                 </div>  
             </div>
+            <Toaster 
+                position="top-right"
+                toastOptions={{
+                    duration: 4000,
+                    style: {
+                        background: '#363636',
+                        color: '#fff',
+                    },
+                }}
+            />
         </section>
     )
 }

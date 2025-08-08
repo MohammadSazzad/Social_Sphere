@@ -11,13 +11,11 @@ class FallbackImageModerationService {
     this.strictMode = process.env.STRICT_MODERATION === 'true'; 
     this.nsfwModel = null;
     
-    console.log(`Fallback image moderation - Enabled: ${this.enabled}, Strict mode: ${this.strictMode}`);
   }
   
   async isAdultContent(imageBuffer) {
     try {
       if (!this.enabled) {
-        console.log('Image moderation disabled, allowing content');
         return false;
       }
       if (!imageBuffer || !Buffer.isBuffer(imageBuffer)) {
@@ -25,17 +23,13 @@ class FallbackImageModerationService {
         return true; 
       }
 
-      console.log(`Processing image buffer of size: ${imageBuffer.length} bytes`);
-
       const hash = createHash('sha256').update(imageBuffer).digest('hex');
     
       if (imageCache.has(hash)) {
-        console.log('Using cached moderation result');
         return imageCache.get(hash);
       }
       
       if (this.strictMode) {
-        console.log('Strict mode enabled - blocking all images');
         imageCache.set(hash, true);
         return true;
       }
@@ -44,10 +38,8 @@ class FallbackImageModerationService {
       
       // Size checks
       if (imageBuffer.length < 500) {
-        console.log('Image extremely small (< 500 bytes), blocking');
         isAdult = true;
       } else if (imageBuffer.length > 8 * 1024 * 1024) {
-        console.log('Image extremely large (> 8MB), blocking');
         isAdult = true;
       } else {
         // Header validation
@@ -55,7 +47,6 @@ class FallbackImageModerationService {
         const isValidImage = this.hasValidImageHeader(header);
         
         if (!isValidImage) {
-          console.log('Invalid image format detected, blocking');
           isAdult = true;
         } else {
           // NSFW model detection
@@ -67,11 +58,8 @@ class FallbackImageModerationService {
               const pornScore = predictions.find(p => p.className === 'Porn')?.probability || 0;
               const hentaiScore = predictions.find(p => p.className === 'Hentai')?.probability || 0;
               const maxScore = Math.max(explicitScore, pornScore, hentaiScore);
-              
-              console.log(`Fallback NSFW scores - Max: ${maxScore}`);
-              
+
               if (maxScore > 0.15) {
-                console.log(`NSFW score above threshold: ${maxScore}`);
                 isAdult = true;
               }
             } catch (error) {
@@ -84,10 +72,8 @@ class FallbackImageModerationService {
             try {
               const enhancedResult = await enhancedImageAnalyzer.analyzeForAdultContent(imageBuffer);
               if (enhancedResult.isAdult) {
-                console.log(`Enhanced analysis flagged content: ${enhancedResult.reasons}`);
                 isAdult = true;
               } else {
-                console.log(`Enhanced analysis passed: ${enhancedResult.reasons}`);
                 // Only use basic analysis if enhanced also didn't flag it
                 if (enhancedResult.reason !== 'Screenshot/text content detected') {
                   isAdult = this.analyzeImageContent(imageBuffer);
@@ -110,7 +96,6 @@ class FallbackImageModerationService {
         imageCache.delete(firstKey);
       }
       
-      console.log(`Fallback moderation result: ${isAdult ? 'BLOCKED' : 'ALLOWED'}`);
       return isAdult;
       
     } catch (error) {
@@ -121,15 +106,12 @@ class FallbackImageModerationService {
 
   analyzeImageContent(imageBuffer) {
     try {
-      console.log('Performing final content analysis...');
       
       const skinToneScore = this.detectSkinTones(imageBuffer);
       const entropyScore = this.calculateEntropy(imageBuffer);
       const compressionScore = this.analyzeCompression(imageBuffer);
       const suspiciousPatterns = this.checkSuspiciousPatterns(imageBuffer);
-      
-      console.log(`Content analysis scores - Skin: ${skinToneScore}, Entropy: ${entropyScore}, Compression: ${compressionScore}, Suspicious: ${suspiciousPatterns}`);
-      
+
       let riskScore = 0;
       
       if (skinToneScore > 0.3) riskScore += 70;
@@ -140,7 +122,6 @@ class FallbackImageModerationService {
       
       const isAdult = riskScore >= 45;
       
-      console.log(`Risk score: ${riskScore}/100 - ${isAdult ? 'BLOCKING' : 'ALLOWING'} content`);
       return isAdult;
     } catch (error) {
       console.error('Content analysis failed:', error.message);
@@ -251,7 +232,6 @@ class FallbackImageModerationService {
         }
       }
       if (matches) {
-        console.log(`Detected valid ${format} image`);
         return true;
       }
     }
@@ -261,7 +241,6 @@ class FallbackImageModerationService {
 
   clearCache() {
     imageCache.clear();
-    console.log('Image moderation cache cleared');
   }
 }
 

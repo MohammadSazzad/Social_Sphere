@@ -2,16 +2,26 @@ import { House, CircleEllipsis, UsersRound, MessageCircle, MonitorPlay, Store, G
 import TitleProfile from "../../assets/TitleProfile.svg";
 import styles from "./LeftSideBar.module.css";
 import { useAuthStore } from "../../store/useAuthStore";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { clearAllCookies, clearAllStorage } from "../../lib/cookieUtils";
 
 
 const LeftSideBar = () => {
 
     const { authUser, logout } = useAuthStore();
+    const navigate = useNavigate();
 
-    const handleLogOut = () => {
-        logout();
-        window.location.href = "/login";
+    const handleLogOut = async () => {
+        clearAllStorage();
+        clearAllCookies();
+        
+        try {
+            await logout();
+        } catch (error) {
+            console.log("Backend logout error (user already logged out locally):", error);
+        } finally {
+            navigate('/login', { replace: true });
+        }
     }
     
     return (

@@ -14,9 +14,6 @@ class ImageModerationService {
       throw new Error('Azure Vision configuration missing');
     }
 
-    console.log('Azure Vision Endpoint:', process.env.AZURE_VISION_ENDPOINT);
-    console.log('Azure Vision Key exists:', !!process.env.AZURE_VISION_KEY);
-
     this.client = vision.default(
       process.env.AZURE_VISION_ENDPOINT, 
       new AzureKeyCredential(process.env.AZURE_VISION_KEY)
@@ -26,7 +23,6 @@ class ImageModerationService {
     this.racyThreshold = 0.15;
     this.fallbackService = new FallbackImageModerationService();
     
-    console.log(`Image moderation initialized with thresholds - Adult: ${this.adultThreshold}, Racy: ${this.racyThreshold}`);
   }
   
   async isAdultContent(imageBuffer) {
@@ -36,17 +32,12 @@ class ImageModerationService {
         return true;
       }
 
-      console.log(`Processing image buffer of size: ${imageBuffer.length} bytes`);
-
       const hash = createHash('sha256').update(imageBuffer).digest('hex');
     
       if (imageCache.has(hash)) {
-        console.log('Using cached moderation result');
         return imageCache.get(hash);
       }
-      
-      console.log('Analyzing image with Azure Vision API...');
-      
+
       let isAdult = false;
       
       try {
@@ -59,8 +50,6 @@ class ImageModerationService {
           contentType: 'application/octet-stream'
         });
 
-        console.log('Azure Vision API response status:', result.status);
-
         if (result.status !== 200) {
           console.error('Azure Vision API returned unsuccessful response:', result.status, result.body);
           throw new Error('Azure Vision API failed');
@@ -68,14 +57,11 @@ class ImageModerationService {
 
         if (result.body.adultResult) {
           const { adultScore, racyScore } = result.body.adultResult;
-          console.log(`Image moderation scores - Adult: ${adultScore}, Racy: ${racyScore}`);
           
           isAdult = adultScore > this.adultThreshold || racyScore > this.racyThreshold;
           
           if (isAdult) {
-            console.log('Image flagged as adult content by Azure');
           } else {
-            console.log('Image passed Azure moderation checks');
           }
         } else {
           console.warn('No adultResult in Azure Vision response');
@@ -104,7 +90,6 @@ class ImageModerationService {
 
   clearCache() {
     imageCache.clear();
-    console.log('Image moderation cache cleared');
   }
 }
 

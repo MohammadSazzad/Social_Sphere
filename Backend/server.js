@@ -23,8 +23,6 @@ dotenv.config();
 const isDevelopment = process.env.NODE_ENV === 'development';
 
 if (isDevelopment) {
-  console.log('🔧 Running in DEVELOPMENT mode');
-  console.log('📝 Enhanced logging and debugging enabled');
 }
 
 const __filename = fileURLToPath(import.meta.url);
@@ -38,9 +36,7 @@ app.use(cookieParser());
 // Development middleware for request logging
 if (isDevelopment) {
   app.use((req, res, next) => {
-    console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
     if (req.body && Object.keys(req.body).length > 0) {
-      console.log('Request Body:', req.body);
     }
     next();
   });
@@ -78,7 +74,6 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-
 const PORT = process.env.SERVER_PORT || process.env.PORT || 3000;
 
 // Enhanced error handling
@@ -111,26 +106,12 @@ app.use((err, req, res, next) => {
 
 // 404 handler for unmatched routes
 app.use('*', (req, res) => {
-  console.log(`404 - Route not found: ${req.method} ${req.originalUrl}`);
   res.status(404).json({ error: 'Route not found' });
 });
 
 server.listen(PORT, () => {
-  console.log('\n🚀 Social Sphere Backend Server Started!');
-  console.log('================================');
-  console.log(`📍 Server running on: http://localhost:${PORT}`);
-  console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`🔗 CORS enabled for: ${isDevelopment ? 'Development origins (localhost:5173, localhost:3000)' : 'Production origin'}`);
-  console.log(`📊 Database: ${process.env.DB_NAME} on ${process.env.DB_HOST}:${process.env.DB_PORT}`);
-  console.log(`🔧 Development features: ${isDevelopment ? 'ENABLED' : 'DISABLED'}`);
-  console.log('================================\n');
   
   if (isDevelopment) {
-    console.log('💡 Development Tips:');
-    console.log('   - API endpoints: http://localhost:3000/api');
-    console.log('   - Socket.IO: http://localhost:3000');
-    console.log('   - Uploads: http://localhost:3000/uploads');
     console.log('   - Enhanced error details enabled');
-    console.log('   - Request logging enabled\n');
   }
 })

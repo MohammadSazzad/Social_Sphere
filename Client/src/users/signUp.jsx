@@ -1,186 +1,242 @@
-import { useRef, useState } from "react";
-import styles from './signUp.module.css';
+// SignUp.jsx
+import { useState } from "react";
+import styles from "./signUp.module.css";
 import { useNavigate } from "react-router-dom";
+import TitleLogo from "../assets/TitleLogo.png";
 import { axiosInstance } from "../lib/axios";
+import toast, { Toaster } from 'react-hot-toast';
+import LoaderX from "../components/Loader";
 
+const EMAIL_REGEX = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
 const SignUp = () => {
-    const fName = useRef();
-    const lName = useRef();
-    const dob = useRef();
-    const email = useRef();
-    const pass = useRef();
-    const [gender, setGender] = useState("");
-    console.log(gender);
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
+  const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
+    dob: "",
+    gender: "",
+    email: "",
+    password: "",
+    terms: false,
+  });
+  const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
-    const handleSubmitButton = async(e) => {
-        e.preventDefault();
-        try{
-            const response = await axiosInstance.post('/users/signup', {
-                first_name: fName.current.value,
-                last_name: lName.current.value,
-                date_of_birth: dob.current.value,
-                gender : gender,
-                email: email.current.value,
-                password: pass.current.value
-            });
-            console.log(response);
-            navigate('/users/verification');
-            if(response.status === 201){
-                alert('Verification Email Send Successfully.');
-            }
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setForm((f) => ({
+      ...f,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+  };
 
-        }catch(err){
-            console.error(err);
-        }
-        e.target.reset();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const errs = {};
+
+    if (!form.firstName.trim()) errs.firstName = "First name is required";
+    if (!form.lastName.trim()) errs.lastName = "Last name is required";
+    if (!form.dob) errs.dob = "Date of birth is required";
+    if (!form.gender) errs.gender = "Gender is required";
+    if (!EMAIL_REGEX.test(form.email.trim()))
+      errs.email = "Please enter a valid email address";
+    if (form.password.length < 6)
+      errs.password = "Password must be at least 6 characters";
+    if (!form.terms) errs.terms = "You must agree to the terms";
+
+    if (Object.keys(errs).length) {
+      setErrors(errs);
+      return;
     }
 
-    return (
-        <div className={styles.signUpContainer}>
-            <div className={styles.signUpWrapper}>
-                <div className={styles.headerSection}>
-                    <h1 className={styles.titleStyling}>Social Sphere</h1>
-                    <h3 className={styles.subtitle}>Create a new account</h3>
-                    <p className={styles.description}>It&apos;s quick and easy.</p>
-                </div>
-                
-                <div className={styles.formContainer}>
-                    <form onSubmit={handleSubmitButton}>
-                        <div className="row">
-                            <div className="col-md-6">
-                                <div className={styles.inputGroup}>
-                                    <input 
-                                        type="text" 
-                                        ref={fName} 
-                                        id="firstName" 
-                                        className={styles.inputField}
-                                        placeholder="First Name" 
-                                        required
-                                    />
-                                </div>
-                            </div>
-                            <div className="col-md-6">
-                                <div className={styles.inputGroup}>
-                                    <input 
-                                        type="text" 
-                                        ref={lName} 
-                                        id="lastName" 
-                                        className={styles.inputField}
-                                        placeholder="Last Name" 
-                                        required
-                                    />
-                                </div>
-                            </div>
-                        </div>
+    try {
+      setIsLoading(true);
+      const { status } = await axiosInstance.post("/users/signup", {
+        first_name: form.firstName.trim(),
+        last_name: form.lastName.trim(),
+        date_of_birth: form.dob,
+        gender: form.gender,
+        email: form.email.trim().toLowerCase(),
+        password: form.password,
+      });
 
-                        <div className={styles.inputGroup}>
-                            <label htmlFor="birthdayDate" className={styles.label}>Date of Birth</label>
-                            <input 
-                                type="date" 
-                                ref={dob} 
-                                className={styles.inputField}
-                                id="birthdayDate" 
-                                required
-                            />
-                        </div>
+      if (status === 201) {
+        toast.success("Verification email sent! Check your inbox.");
+        navigate("/users/verification");
+      }
+    } catch (err) {
+      setErrors({
+        submit:
+          err.response?.data?.message ||
+          "Registration failed. Please try again.",
+      });
+      toast.error(err.response?.data?.message || "Registration failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-                        <div className={styles.genderSection}>
-                            <h6 className={styles.genderTitle}>Gender</h6>
-                            <div className={styles.genderOptions}>
-                                <div className={styles.genderOption}>
-                                    <div className={`${styles.radioContainer} ${gender === "Female" ? styles.selected : ""}`}>
-                                        <input 
-                                            className={styles.radioInput}
-                                            type="radio" 
-                                            name="gender" 
-                                            id="femaleGender"
-                                            value="Female" 
-                                            checked={gender === "Female"} 
-                                            onChange={(e) => setGender(e.target.value)} 
-                                        />
-                                        <label className={styles.radioLabel} htmlFor="femaleGender">Female</label>
-                                    </div>
-                                </div>
-                                <div className={styles.genderOption}>
-                                    <div className={`${styles.radioContainer} ${gender === "Male" ? styles.selected : ""}`}>
-                                        <input 
-                                            className={styles.radioInput}
-                                            type="radio" 
-                                            name="gender" 
-                                            id="maleGender"
-                                            value="Male" 
-                                            checked={gender === "Male"} 
-                                            onChange={(e) => setGender(e.target.value)} 
-                                        />
-                                        <label className={styles.radioLabel} htmlFor="maleGender">Male</label>
-                                    </div>
-                                </div>
-                                <div className={styles.genderOption}>
-                                    <div className={`${styles.radioContainer} ${gender === "Other" ? styles.selected : ""}`}>
-                                        <input 
-                                            className={styles.radioInput}
-                                            type="radio" 
-                                            name="gender" 
-                                            id="otherGender"
-                                            value="Other" 
-                                            checked={gender === "Other"} 
-                                            onChange={(e) => setGender(e.target.value)} 
-                                        />
-                                        <label className={styles.radioLabel} htmlFor="otherGender">Other</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className={styles.inputGroup}>
-                            <input 
-                                type="email" 
-                                ref={email} 
-                                id="emailAddress" 
-                                className={styles.inputField}
-                                placeholder="Email address" 
-                                required
-                            />
-                        </div>
-
-                        <div className={styles.inputGroup}>
-                            <input 
-                                type="password" 
-                                ref={pass} 
-                                id="password" 
-                                className={styles.inputField}
-                                placeholder="New password" 
-                                required
-                            />
-                        </div>
-
-                        <div className={styles.checkboxContainer}>
-                            <input 
-                                className={styles.checkbox}
-                                type="checkbox" 
-                                id="termsCheckbox" 
-                                required
-                            />
-                            <label className={styles.checkboxLabel} htmlFor="termsCheckbox">
-                                I agree to all statements in <a href="#!" className={styles.termsLink}>Terms of service</a>
-                            </label>
-                        </div>
-
-                        <button type='submit' className={styles.Buttn}>
-                            Create Account
-                        </button>
-                        
-                        <a href="/users/login" className={styles.loginLink}>
-                            Already have an account? Sign in
-                        </a>
-                    </form>
-                </div>
-            </div>
+  return (
+    <div className={styles.signUpContainer}>
+      <div className={styles.signUpWrapper}>
+        <div className={styles.headerSection}>
+          <img src={TitleLogo} alt="Logo" className={`${styles.titleImg} mb-3`} />
+          <h3>Create a new account</h3>
+          <p>It’s quick and easy.</p>
         </div>
-    );
-}
+
+        <form className={styles.formContainer} onSubmit={handleSubmit}>
+          <div className="row">
+            <div className="col-md-6 mb-3">
+              <input
+                name="firstName"
+                value={form.firstName}
+                onChange={handleChange}
+                className={`${styles.inputField} ${
+                  errors.firstName ? styles.inputError : ""
+                }`}
+                placeholder="First Name"
+              />
+              {errors.firstName && (
+                <small className={styles.errorMessage}>
+                  {errors.firstName}
+                </small>
+              )}
+            </div>
+            <div className="col-md-6 mb-3">
+              <input
+                name="lastName"
+                value={form.lastName}
+                onChange={handleChange}
+                className={`${styles.inputField} ${
+                  errors.lastName ? styles.inputError : ""
+                }`}
+                placeholder="Last Name"
+              />
+              {errors.lastName && (
+                <small className={styles.errorMessage}>
+                  {errors.lastName}
+                </small>
+              )}
+            </div>
+          </div>
+
+          <div className="mb-3">
+            <label>Date of Birth</label>
+            <input
+              type="date"
+              name="dob"
+              value={form.dob}
+              onChange={handleChange}
+              className={`${styles.inputField} ${
+                errors.dob ? styles.inputError : ""
+              }`}
+            />
+            {errors.dob && (
+              <small className={styles.errorMessage}>{errors.dob}</small>
+            )}
+          </div>
+
+          <div className="mb-3">
+            <label>Gender</label>
+            <select
+              name="gender"
+              value={form.gender}
+              onChange={handleChange}
+              className={`${styles.inputField} ${
+                errors.gender ? styles.inputError : ""
+              }`}
+            >
+              <option value="">Select</option>
+              <option value="Female">Female</option>
+              <option value="Male">Male</option>
+              <option value="Other">Other</option>
+            </select>
+            {errors.gender && (
+              <small className={styles.errorMessage}>{errors.gender}</small>
+            )}
+          </div>
+
+          <div className="mb-3">
+            <input
+              type="email"
+              name="email"
+              value={form.email}
+              onChange={handleChange}
+              className={`${styles.inputField} ${
+                errors.email ? styles.inputError : ""
+              }`}
+              placeholder="Email address"
+            />
+            {errors.email && (
+              <small className={styles.errorMessage}>{errors.email}</small>
+            )}
+          </div>
+
+          <div className="mb-3">
+            <input
+              type="password"
+              name="password"
+              value={form.password}
+              onChange={handleChange}
+              className={`${styles.inputField} ${
+                errors.password ? styles.inputError : ""
+              }`}
+              placeholder="New password (min 6 characters)"
+            />
+            {errors.password && (
+              <small className={styles.errorMessage}>{errors.password}</small>
+            )}
+          </div>
+
+          <div className="form-check mb-3">
+            <input
+              type="checkbox"
+              name="terms"
+              checked={form.terms}
+              onChange={handleChange}
+              className="form-check-input"
+              id="termsCheckbox"
+            />
+            <label
+              className="form-check-label"
+              htmlFor="termsCheckbox"
+            >
+              I agree to the <a href="#!">Terms of Service</a>
+            </label>
+            {errors.terms && (
+              <small className={styles.errorMessage}>{errors.terms}</small>
+            )}
+          </div>
+
+          {errors.submit && (
+            <div className={styles.submitErrorMessage}>{errors.submit}</div>
+          )}
+
+          <button type="submit" className={styles.Buttn} disabled={isLoading}>
+            {isLoading ? <LoaderX /> : "Create Account"}
+          </button>
+
+          <p className="mt-3">
+            Already have an account?{" "}
+            <a href="/login">Sign in</a>
+          </p>
+        </form>
+      </div>
+      <Toaster 
+        position="top-right"
+        toastOptions={{
+          duration: 4000,
+          style: {
+            background: '#363636',
+            color: '#fff',
+          },
+        }}
+      />
+    </div>
+  );
+};
 
 export default SignUp;

@@ -53,3 +53,13 @@ export const uploadImage = async (id, profile_picture_url) => {
     );
     return result.rows;
  }
+
+ export const GetVerifyUser = async (username) => {
+  const result = await pool.query(
+    `UPDATE users 
+     SET status = 'Verified'
+     WHERE username = $1 `,
+    [username]
+  );
+  return result.rows[0]; 
+};

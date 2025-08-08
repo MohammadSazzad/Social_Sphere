@@ -14,17 +14,13 @@ class EnhancedImageAnalyzer {
 
   async analyzeForAdultContent(imageBuffer) {
     try {
-      console.log('Starting enhanced sexual content analysis...');
       
       const image = sharp(imageBuffer);
       const metadata = await image.metadata();
-      
-      console.log(`Image metadata: ${metadata.width}x${metadata.height}, format: ${metadata.format}`);
-      
+
       // Check if this looks like a screenshot or text-heavy image
       const isLikelyScreenshot = this.detectScreenshot(metadata, imageBuffer);
       if (isLikelyScreenshot) {
-        console.log('Image detected as likely screenshot/text content - allowing');
         return { isAdult: false, confidence: 0.9, reason: 'Screenshot/text content detected' };
       }
       
@@ -38,7 +34,6 @@ class EnhancedImageAnalyzer {
       const sexualContentAnalysis = await this.detectSexualContent(data, info, metadata);
       
       if (sexualContentAnalysis.isExplicit) {
-        console.log(`SEXUAL CONTENT DETECTED: ${sexualContentAnalysis.reasons}`);
         return { 
           isAdult: true, 
           confidence: sexualContentAnalysis.confidence, 
@@ -54,9 +49,7 @@ class EnhancedImageAnalyzer {
         aspectRatio: metadata.width / metadata.height,
         fileSize: imageBuffer.length
       };
-      
-      console.log('General analysis results:', analysis);
-      
+
       return this.calculateRiskScore(analysis);
       
     } catch (error) {
@@ -67,7 +60,6 @@ class EnhancedImageAnalyzer {
 
   async detectSexualContent(data, info, metadata) {
     try {
-      console.log('Analyzing for explicit sexual content...');
       
       // 1. Detect high concentration of skin tones in specific patterns
       const skinAnalysis = this.analyzeSkinDistribution(data, info);
@@ -119,10 +111,7 @@ class EnhancedImageAnalyzer {
       
       const isExplicit = riskScore >= 70; // Higher threshold for explicit content
       const confidence = Math.min(riskScore / 100, 1.0);
-      
-      console.log(`Sexual content analysis: ${riskScore}/100 points`);
-      console.log(`Explicit content: ${isExplicit ? 'YES' : 'NO'} (confidence: ${(confidence * 100).toFixed(1)}%)`);
-      
+
       return {
         isExplicit,
         confidence,
@@ -170,7 +159,6 @@ class EnhancedImageAnalyzer {
         (hasHighContrast ? 20 : 0) +
         (hasLowSkinContent ? 20 : 0); // Added skin content check
       
-      console.log(`Screenshot detection score: ${screenshotScore}/110 (skin content: ${(this.quickSkinCheck(imageBuffer) * 100).toFixed(1)}%)`);
       return screenshotScore >= 60; // Requires multiple indicators
       
     } catch (error) {
@@ -699,11 +687,7 @@ class EnhancedImageAnalyzer {
     // Higher threshold to reduce false positives on normal photos
     const isAdult = riskScore >= 50; // Increased threshold
     const confidence = Math.min(riskScore / 100, 1.0);
-    
-    console.log(`Risk assessment: ${riskScore}/100 points`);
-    console.log(`Reasons: ${reasons.join(', ') || 'No high-risk patterns detected'}`);
-    console.log(`Decision: ${isAdult ? 'BLOCK' : 'ALLOW'} (confidence: ${(confidence * 100).toFixed(1)}%)`);
-    
+
     return {
       isAdult,
       confidence,

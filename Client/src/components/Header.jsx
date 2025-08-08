@@ -1,11 +1,12 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Bell, MessageCircle, ChevronDown, Grip, House, MonitorPlay, Store,  UsersRound, Gamepad } from "lucide-react";
 import Logo from "../assets/Logo2.png";
 import TitleProfile from "../assets/TitleProfile.svg";
 import styles from "./Header.module.css";
 import { useAuthStore } from "../store/useAuthStore";
 import SearchBarInHeader from "./ui/SearchBarInHeader";
+import { clearAllCookies, clearAllStorage } from "../lib/cookieUtils";
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -14,6 +15,20 @@ const Header = () => {
 
     const { authUser, logout } = useAuthStore();
 
+    // Close dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (isOpen && !event.target.closest('.dropdown')) {
+                setIsOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isOpen]);
+
     const isActive = (path) => {
         if (path === '/') {
             return location.pathname === '/';
@@ -21,10 +36,19 @@ const Header = () => {
         return location.pathname.startsWith(path);
     };
 
-    const handleLogout = () => {
-        logout();
-        localStorage.removeItem('token');
-        navigate('/login');
+    const handleLogout = async (e) => {
+        e.preventDefault();
+        setIsOpen(false); 
+        clearAllStorage();
+        clearAllCookies();
+        
+        try {
+            await logout();
+        } catch (error) {
+            console.log("Backend logout error (user already logged out locally):", error);
+        } finally {
+            navigate('/login', { replace: true });
+        }
     };
 
     const handleProfileClick = () => {
@@ -127,23 +151,25 @@ const Header = () => {
                                         </li>
                                         <li><hr className="dropdown-divider" style={{ margin: '8px 0', border: 'none', borderTop: '1px solid #e9ecef' }} /></li>
                                         <li>
-                                            <a 
+                                            <button 
                                                 className="dropdown-item" 
-                                                href="/" 
                                                 onClick={handleLogout}
                                                 style={{
                                                     padding: '10px 16px',
                                                     fontSize: '14px',
                                                     color: '#dc3545',
-                                                    textDecoration: 'none',
-                                                    display: 'block',
+                                                    border: 'none',
+                                                    background: 'none',
+                                                    width: '100%',
+                                                    textAlign: 'left',
+                                                    cursor: 'pointer',
                                                     transition: 'background-color 0.2s ease'
                                                 }}
                                                 onMouseEnter={(e) => e.target.style.backgroundColor = '#fff5f5'}
                                                 onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
                                             >
                                                 🚪 Logout
-                                            </a>
+                                            </button>
                                         </li>
                                     </ul>
                                 )}
@@ -304,23 +330,25 @@ const Header = () => {
                                         </li>
                                         <li><hr className="dropdown-divider" style={{ margin: '8px 0', border: 'none', borderTop: '1px solid #e9ecef' }} /></li>
                                         <li>
-                                            <a 
+                                            <button 
                                                 className="dropdown-item" 
-                                                href="/" 
                                                 onClick={handleLogout}
                                                 style={{
                                                     padding: '12px 16px',
                                                     fontSize: '14px',
                                                     color: '#dc3545',
-                                                    textDecoration: 'none',
-                                                    display: 'block',
+                                                    border: 'none',
+                                                    background: 'none',
+                                                    width: '100%',
+                                                    textAlign: 'left',
+                                                    cursor: 'pointer',
                                                     transition: 'background-color 0.2s ease'
                                                 }}
                                                 onMouseEnter={(e) => e.target.style.backgroundColor = '#fff5f5'}
                                                 onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
                                             >
                                                 🚪 Logout
-                                            </a>
+                                            </button>
                                         </li>
                                     </ul>
                                 )}

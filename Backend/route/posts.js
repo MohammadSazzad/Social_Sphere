@@ -18,9 +18,7 @@ postsRouter.post("/test-moderation", upload.single('file'), async (req, res) => 
         if (!req.file) {
             return res.status(400).json({ error: "No file provided" });
         }
-        
-        console.log("Testing image moderation...");
-        
+
         let isAdult = false;
         let method = "unknown";
         
@@ -28,7 +26,6 @@ postsRouter.post("/test-moderation", upload.single('file'), async (req, res) => 
             isAdult = await imageModerationService.isAdultContent(req.file.buffer);
             method = "Azure Vision";
         } catch (azureError) {
-            console.log("Azure failed, trying fallback service...");
             isAdult = await fallbackImageModerationService.isAdultContent(req.file.buffer);
             method = "Fallback Service";
         }
@@ -45,6 +42,5 @@ postsRouter.post("/test-moderation", upload.single('file'), async (req, res) => 
         res.status(500).json({ error: "Test failed", details: error.message });
     }
 });
-
 
 export default postsRouter;

@@ -24,7 +24,6 @@ function hasValidImageHeader(header) {
             }
         }
         if (matches) {
-            console.log(`Detected valid ${format} image`);
             return true;
         }
     }
@@ -61,29 +60,23 @@ export const createPostController = async (req, res) => {
         let mediaUrl = null;
         if (req.file) {
             try {
-                console.log(`Processing image: ${req.file.originalname}, size: ${req.file.size} bytes`);
                 
                 let isAdultImage = false;
                 let moderationMethod = "unknown";
                 
                 try {
-                    console.log('Attempting Azure image moderation...');
                     isAdultImage = await imageModerationService.isAdultContent(req.file.buffer);
                     moderationMethod = "Azure Vision";
-                    console.log('Azure moderation result:', isAdultImage);
                     
                     // If Azure returns false but we know it's failing (403 errors), use fallback
                     if (!isAdultImage) {
-                        console.log('Azure returned false - attempting fallback analysis for verification...');
                         try {
                             const fallbackResult = await fallbackImageModerationService.isAdultContent(req.file.buffer);
                             if (fallbackResult) {
                                 isAdultImage = true;
                                 moderationMethod = "Fallback Service (Override)";
-                                console.log('Fallback detected adult content that Azure missed');
                             } else {
                                 moderationMethod = "Azure + Fallback Verification";
-                                console.log('Both Azure and Fallback agree: content is safe');
                             }
                         } catch (fallbackError) {
                             console.warn('Fallback verification failed:', fallbackError.message);
@@ -96,27 +89,21 @@ export const createPostController = async (req, res) => {
                     try {
                         isAdultImage = await fallbackImageModerationService.isAdultContent(req.file.buffer);
                         moderationMethod = "Fallback Service";
-                        console.log('Fallback moderation result:', isAdultImage);
                     } catch (fallbackError) {
                         console.error('Both moderation services failed:', fallbackError.message);
                         isAdultImage = true;
                         moderationMethod = "Emergency Block";
                     }
                 }
-                
-                console.log(`Final moderation decision: ${isAdultImage ? 'BLOCKED' : 'ALLOWED'} (Method: ${moderationMethod})`);
-                
+
                 if (isAdultImage) {
-                    console.log('Image rejected due to adult content');
                     return res.status(400).json({
                         error: "Post rejected: Image contains prohibited content"
                     });
                 }
 
-                console.log('Image passed moderation, uploading to Cloudinary...');
                 const result = await uploadOnCloudinary(req.file.buffer, req.file.originalname);
                 mediaUrl = result.url;
-                console.log('Image uploaded successfully to Cloudinary');
             } catch (uploadError) {
                 console.error('Media processing error:', uploadError);
                 return res.status(500).json({
@@ -221,29 +208,23 @@ export const updatePostController = async (req, res) => {
         // Handle media update if file is provided
         if (req.file) {
             try {
-                console.log(`Processing image: ${req.file.originalname}, size: ${req.file.size} bytes`);
                 
                 let isAdultImage = false;
                 let moderationMethod = "unknown";
                 
                 try {
-                    console.log('Attempting Azure image moderation...');
                     isAdultImage = await imageModerationService.isAdultContent(req.file.buffer);
                     moderationMethod = "Azure Vision";
-                    console.log('Azure moderation result:', isAdultImage);
                     
                     // If Azure returns false but we know it's failing (403 errors), use fallback
                     if (!isAdultImage) {
-                        console.log('Azure returned false - attempting fallback analysis for verification...');
                         try {
                             const fallbackResult = await fallbackImageModerationService.isAdultContent(req.file.buffer);
                             if (fallbackResult) {
                                 isAdultImage = true;
                                 moderationMethod = "Fallback Service (Override)";
-                                console.log('Fallback detected adult content that Azure missed');
                             } else {
                                 moderationMethod = "Azure + Fallback Verification";
-                                console.log('Both Azure and Fallback agree: content is safe');
                             }
                         } catch (fallbackError) {
                             console.warn('Fallback verification failed:', fallbackError.message);
@@ -256,37 +237,28 @@ export const updatePostController = async (req, res) => {
                     try {
                         isAdultImage = await fallbackImageModerationService.isAdultContent(req.file.buffer);
                         moderationMethod = "Fallback Service";
-                        console.log('Fallback moderation result:', isAdultImage);
                     } catch (fallbackError) {
                         console.error('Both moderation services failed:', fallbackError.message);
                         isAdultImage = true;
                         moderationMethod = "Emergency Block";
                     }
                 }
-                
-                console.log(`Final moderation decision: ${isAdultImage ? 'BLOCKED' : 'ALLOWED'} (Method: ${moderationMethod})`);
-                
+
                 if (isAdultImage) {
-                    console.log('Image rejected due to adult content');
                     return res.status(400).json({
                         error: "Post rejected: Image contains prohibited content"
                     });
                 }
 
-                console.log('Image passed moderation, uploading to Cloudinary...');
                 const result = await uploadOnCloudinary(req.file.buffer, req.file.originalname);
                 mediaUrl = result.url;
-                console.log('Image uploaded successfully to Cloudinary');
 
                 // Update or create media record
                 try {
                     await updateMedia(post_id, userId, mediaUrl, updatedAt);
-                    console.log('Media record updated successfully');
                 } catch (mediaUpdateError) {
                     // If update fails, try to create new media record
-                    console.log('Media update failed, creating new media record...');
                     await createMedia(post_id, userId, mediaUrl, updatedAt);
-                    console.log('New media record created successfully');
                 }
 
             } catch (uploadError) {

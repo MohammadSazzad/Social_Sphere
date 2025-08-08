@@ -28,8 +28,11 @@ export const useAuthStore = create((set, get) => ({
                 withCredentials: true
             });
             get().disconnectSocket();
+        } catch (error) {
+            console.log("Backend logout error:", error);
+            get().disconnectSocket();
         } finally {
-            set({ authUser: null, isSignedIn: false, });
+            set({ authUser: null, isSignedIn: false });
         }
     },
 
@@ -39,12 +42,15 @@ export const useAuthStore = create((set, get) => ({
         try {
             const response = await axiosInstance.post('/users/login', data);
             if (response.status === 200) {
-                alert("Login Successful");
                 set({ authUser: response.data, isSignedIn: true });
+                get().connectSocket();
+                return { success: true, user: response.data };
             }
-            get().connectSocket();
         } catch (error) {
-            console.log(error);
+            console.log("Login error:", error);
+            const errorMessage = error.response?.data?.message || "Login failed. Please try again.";
+            set({ authUser: null, isSignedIn: false });
+            throw new Error(errorMessage);
         } finally{
             set({ isLoggingIn: false });
         }
@@ -68,6 +74,12 @@ export const useAuthStore = create((set, get) => ({
         socket.on("getOnlineUsers", (userIds)=> {
             set({ onlineUsers: userIds })
         })
+    },
+    verify : async (otpValue) => {
+        const response = await axiosInstance.post('/users/verify', { otp: otpValue });
+        set({ authUser: response.data, isSignedIn: true });
+        get().connectSocket();
+        return response.data;
     },
     
     disconnectSocket: () => {

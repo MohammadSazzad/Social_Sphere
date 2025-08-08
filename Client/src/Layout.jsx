@@ -22,8 +22,12 @@ const Layout = () => {
         )
     }
 
-    console.log(onlineUsers);
-    console.log(authUser);
+    // Remove debug logs for production
+    // Only log in development mode
+    if (import.meta.env.MODE === 'development') {
+        console.log('Online users:', onlineUsers);
+        console.log('Auth user:', authUser);
+    }
 
     return (
         <>
