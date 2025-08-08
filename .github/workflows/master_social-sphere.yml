@@ -29,14 +29,7 @@ jobs:
       - name: Build application
         run: |
           cd Backend
-          npm run build --if-present  # Only runs if build script exists
-
-      # Removed the test step to prevent failure
-      # Add this back when you have actual tests
-      #- name: Run tests
-      #  run: |
-      #    cd Backend
-      #    npm run test
+          npm run build --if-present
 
       - name: Remove dev dependencies
         run: |
@@ -57,6 +50,10 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: node-app
+          path: .  # Download directly to root directory
+
+      - name: List downloaded files (for debugging)
+        run: ls -la
 
       - name: Azure Login
         uses: azure/login@v2
@@ -70,4 +67,4 @@ jobs:
         with:
           app-name: 'social-sphere'
           slot-name: 'Production'
-          package: ./node-app
+          package: .  # Deploy all files in current directory
