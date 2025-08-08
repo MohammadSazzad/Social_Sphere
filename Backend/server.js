@@ -74,7 +74,7 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-const PORT = process.env.SERVER_PORT ;
+const PORT = process.env.PORT ;
 
 // Enhanced error handling
 app.use((err, req, res, next) => {
