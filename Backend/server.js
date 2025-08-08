@@ -74,7 +74,7 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-const PORT = process.env.PORT ;
+const PORT = process.env.PORT || 3000;
 
 // Enhanced error handling
 app.use((err, req, res, next) => {
@@ -109,8 +109,11 @@ app.use('*', (req, res) => {
   res.status(404).json({ error: 'Route not found' });
 });
 
+app.get("/health", (req, res) => res.sendStatus(200));
+
+
 server.listen(PORT, () => {
-  
+  console.log(`🚀 Server listening on port ${PORT}`);
   if (isDevelopment) {
     console.log('   - Enhanced error details enabled');
   }
