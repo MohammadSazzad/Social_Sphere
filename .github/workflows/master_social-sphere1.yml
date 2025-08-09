@@ -15,23 +15,35 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Debug repo layout
+        run: |
+          echo "PWD: $(pwd)"
+          echo "Root files:"
+          ls -la
+          echo "Backend files:"
+          ls -la Backend || true
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20.x'
           cache: 'npm'
 
-      - name: Install production dependencies in Backend
+      - name: Install production dependencies (Backend)
         working-directory: Backend
         run: |
-          # Use npm ci for reproducible installs; remove --only=production if you need devDependencies
-          npm ci --only=production
+          # If Backend/package-lock.json exists, prefer npm ci for reproducible installs
+          if [ -f package-lock.json ]; then
+            npm ci --only=production
+          else
+            npm install --omit=dev
+          fi
 
       - name: Zip Backend for deployment
         run: |
           rm -f deploy.zip
           cd Backend
-          zip -r ../deploy.zip .  # includes node_modules, package.json, server.js, etc.
+          zip -r ../deploy.zip .
 
       - name: Login to Azure
         uses: azure/login@v2
