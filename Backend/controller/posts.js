@@ -192,20 +192,16 @@ export const updatePostController = async (req, res) => {
             return res.status(403).json({ message: "You are not authorized to update this post" });
         }
 
-        // Text moderation
         const isAdultText = await moderationService.isAdultContent(content);
         if (isAdultText) {
             return res.status(400).json({
                 error: "Post rejected: Contains prohibited content"
             });
         }
-
-        // Update post content
         const updatedAt = new Date();
         await updatePost(post_id, userId, content, updatedAt);
 
         let mediaUrl = null;
-        // Handle media update if file is provided
         if (req.file) {
             try {
                 

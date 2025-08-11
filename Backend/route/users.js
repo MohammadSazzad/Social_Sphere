@@ -19,14 +19,11 @@ usersRouter.get("/", getUsersController);
 usersRouter.post("/signup", signUpController);
 usersRouter.post("/verify", verifyUserController);
 usersRouter.post("/login", loginController);
+usersRouter.post("/logout", protectRoute, logoutController);
 usersRouter.get("/friendProfile/:id", getUserByIdController);
-usersRouter.post("/signup", signUpController);
-usersRouter.post("/verify", verifyUserController);
-usersRouter.post("/login", loginController);
 usersRouter.post("/upload/:id", upload.single("file"), uploadImageController);
-usersRouter.post("/logout", logoutController);
 usersRouter.get("/check", protectRoute, authCheckController);
 usersRouter.get("/post/:userId", protectRoute, getUserPostsController);
-//usersRouter.put("/user/:id/about", protectRoute, updateUserAboutController);
+
 
 export default usersRouter;
