@@ -23,6 +23,12 @@ const LeftSideBar = () => {
             navigate('/login', { replace: true });
         }
     }
+
+    const handleProfile =  () => {
+        if(authUser){
+            navigate(`/profile/${authUser.id}`);
+        }
+    }
     
     return (
         <div className={`d-none d-lg-flex flex-column flex-shrink-0 p-3 bg-light ${styles.leftSidebar}`} style={{
@@ -92,7 +98,7 @@ const LeftSideBar = () => {
             </ul>
             <hr />
             <div className="d-flex justify-content-between"> 
-                <button className={`btn btn-light btn-block d-flex align-items-center`}>
+                <button className={`btn btn-light btn-block d-flex align-items-center`} onClick={handleProfile}>
                     <img src={authUser?.image || TitleProfile} alt="Profile Image" style={{ "width": "48px", "height": "48px", "borderRadius": "50%", "objectFit": "cover"}} />
                     <p className="fs-5 ms-3">{authUser ? `${authUser.first_name} ${authUser.last_name}` : 'Guest User'}</p>
                 </button>

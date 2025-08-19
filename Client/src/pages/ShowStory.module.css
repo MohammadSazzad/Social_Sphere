@@ -1,7 +1,8 @@
 .showStoryContainer {
     display: flex;
-    height: 100vh;
-    overflow: hidden;
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
 }
 
 .sideBar {
@@ -29,25 +30,24 @@
 
 /* ===== Mobile styling (max-width: 575.98px) ===== */
 @media (max-width: 575.98px) {
-    /* Global reset for mobile story view */
+    /* Reset for mobile story view */
     html, body {
         margin: 0 !important;
         padding: 0 !important;
-        height: 100% !important;
-        overflow: hidden !important;
+        height: auto !important;
+        overflow: auto !important;
     }
     
     * {
         box-sizing: border-box;
-        margin: 0;
-        padding: 0;
     }
     
     .showStoryContainer {
-        height: 100vh !important;
+        height: auto !important;
+        min-height: 100vh !important;
         width: 100vw !important;
-        overflow: hidden !important;
-        position: fixed !important;
+        overflow: visible !important;
+        position: relative !important;
         top: 0 !important;
         left: 0 !important;
         margin: 0 !important;

@@ -1,6 +1,21 @@
+/* Global body styles for proper scrolling */
+html, body {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+#root {
+    min-height: 100vh;
+}
+
 .UiContainer{
     margin-top: 63px;
     background-color: #F8F9FA;
+    min-height: calc(100vh - 63px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
 
 .MainContainer {
@@ -8,4 +23,35 @@
     margin: 0 auto; 
     flex: 1;
     width: 100%;
+    min-height: 100%;
+    overflow-y: auto;
+}
+
+/* Mobile specific fixes */
+@media (max-width: 768px) {
+    html, body {
+        position: relative;
+        height: auto;
+        overflow: auto;
+    }
+    
+    .UiContainer {
+        padding: 0;
+        margin-top: 60px;
+        height: auto;
+        min-height: calc(100vh - 60px);
+        overflow-y: visible;
+        -webkit-overflow-scrolling: touch;
+        position: relative;
+        display: block;
+    }
+    
+    .MainContainer {
+        width: 100%;
+        padding: 10px;
+        overflow-y: visible;
+        min-height: auto;
+        height: auto;
+        display: block;
+    }
 }

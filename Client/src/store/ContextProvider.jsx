@@ -159,8 +159,6 @@ const ContextProvider = ({children}) => {
         }).format(postDate);
       };
 
-    console.log(posts);
-
     const context = {
         users,
         events,
@@ -177,7 +175,6 @@ const ContextProvider = ({children}) => {
         setselectFriendId
     };
 
-    console.log(users);
 
     return (
         <Context.Provider value={context}>
