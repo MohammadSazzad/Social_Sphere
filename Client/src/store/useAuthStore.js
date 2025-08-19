@@ -60,7 +60,7 @@ export const useAuthStore = create((set, get) => ({
         const { authUser } = get();
         if (!authUser || get().socket?.connected) return;
     
-        const SOCKET_URL = 'http://localhost:3000';
+        const SOCKET_URL = 'http://socialsphere.eastasia.cloudapp.azure.com:3000';
         
         const socket = io(SOCKET_URL, {
             auth: { userId: authUser.id },
