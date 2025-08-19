@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://socialsphere.eastasia.cloudapp.azure.com:3000/api';
+const API_BASE_URL = 'http://socialsphere.eastasia.cloudapp.azure.com/api';
 
 export const axiosInstance = axios.create({
     baseURL: API_BASE_URL,
